@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <!-- Professional SEO Optimization -->
-    <meta name="description" content="Fiber Count by Sandeep Biswal G is a highly customized, responsive counter, badge tracker, fiber length converter, and calculator utility app available in Odia and English.">
-    <meta name="keywords" content="Fiber Count, Num Increment, Number Increment, Sandeep Biswal G, Counter App, Odia, Android Developer, Utility, Badge Tracker, Plyxo Games, Goa Commscope, Fiber Length Check, Online Calculator, Odia Bhasa App">
+    <meta name="description" content="Fiber Count by Sandeep Biswal G is a highly customized, responsive counter, badge tracker, fiber length converter, and calculator utility app available in Odia, English, Hindi, and Konkani.">
+    <meta name="keywords" content="Fiber Count, Num Increment, Number Increment, Sandeep Biswal G, Counter App, Odia, Hindi, Konkani, Android Developer, Utility, Badge Tracker, Plyxo Games, Goa Commscope, Fiber Length Check, Online Calculator, Odia Bhasa App, Configurable Jumper, Cable Assembly">
     <meta name="author" content="Sandeep Biswal G">
     <meta name="robots" content="index, follow">
     <title>Fiber Count - Sandeep Biswal G</title>
@@ -92,7 +92,7 @@
             z-index: 9999; transition: opacity 0.5s ease; text-align: center;
         }
         #loader-content { flex: 1; display: flex; flex-direction: column; justify-content: center; }
-        #loader h1 { color: var(--md-sys-color-on-primary-container); margin-bottom: 16px; font-size: 2.5rem; }
+        #loader h1 { color: var(--md-sys-color-on-primary-container); margin-bottom: 16px; font-size: 2.5rem; line-height: 1.2; }
         #loader h2 { color: var(--md-sys-color-primary); font-weight: 500; font-size: 1.5rem;}
         .loader-footer { padding: 24px; font-weight: 500; color: var(--md-sys-color-on-primary-container); opacity: 0.8; }
         
@@ -210,22 +210,20 @@
         .custom-target-input { display: none; margin-left: 8px; width: 90px; }
         .show-custom { display: inline-block !important; }
 
-        /* Floating Link Left & Auto Hide */
-        .floating-attendance {
-            position: fixed; left: 0; top: 75%; transform: translateY(-50%);
+        /* Floating Links */
+        .floating-action-btn {
+            position: fixed;
             background: var(--md-sys-color-primary); color: var(--md-sys-color-on-primary);
-            padding: 12px 20px; border-radius: 0 24px 24px 0;
+            padding: 12px 20px; 
             display: flex; align-items: center; gap: 10px; text-decoration: none;
             z-index: 1500; box-shadow: 2px 4px 12px rgba(0,0,0,0.25);
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             font-weight: 600; font-size: 0.95rem; white-space: nowrap;
         }
-        .floating-attendance.hidden-on-scroll {
-            transform: translateY(-50%) translateX(-110%);
-            opacity: 0;
-            pointer-events: none;
-        }
 
+        #floatingAttendance { left: 0; top: 60%; transform: translateY(-50%); border-radius: 0 24px 24px 0; }
+        #floatingDocsBtn { right: 0; top: 60%; transform: translateY(-50%); border-radius: 24px 0 0 24px; }
+        
         /* Promo Card Fixes */
         .promo-card {
             background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2);
@@ -251,13 +249,16 @@
         .modal-overlay {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.6); z-index: 2000; justify-content: center; align-items: center;
-            backdrop-filter: blur(4px);
+            backdrop-filter: blur(4px); opacity: 0; transition: opacity 0.3s ease-in-out;
         }
-        .modal-overlay.active { display: flex; }
+        .modal-overlay.active { display: flex; opacity: 1; }
         .modal-content {
             background: var(--md-sys-color-background); color: var(--md-sys-color-on-surface);
             width: 100vw; height: 100vh; position: relative; display: flex; justify-content: center; align-items: center; overflow: hidden;
+            transform: scale(0.95); transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
+        .modal-overlay.active .modal-content { transform: scale(1); }
+
         .lc-layout { display: flex; flex-direction: column; width: 100%; max-width: 1100px; height: 100%; padding: 20px; box-sizing: border-box; overflow-y: auto; }
         .lc-left, .lc-right { display: flex; flex-direction: column; width: 100%; gap: 12px; }
         .lc-right { align-items: center; margin-top: 24px; gap: 12px; }
@@ -296,12 +297,54 @@
         }
         #toast.show { visibility: visible; opacity: 1; bottom: 60px; }
 
+        /* Config Docs Modal Styles */
+        #configDocsModal .modal-content { overflow: hidden; }
+        .config-docs-container { width: 100%; height: 100%; display: flex; flex-direction: column; position: relative; overflow: hidden;}
+        .config-docs-selection { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 20px; padding: 20px; height: 100%; transition: transform 0.4s ease-in-out, opacity 0.3s; }
+        .config-docs-selection.hidden { transform: translateX(-100%); opacity: 0; pointer-events: none; position: absolute; }
+
+        .config-btn {
+            background: var(--md-sys-color-primary-container); color: var(--md-sys-color-on-primary-container);
+            border: none; border-radius: 24px; padding: 24px 32px; font-size: 1.2rem; font-weight: 700;
+            width: 90%; max-width: 450px; cursor: pointer; text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1); transition: transform 0.2s, background 0.2s;
+        }
+        .config-btn:hover { transform: translateY(-4px); background-color: var(--md-sys-color-secondary-container); }
+        .config-btn small { display: block; font-size: 0.8em; font-weight: 500; opacity: 0.8; margin-top: 4px; }
+        
+        .config-docs-viewer { display: flex; flex-direction: column; height: 100%; position: absolute; top:0; left:0; width:100%; background: var(--md-sys-color-background); transform: translateX(100%); opacity:0; transition: transform 0.4s ease-in-out, opacity 0.3s; }
+        .config-docs-viewer.visible { transform: translateX(0); opacity: 1; }
+
+        .config-viewer-header { padding: 16px 20px; display: flex; align-items: center; gap: 16px; border-bottom: 1px solid var(--md-sys-color-surface-variant); flex-shrink: 0; }
+        .config-back-btn { background: var(--md-sys-color-surface-variant); border-radius: 50%; border: none; width: 36px; height: 36px; font-size: 1.5rem; cursor: pointer; display: flex; justify-content: center; align-items: center; }
+        .config-viewer-header h3 { font-size: 1.1rem; color: var(--md-sys-color-primary); }
+        .config-viewer-body { padding: 20px; overflow-y: auto; flex-grow: 1; }
+        .config-viewer-body h2 { font-size: 1.4rem; margin-bottom: 12px; }
+        .config-viewer-body h3 { font-size: 1.1rem; margin-top: 24px; margin-bottom: 12px; border-bottom: 2px solid var(--md-sys-color-primary); padding-bottom: 6px;}
+        .config-viewer-body p { margin-bottom: 12px; line-height: 1.6; }
+        .config-viewer-body table { width: 100%; border-collapse: collapse; margin-top: 16px; font-size: 0.9rem; }
+        .config-viewer-body th, .config-viewer-body td { border: 1px solid var(--md-sys-color-surface-variant); padding: 10px 12px; text-align: left; }
+        .config-viewer-body th { background-color: var(--md-sys-color-secondary-container); font-weight: 700; }
+        .config-viewer-body td:first-child, .config-viewer-body th:first-child { text-align: center; font-weight: bold; }
+        .color-swatch { display: inline-block; width: 14px; height: 14px; border-radius: 50%; margin-right: 8px; vertical-align: middle; border: 1px solid rgba(0,0,0,0.2); }
+        body.dark-theme .color-swatch { border-color: rgba(255,255,255,0.2); }
+
+        /* Report Modal */
+        #reportModal .modal-content {
+            flex-direction: column; text-align: center; padding: 24px;
+            max-width: 500px; width: 90vw; border-radius: 24px; height: auto;
+        }
+        #reportModal h2 { font-size: 1.3rem; margin-bottom: 16px; color: var(--md-sys-color-primary); }
+        #reportModal p { margin-bottom: 12px; line-height: 1.6; }
+        #reportModal a { color: var(--md-sys-color-primary); font-weight: 600; text-decoration: none; }
+        #reportModal a:hover { text-decoration: underline; }
+
         @media (min-width: 768px) {
             .lc-layout { flex-direction: row; align-items: flex-start; justify-content: center; gap: 64px; overflow: hidden; height: auto; max-height: 90vh; }
             .lc-left { flex: 1; max-width: 450px; justify-content: center; }
             .lc-right { flex: 1; max-width: 450px; margin-top: 0; justify-content: center; }
             .modal-close { display: none; } 
-            #historyModal .modal-content { max-width: 500px; max-height: 600px; border-radius: 24px; padding: 24px; }
+            #historyModal .modal-content, #configDocsModal .modal-content { max-width: 1000px; max-height: 90vh; border-radius: 24px; padding: 24px; }
         }
 
         @media (max-width: 768px) {
@@ -322,8 +365,8 @@
 
     <div id="loader">
         <div id="loader-content">
-            <h1 data-key="loaderTitle">Fiber Count<span class="odia-sub">ଫାଇବର ଗଣନା</span></h1>
-            <h2><span class="odia-sub">Sandeep Biswal G Apps</span></h2>
+            <h1 id="loaderTitle" data-key="loaderTitle">Fiber Count<span class="odia-sub">ଫାଇବର ଗଣନା</span></h1>
+            <h2 id="loaderSubtitle"><span class="odia-sub">Sandeep Biswal G Apps</span></h2>
         </div>
         <div class="loader-footer" data-key="footerCredit">by Sandeep Biswal G</div>
     </div>
@@ -331,13 +374,20 @@
     <!-- Toast Notification -->
     <div id="toast">Data Stored Successfully!</div>
 
-    <!-- Floating Link for Tr.ee (Left Side, Hides on Scroll) -->
-    <a href="http://tr.ee/GOA" target="_blank" class="floating-attendance" id="floatingAttendance">
+    <!-- Floating Links -->
+    <a href="http://tr.ee/GOA" target="_blank" class="floating-action-btn" id="floatingAttendance">
         <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
             <path d="M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm2 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
         </svg>
-        <span>Check Contract Attendance</span>
+        <span>Attendance</span>
     </a>
+    <a href="#config-docs" class="floating-action-btn" id="floatingDocsBtn">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+            <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zM6 20V4h7v5h5v11H6z"/>
+        </svg>
+        <span>Docs</span>
+    </a>
+
 
     <div id="floatingProgress">
         <div class="float-info">
@@ -363,12 +413,17 @@
                 <a href="#badgeconverter" class="nav-btn"><span data-key="badgeConvBtn">Badge Converter</span></a>
 
                 <select id="langSwitch">
-                    <option value="both">Mix (Eng & Odia)</option>
+                    <option value="both">Eng &amp; Odia</option>
+                    <option value="eng">English</option>
                     <option value="odia">ଓଡ଼ିଆ</option>
+                    <option value="hindi">हिन्दी</option>
+                    <option value="konkani">कोंकणी</option>
+                    <option value="report" data-key="reportLang">Report/Add Language</option>
                 </select>
                 
-                <button class="nav-btn" onclick="toggleManualTheme()" style="background: none; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 8px 16px;">
-                    <span id="themeToggleText">🌙 Dark</span>
+                <button class="nav-btn" onclick="toggleManualTheme()" style="background: none; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 8px;">
+                     <svg id="themeIconSun" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                     <svg id="themeIconMoon" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
                 </button>
             </div>
         </div>
@@ -388,7 +443,7 @@
                     <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
                     <path d="M12 10h-2v2H9v-2H7V9h2V7h1v2h2v1z"/>
                 </svg>
-                <span id="zoomText">Zoom: 100%</span>
+                <span id="zoomText" data-key="zoomText">Zoom: 100%</span>
             </button>
         </div>
 
@@ -434,7 +489,7 @@
                 </svg>
                 <h2 data-key="badges">Total Badges</h2>
                 <div class="number-display" id="badgeDisplay">0</div>
-                <div id="smallTotalDisplay" style="font-size: 1.1rem; font-weight: 700; color: var(--md-sys-color-primary); opacity: 0.8; margin-top: -12px; margin-bottom: 8px;">(Total: 0)</div>
+                <div id="smallTotalDisplay" data-key="smallTotalDisplay" style="font-size: 1.1rem; font-weight: 700; color: var(--md-sys-color-primary); opacity: 0.8; margin-top: -12px; margin-bottom: 8px;">(Total: 0)</div>
                 
                 <div class="step-control" style="margin-top: 8px; margin-bottom: 0;">
                     <label data-key="badgeSizeSet">Set Badge Size:</label>
@@ -607,6 +662,55 @@
             </div>
         </div>
     </div>
+    
+    <!-- Config Docs Modal -->
+    <div id="configDocsModal" class="modal-overlay" onclick="closeModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+             <button class="modal-close" onclick="window.location.hash=''">✕</button>
+             <div class="config-docs-container">
+                <div id="configDocsSelection" class="config-docs-selection">
+                    <button class="config-btn" onclick="showConfigDoc('doc1')">
+                        CABLE ASSEMBLY, JUMPER
+                        <small>CONFIGURABLE (A100H3247)</small>
+                    </button>
+                    <button class="config-btn" onclick="showConfigDoc('doc2')">
+                        LC UNI-BOOT JUMPER
+                        <small>CONFIGURABLE (A110H3439)</small>
+                    </button>
+                    <button class="btn-dec" style="width: 90%; max-width: 450px; padding: 12px; margin-top: 20px; font-size: 1rem; border:none; border-radius:100px; font-weight:bold; cursor:pointer;" onclick="window.location.hash=''">
+                        <span data-key="lcBackBtn">Back to Tracker</span>
+                    </button>
+                </div>
+
+                <div id="configDocsViewer" class="config-docs-viewer">
+                    <div class="config-viewer-header">
+                        <button class="config-back-btn" onclick="showConfigSelection()">‹</button>
+                        <h3 id="configViewerTitle">Document</h3>
+                    </div>
+                    <div class="config-viewer-body" id="configViewerBody">
+                        <!-- Content will be injected here -->
+                    </div>
+                </div>
+             </div>
+        </div>
+    </div>
+
+    <!-- Report Language Modal -->
+    <div id="reportModal" class="modal-overlay">
+        <div class="modal-content">
+             <button class="modal-close" onclick="document.getElementById('reportModal').classList.remove('active')">✕</button>
+             <div>
+                <h2 data-key="reportLang">Report a Translation</h2>
+                <p data-key="reportText">Need to report a translation error or request a new language?</p>
+                <p data-key="reportEmail">Send us an email and we'll get right on it!</p>
+                <p><a href="mailto:message.sbg@gmail.com">message.sbg@gmail.com</a></p>
+                <button class="btn-inc" style="padding: 10px 30px; border-radius:100px; border:none; font-weight:bold; cursor:pointer; margin-top: 16px;" onclick="document.getElementById('reportModal').classList.remove('active')">
+                    <span data-key="reportClose">Close</span>
+                </button>
+             </div>
+        </div>
+    </div>
+
 
     <footer>
         <a href="https://play.google.com/store/apps/details?id=in.sandeep.plyxogames" target="_blank" class="promo-card" style="max-width: 600px;">
@@ -622,37 +726,40 @@
     </footer>
 
     <script>
+        // --- THEME ---
         function applyTimeBasedTheme() {
             if (localStorage.getItem('sbg_theme_override')) return; 
             const hour = new Date().getHours();
-            const themeBtn = document.getElementById('themeToggleText');
             if (hour >= 6 && hour < 18) {
-                document.body.classList.remove('dark-theme');
-                if(themeBtn) themeBtn.innerText = '🌙 Dark';
+                setTheme('light');
             } else {
-                document.body.classList.add('dark-theme');
-                if(themeBtn) themeBtn.innerText = '☀️ Light';
+                setTheme('dark');
             }
         }
 
+        function setTheme(theme) {
+            const isDark = theme === 'dark';
+            document.body.classList.toggle('dark-theme', isDark);
+            document.getElementById('themeIconSun').style.display = isDark ? 'block' : 'none';
+            document.getElementById('themeIconMoon').style.display = isDark ? 'none' : 'block';
+        }
+
         function toggleManualTheme() {
-            const isDark = document.body.classList.toggle('dark-theme');
-            document.getElementById('themeToggleText').innerText = isDark ? '☀️ Light' : '🌙 Dark';
-            localStorage.setItem('sbg_theme_override', isDark ? 'dark' : 'light');
+            const isDark = !document.body.classList.contains('dark-theme');
+            const newTheme = isDark ? 'dark' : 'light';
+            setTheme(newTheme);
+            localStorage.setItem('sbg_theme_override', newTheme);
         }
 
         const savedTheme = localStorage.getItem('sbg_theme_override');
-        if (savedTheme === 'dark') {
-            document.body.classList.add('dark-theme');
-            document.getElementById('themeToggleText').innerText = '☀️ Light';
-        } else if (savedTheme === 'light') {
-            document.body.classList.remove('dark-theme');
-            document.getElementById('themeToggleText').innerText = '🌙 Dark';
+        if (savedTheme) {
+            setTheme(savedTheme);
         } else {
             applyTimeBasedTheme();
         }
         setInterval(applyTimeBasedTheme, 60000);
 
+        // --- MANIFEST ---
         const manifestJSON = {
             "name": "Fiber Count",
             "short_name": "FiberCnt",
@@ -670,26 +777,27 @@
         const manifestBlob = new Blob([JSON.stringify(manifestJSON)], {type: 'application/json'});
         document.getElementById('dynamic-manifest').href = URL.createObjectURL(manifestBlob);
 
+        // --- CORE APP ---
         // Core Variables
         let count = parseInt(localStorage.getItem('sbg_count')) || 0;
         let step = parseInt(localStorage.getItem('sbg_step')) || 1;
         let badgeMultiplier = parseInt(localStorage.getItem('sbg_badge_mult')) || 6;
         let currentLang = localStorage.getItem('sbg_lang') || 'both';
-        if(currentLang !== 'both' && currentLang !== 'odia') currentLang = 'both';
-        
+        let lastValidLang = currentLang;
+
         let targetValue = parseInt(localStorage.getItem('sbg_target')) || 0;
         let activeMode = localStorage.getItem('sbg_mode') || 'number'; 
         let currentLengthTotal = 0;
         let lastSavedHash = ""; 
 
-        // Zoom Logic Update (100% -> 90% -> 80% cycle)
+        // Zoom Logic Update
         let zoomLevels = [1, 0.9, 0.8];
         let currentZoomIndex = 0;
         function cycleZoom() {
             currentZoomIndex = (currentZoomIndex + 1) % zoomLevels.length;
             let zoomVal = zoomLevels[currentZoomIndex];
             document.body.style.zoom = zoomVal;
-            document.getElementById('zoomText').innerText = `Zoom: ${Math.round(zoomVal * 100)}%`;
+            updateUI();
         }
 
         document.getElementById('stepInput').value = step;
@@ -704,66 +812,74 @@
         }
 
         const translations = {
-            loaderTitle: { eng: "Fiber Count", odia: "ଫାଇବର ଗଣନା" },
-            home: { eng: "Shift Calendar", odia: "ସିଫ୍ଟ କ୍ୟାଲେଣ୍ଡର" },
-            currentNum: { eng: "Current Number", odia: "ବର୍ତ୍ତମାନର ସଂଖ୍ୟା" },
-            stepLabel: { eng: "Increment Step:", odia: "ବୃଦ୍ଧି ମାତ୍ରା:" },
-            btnReset: { eng: "Reset Data", odia: "ରିସେଟ୍ ଡାଟା" },
-            badges: { eng: "Total Batches", odia: "ମୋଟ ବ୍ୟାଜ୍" },
-            badgeSizeSet: { eng: "Set Batch Size:", odia: "ବ୍ୟାଜ୍ ଆକାର ସେଟ୍ କରନ୍ତୁ:" },
-            targetLabel: { eng: "Set Target:", odia: "ଲକ୍ଷ୍ୟ ସେଟ୍ କରନ୍ତୁ:" },
-            noTarget: { eng: "No Target | ", odia: "କୌଣସି ଲକ୍ଷ୍ୟ ନାହିଁ" },
-            custom: { eng: "Custom | ", odia: "କଷ୍ଟମ୍" },
-            remainingText: { eng: "Remaining Count:", odia: "ବାକି ସଂଖ୍ୟା:" },
-            targetReached: { eng: "Target Reached! 🎉", odia: "ଲକ୍ଷ୍ୟ ପୂରଣ ହେଲା! 🎉" },
-            modeNumber: { eng: "Mode: Num Increment", odia: "ମୋଡ୍: ସଂଖ୍ୟା ବୃଦ୍ଧି" },
-            modeBadge: { eng: "Mode: Batch Increment", odia: "ମୋଡ୍: ବ୍ୟାଜ୍ ବୃଦ୍ଧି" },
-            footerCredit: { eng: "by Sandeep Biswal G", odia: "ସନ୍ଦୀପ୍ ବିଶ୍ୱାଳ ଜି ଙ୍କ ଦ୍ଵାରା" },
-            promoTitle: { eng: "Download Plyxo Games", odia: "ଡାଉନଲୋଡ୍ Plyxo Games" },
-            promoSub: { eng: "Where Every Move Matters.", odia: "ଯେଉଁଠି ପ୍ରତିଟି ପଦକ୍ଷେପ ଗୁରୁତ୍ୱପୂର୍ଣ୍ଣ ।" },
-            navLink1: { eng: "Smart Calc", odia: "କ୍ୟାଲକୁଲେଟର" },
-            badgeConvBtn: { eng: "Batch Converter", odia: "ବ୍ୟାଜ୍ କନଭର୍ଟର" },
-            badgeConvTitle: { eng: "Batch Converter", odia: "ବ୍ୟାଜ୍ କନଭର୍ଟର" },
-            lengthCheckBtn: { eng: "Length Check", odia: "ଦୈର୍ଘ୍ୟ ଯାଞ୍ଚ" },
-            lengthCheckTitle: { eng: "Fiber Length Check", odia: "ଫାଇବର ଦୈର୍ଘ୍ୟ ଯାଞ୍ଚ" },
-            lcRead1: { eng: "Reading End 1", odia: "ରିଡିଂ ଏଣ୍ଡ୍ ୧" },
-            lcRead2: { eng: "Reading End 2", odia: "ରିଡିଂ ଏଣ୍ଡ୍ ୨" },
-            lcEnd1: { eng: "End 1 Prep (cm)", odia: "ଏଣ୍ଡ୍ ୧ ପ୍ରସ୍ତୁତି (cm)" },
-            lcEnd2: { eng: "End 2 Prep (cm)", odia: "ଏଣ୍ଡ୍ ୨ ପ୍ରସ୍ତୁତି (cm)" },
-            lcSave: { eng: "Save to History", odia: "ଇତିହାସରେ ସେଭ୍ କରନ୍ତୁ" },
-            lcClearInputs: { eng: "Clear Inputs", odia: "ଇନପୁଟ୍ ସଫା କରନ୍ତୁ" },
-            lcHistTitle: { eng: "History", odia: "ଇତିହାସ" },
-            lcClear: { eng: "Clear", odia: "ସଫା କରନ୍ତୁ" },
-            lcResultText: { eng: "Result:", odia: "ପରିଣାମ:" },
-            lcViewHistory: { eng: "View History", odia: "ଇତିହାସ ଦେଖନ୍ତୁ" },
-            lcBackBtn: { eng: "Back to Tracker", odia: "ମେନ୍ ମେନୁ କୁ ଫେରନ୍ତୁ" },
-            converterBtn: { eng: "Length Converter", odia: "ଦୈର୍ଘ୍ୟ କନଭର୍ଟର" },
-            convTitle: { eng: "Length Converter", odia: "ଦୈର୍ଘ୍ୟ କନଭର୍ଟର" },
-            convInput: { eng: "Enter Value", odia: "ମୂଲ୍ୟ ଲେଖନ୍ତୁ" },
-            convFrom: { eng: "From Unit", odia: "ରୁ (ୟୁନିଟ୍)" },
-            convTo: { eng: "କୁ (ୟୁନିଟ୍)", odia: "କୁ (ୟୁନିଟ୍)" },
-            dataStored: { eng: "Data Stored Successfully!", odia: "ଡାଟା ସଫଳତାର ସହ ସେଭ୍ ହେଲା!" },
-            dataExists: { eng: "Already Saved!", odia: "ପୂର୍ବରୁ ସେଭ୍ ହୋଇଛି!" }
+            loaderTitle: { eng: "Fiber Count", odia: "ଫାଇବର ଗଣନା", hin: "फायबर गणना", kon: "फायबर गणना" },
+            home: { eng: "Shift Calendar", odia: "ସିଫ୍ଟ କ୍ୟାଲେଣ୍ଡର", hin: "शिफ्ट कैलेंडर", kon: "शिफ्ट कॅलेंडर" },
+            currentNum: { eng: "Current Number", odia: "ବର୍ତ୍ତମାନର ସଂଖ୍ୟା", hin: "वर्तमान संख्या", kon: "सध्याची संख्या" },
+            stepLabel: { eng: "Increment Step:", odia: "ବୃଦ୍ଧି ମାତ୍ରା:", hin: "वृद्धि चरण:", kon: "वाढीचे प्रमाण:" },
+            btnReset: { eng: "Reset Data", odia: "ରିସେଟ୍ ଡାଟା", hin: "डेटा रीसेट करें", kon: "डेटा रीसेट करा" },
+            badges: { eng: "Total Batches", odia: "ମୋଟ ବ୍ୟାଚ୍", hin: "कुल बैच", kon: "एकूण बॅच" },
+            badgeSizeSet: { eng: "Set Batch Size:", odia: "ବ୍ୟାଚ୍ ଆକାର ସେଟ୍ କରନ୍ତୁ:", hin: "बैच आकार सेट करें:", kon: "बॅच आकार सेट करा:" },
+            targetLabel: { eng: "Set Target:", odia: "ଲକ୍ଷ୍ୟ ସେଟ୍ କରନ୍ତୁ:", hin: "लक्ष्य निर्धारित करें:", kon: "लक्ष्य सेट करा:" },
+            noTarget: { eng: "No Target", odia: "କୌଣସି ଲକ୍ଷ୍ୟ ନାହିଁ", hin: "कोई लक्ष्य नहीं", kon: "लक्ष्य नाही" },
+            custom: { eng: "Custom", odia: "କଷ୍ଟମ୍", hin: "कस्टम", kon: "कस्टम" },
+            remainingText: { eng: "Remaining Count:", odia: "ବାକି ସଂଖ୍ୟା:", hin: "शेष संख्या:", kon: "उर्वरित संख्या:" },
+            targetReached: { eng: "Target Reached! 🎉", odia: "ଲକ୍ଷ୍ୟ ପୂରଣ ହେଲା! 🎉", hin: "लक्ष्य पूरा हुआ! 🎉", kon: "लक्ष्य गाठले! 🎉" },
+            modeNumber: { eng: "Mode: Num Increment", odia: "ମୋଡ୍: ସଂଖ୍ୟା ବୃଦ୍ଧି", hin: "मोड: संख्या वृद्धि", kon: "मोड: संख्या वाढ" },
+            modeBadge: { eng: "Mode: Batch Increment", odia: "ମୋଡ୍: ବ୍ୟାଚ୍ ବୃଦ୍ଧି", hin: "मोड: बैच वृद्धि", kon: "मोड: बॅच वाढ" },
+            footerCredit: { eng: "by Sandeep Biswal G", odia: "ସନ୍ଦୀପ୍ ବିଶ୍ୱାଳ ଜି ଙ୍କ ଦ୍ଵାରା", hin: "संदीप् बिस्वाल जी द्वारा", kon: "संदीप् बिस्वाल जी यांच्याद्वारे" },
+            promoTitle: { eng: "Download Plyxo Games", odia: "ଡାଉନଲୋଡ୍ Plyxo Games", hin: "Plyxo गेम्स डाउनलोड करें", kon: "Plyxo गेम्स डाउनलोड करा" },
+            promoSub: { eng: "Where Every Move Matters.", odia: "ଯେଉଁଠି ପ୍ରତିଟି ପଦକ୍ଷେପ ଗୁରୁତ୍ୱପୂର୍ଣ୍ଣ ।", hin: "जहाँ हर चाल मायने रखती है।", kon: "जिथे प्रत्येक हालचाल महत्त्वाची आहे." },
+            navLink1: { eng: "Smart Calc", odia: "କ୍ୟାଲକୁଲେଟର", hin: "स्मार्ट कैल्क", kon: "स्मार्ट कॅल्क" },
+            badgeConvBtn: { eng: "Batch Converter", odia: "ବ୍ୟାଚ୍ କନଭର୍ଟର", hin: "बैच कन्वर्टर", kon: "बॅच कन्वर्टर" },
+            badgeConvTitle: { eng: "Batch Converter", odia: "ବ୍ୟାଚ୍ କନଭର୍ଟର", hin: "बैच कन्वर्टर", kon: "बॅच कन्वर्टर" },
+            lengthCheckBtn: { eng: "Length Check", odia: "ଦୈର୍ଘ୍ୟ ଯାଞ୍ଚ", hin: "लंबाई जांच", kon: "लांबी तपासा" },
+            lengthCheckTitle: { eng: "Fiber Length Check", odia: "ଫାଇବର ଦୈର୍ଘ୍ୟ ଯାଞ୍ଚ", hin: "फाइबर लंबाई जांच", kon: "फायबर लांबी तपासा" },
+            lcRead1: { eng: "Reading End 1", odia: "ରିଡିଂ ଏଣ୍ଡ୍ ୧", hin: "रीडिंग सिरा 1", kon: "रीडिंग टोक 1" },
+            lcRead2: { eng: "Reading End 2", odia: "ରିଡିଂ ଏଣ୍ଡ୍ ୨", hin: "रीडिंग सिरा 2", kon: "रीडिंग टोक 2" },
+            lcEnd1: { eng: "End 1 Prep (cm)", odia: "ଏଣ୍ଡ୍ ୧ ପ୍ରସ୍ତୁତି (cm)", hin: "सिरा 1 तैयारी (cm)", kon: "टोक 1 तयारी (cm)" },
+            lcEnd2: { eng: "End 2 Prep (cm)", odia: "ଏଣ୍ଡ୍ ୨ ପ୍ରସ୍ତୁତି (cm)", hin: "सिरा 2 तैयारी (cm)", kon: "टोक 2 तयारी (cm)" },
+            lcSave: { eng: "Save to History", odia: "ଇତିହାସରେ ସେଭ୍ କରନ୍ତୁ", hin: "इतिहास में सहेजें", kon: "इतिहासात सेव्ह करा" },
+            lcClearInputs: { eng: "Clear Inputs", odia: "ଇନପୁଟ୍ ସଫା କରନ୍ତୁ", hin: "इनपुट साफ़ करें", kon: "इनपुट साफ करा" },
+            lcHistTitle: { eng: "History", odia: "ଇତିହାସ", hin: "इतिहास", kon: "इतिहास" },
+            lcClear: { eng: "Clear", odia: "ସଫା କରନ୍ତୁ", hin: "साफ़ करें", kon: "साफ करा" },
+            lcResultText: { eng: "Result:", odia: "ପରିଣାମ:", hin: "परिणाम:", kon: "निकाल:" },
+            lcViewHistory: { eng: "View History", odia: "ଇତିହାସ ଦେଖନ୍ତୁ", hin: "इतिहास देखें", kon: "इतिहास पहा" },
+            lcBackBtn: { eng: "Back to Tracker", odia: "ମେନ୍ ମେନୁ କୁ ଫେରନ୍ତୁ", hin: "ट्रैकर पर वापस जाएं", kon: "ट्रॅकरवर परत जा" },
+            converterBtn: { eng: "Length Converter", odia: "ଦୈର୍ଘ୍ୟ କନଭର୍ଟର", hin: "लंबाई कन्वर्टर", kon: "लांबी कन्वर्टर" },
+            convTitle: { eng: "Length Converter", odia: "ଦୈର୍ଘ୍ୟ କନଭର୍ଟର", hin: "लंबाई कन्वर्टर", kon: "लांबी कन्वर्टर" },
+            convInput: { eng: "Enter Value", odia: "ମୂଲ୍ୟ ଲେଖନ୍ତୁ", hin: "मान दर्ज करें", kon: "मूल्य प्रविष्ट करा" },
+            convFrom: { eng: "From Unit", odia: "ରୁ (ୟୁନିଟ୍)", hin: "से इकाई", kon: "पासून युनिट" },
+            convTo: { eng: "To Unit", odia: "କୁ (ୟୁନିଟ୍)", hin: "में इकाई", kon: "पर्यंत युनिट" },
+            dataStored: { eng: "Data Stored Successfully!", odia: "ଡାଟା ସଫଳତାର ସହ ସେଭ୍ ହେଲା!", hin: "डेटा सफलतापूर्वक संग्रहीत हुआ!", kon: "डेटा यशस्वीरित्या सेव्ह झाला!" },
+            dataExists: { eng: "Already Saved!", odia: "ପୂର୍ବରୁ ସେଭ୍ ହୋଇଛି!", hin: "पहले से सहेजा गया!", kon: "आधीच सेव्ह केले आहे!" },
+            zoomText: { eng: "Zoom ", odia: "ଜୁମ୍ ", hin: "ज़ूम ", kon: "ज़ूम" },
+            smallTotalDisplay: { eng: "(Total: ", odia: "(ମୋଟ: ", hin: "(कुल: ", kon: "(एकूण: " },
+            reportLang: { eng: "Report/Add Language ", odia: "ରିପୋର୍ଟ/ଭାଷା ଯୋଡ଼ନ୍ତୁ", hin: "अनुवाद रिपोर्ट/भाषा जोड़ें", kon: "अनुवाद तक्रार/भाषा जोडा" },
+            reportText: { eng: "Need to report a translation error or request a new language?", odia: "ଅନୁବାଦ ତ୍ରୁଟି ରିପୋର୍ଟ କରିବାକୁ କିମ୍ବା ନୂଆ ଭାଷା ଅନୁରୋଧ କରିବାକୁ ଚାହୁଁଛନ୍ତି କି?", hin: "अनुवाद में कोई त्रुटि रिपोर्ट करनी है या एक नई भाषा का अनुरोध करना है?", kon: "भाषांतरात त्रुटी आढळल्यास किंवा नवीन भाषेची विनंती करायची आहे का?" },
+            reportEmail: { eng: "Send us an email and we'll get right on it!", odia: "ଆମକୁ ଏକ ଇମେଲ୍ ପଠାନ୍ତୁ ଏବଂ ଆମେ ଏହା ଉପରେ କାର୍ଯ୍ୟ କରିବୁ!", hin: "हमें एक ईमेल भेजें और हम इसे तुरंत ठीक कर देंगे!", kon: "आम्हाला ईमेल पाठवा आणि आम्ही ते त्वरित करू!" },
+            reportClose: { eng: "Close", odia: "ବନ୍ଦ କରନ୍ତୁ", hin: "बंद करें", kon: "बंद करा" }
         };
 
         function toOdiaNumeral(num) {
             const odiaDigits = ['୦', '୧', '୨', '୩', '୪', '୫', '୬', '୭', '୮', '୯'];
-            return num.toString().split('').map(char => {
-                if (char === '-') return '-';
-                if (char === '.') return '.';
-                return (char >= '0' && char <= '9') ? odiaDigits[parseInt(char)] : char;
-            }).join('');
+            return String(num).split('').map(char => (char >= '0' && char <= '9') ? odiaDigits[parseInt(char)] : char).join('');
+        }
+        
+        function toDevanagariNumeral(num) {
+            const devanagariDigits = ['०', '१', '२', '३', '४', '५', '६', '७', '८', '९'];
+            return String(num).split('').map(char => (char >= '0' && char <= '9') ? devanagariDigits[parseInt(char)] : char).join('');
         }
 
-        function parseOdiaInput(val, fallback) {
+        function parseRegionalInput(val, fallback) {
             const odiaMap = {'୦':0, '୧':1, '୨':2, '୩':3, '୪':4, '୫':5, '୬':6, '୭':7, '୮':8, '୯':9};
-            let parsed = val.toString().split('').map(c => odiaMap[c] !== undefined ? odiaMap[c] : c).join('');
+            const devanagariMap = {'०':0, '१':1, '२':2, '३':3, '४':4, '५':5, '६':6, '७':7, '८':8, '९':9};
+            let parsed = String(val).split('').map(c => odiaMap[c] ?? devanagariMap[c] ?? c).join('');
             return parseInt(parsed) || fallback;
         }
 
         function adjustInput(inputId, delta) {
             let inputEl = document.getElementById(inputId);
-            let currentVal = parseOdiaInput(inputEl.value, 1);
+            let currentVal = parseRegionalInput(inputEl.value, 1);
             let newVal = currentVal + delta;
             if (newVal < 1) newVal = 1;
 
@@ -802,15 +918,18 @@
                 const key = el.getAttribute('data-key');
                 if(!translations[key]) return;
                 
-                // Keep promo card spans distinct styling
                 let extraClass = el.classList.contains('promo-title') || el.classList.contains('promo-sub') ? ' promo-sub' : '';
                 
                 if (currentLang === 'both') {
                     el.innerHTML = `${translations[key].eng}<span class="odia-sub${extraClass}">${translations[key].odia}</span>`;
-                } else if (currentLang === 'odia') {
-                    el.innerHTML = translations[key].odia;
                 } else {
-                    el.innerHTML = translations[key].eng;
+                    let langKey;
+                    if (currentLang === 'odia') langKey = 'odia';
+                    else if (currentLang === 'hindi') langKey = 'hin';
+                    else if (currentLang === 'konkani') langKey = 'kon';
+                    else langKey = 'eng';
+                    
+                    el.innerHTML = translations[key][langKey] || translations[key]['eng'];
                 }
             });
         }
@@ -832,35 +951,45 @@
                 document.getElementById('anchor-number').appendChild(interactionArea);
                 modeTextEl.setAttribute('data-key', 'modeNumber');
             }
+            
+            let numConverter = (num) => num;
+            if (currentLang === 'odia') numConverter = toOdiaNumeral;
+            else if (currentLang === 'hindi' || currentLang === 'konkani') numConverter = toDevanagariNumeral;
 
             let badges = Math.floor(count / badgeMultiplier);
             if (badges < 0) badges = 0; 
 
-            let displayCount = currentLang === 'odia' ? toOdiaNumeral(count) : count;
-            let displayBadges = currentLang === 'odia' ? toOdiaNumeral(badges) : badges;
+            document.getElementById('countDisplay').innerText = numConverter(count);
+            document.getElementById('badgeDisplay').innerText = numConverter(badges);
             
-            document.getElementById('countDisplay').innerText = displayCount;
-            document.getElementById('badgeDisplay').innerText = displayBadges;
-            document.getElementById('smallTotalDisplay').innerText = `(Total: ${displayCount})`;
-
-            let stepInput = document.getElementById('stepInput');
-            if (currentLang === 'odia') { stepInput.type = "text"; stepInput.value = toOdiaNumeral(step); } 
-            else { stepInput.type = "number"; stepInput.value = step; }
-
-            let badgeInput = document.getElementById('badgeSizeInput');
-            if (currentLang === 'odia') { badgeInput.type = "text"; badgeInput.value = toOdiaNumeral(badgeMultiplier); } 
-            else { badgeInput.type = "number"; badgeInput.value = badgeMultiplier; }
-
-            let bDescEng = `1 Badge = ${badgeMultiplier} Increments`;
-            let bDescOdia = `୧ ବ୍ୟାଜ୍ = ${toOdiaNumeral(badgeMultiplier)} ସଂଖ୍ୟା`;
-            if (currentLang === 'both') {
-                document.getElementById('badgeDescText').innerHTML = `${bDescEng}<span class="odia-sub">${bDescOdia}</span>`;
-            } else if (currentLang === 'odia') {
-                document.getElementById('badgeDescText').innerHTML = bDescOdia;
+            applyTranslations(); // Apply text first
+            
+            // Then update elements with dynamic numbers
+            document.getElementById('smallTotalDisplay').innerHTML = `${translations['smallTotalDisplay'][currentLang === 'both' ? 'eng' : (currentLang === 'odia' ? 'odia' : (currentLang === 'hindi' ? 'hin' : (currentLang === 'konkani' ? 'kon' : 'eng')))] || '(Total: '}${numConverter(count)})`;
+            if(currentLang === 'both') {
+                document.getElementById('smallTotalDisplay').innerHTML += `<span class="odia-sub">${translations.smallTotalDisplay.odia}${toOdiaNumeral(count)})</span>`;
             }
 
+            let zoomVal = zoomLevels[currentZoomIndex];
+            document.getElementById('zoomText').innerText = `${translations['zoomText'][currentLang === 'both' ? 'eng' : (currentLang === 'odia' ? 'odia' : (currentLang === 'hindi' ? 'hin' : (currentLang === 'konkani' ? 'kon' : 'eng')))] || 'Zoom: '}${Math.round(zoomVal * 100)}%`;
+
+
+            document.getElementById('stepInput').value = numConverter(step);
+            document.getElementById('badgeSizeInput').value = numConverter(badgeMultiplier);
+
+            let bDescEng = `1 Badge = ${badgeMultiplier} Increments`;
+            let bDescOdia = `୧ ବ୍ୟାଚ୍ = ${toOdiaNumeral(badgeMultiplier)} ସଂଖ୍ୟା`;
+            let bDescHin = `१ बैच = ${toDevanagariNumeral(badgeMultiplier)} संख्या`;
+            let bDescKon = `१ बॅच = ${toDevanagariNumeral(badgeMultiplier)} संख्या`;
+
+            if (currentLang === 'both') document.getElementById('badgeDescText').innerHTML = `${bDescEng}<span class="odia-sub">${bDescOdia}</span>`;
+            else if (currentLang === 'odia') document.getElementById('badgeDescText').innerHTML = bDescOdia;
+            else if (currentLang === 'hindi') document.getElementById('badgeDescText').innerHTML = bDescHin;
+            else if (currentLang === 'konkani') document.getElementById('badgeDescText').innerHTML = bDescKon;
+            else document.getElementById('badgeDescText').innerHTML = bDescEng;
+
+
             const progressContainer = document.getElementById('progressContainer');
-            
             if (targetValue > 0) {
                 document.body.classList.add('target-active');
                 progressContainer.style.display = 'block';
@@ -880,13 +1009,13 @@
                     document.body.classList.add('target-reached-bg');
                 } else {
                     statusEl.setAttribute('data-key', 'remainingText'); floatStatusEl.setAttribute('data-key', 'remainingText');
-                    document.body.classList.remove('target-reached-bg');
                     translations.remainingText.eng = `Remaining Count: <span style="color:var(--md-sys-color-primary)">${remaining}</span>`;
                     translations.remainingText.odia = `ବାକି ସଂଖ୍ୟା: <span style="color:var(--md-sys-color-primary)">${toOdiaNumeral(remaining)}</span>`;
+                    translations.remainingText.hin = `शेष संख्या: <span style="color:var(--md-sys-color-primary)">${toDevanagariNumeral(remaining)}</span>`;
+                    translations.remainingText.kon = `उर्वरित संख्या: <span style="color:var(--md-sys-color-primary)">${toDevanagariNumeral(remaining)}</span>`;
                 }
-
-                let tDisp = currentLang === 'odia' ? toOdiaNumeral(targetValue) : targetValue;
-                let finalTargetText = `${displayCount} / ${tDisp}`;
+                
+                let finalTargetText = `${numConverter(count)} / ${numConverter(targetValue)}`;
                 document.getElementById('targetDisplay').innerText = finalTargetText;
                 document.getElementById('floatTargetDisplay').innerText = finalTargetText;
             } else {
@@ -898,7 +1027,7 @@
             updateLengthResultUI(); 
             convertLengthLive(); 
             convertBadgeLive();
-            applyTranslations();
+            applyTranslations(); // Re-apply for any elements changed by progress logic
         }
 
         function changeCount(direction) {
@@ -923,12 +1052,16 @@
 
         function showToast(msgKey) {
             const toast = document.getElementById("toast");
+            let langKey;
+            if (currentLang === 'odia') langKey = 'odia';
+            else if (currentLang === 'hindi') langKey = 'hin';
+            else if (currentLang === 'konkani') langKey = 'kon';
+            else langKey = 'eng';
+            
             if (currentLang === 'both') {
                 toast.innerHTML = `${translations[msgKey].eng} <br><span style="font-size:0.85em">${translations[msgKey].odia}</span>`;
-            } else if (currentLang === 'odia') {
-                toast.innerHTML = translations[msgKey].odia;
             } else {
-                toast.innerHTML = translations[msgKey].eng;
+                toast.innerHTML = translations[msgKey][langKey];
             }
             toast.className = "toast show";
             setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 3000);
@@ -962,8 +1095,10 @@
         }
 
         function updateLengthResultUI() {
-            let renderOdia = (num) => currentLang === 'odia' ? toOdiaNumeral(num) : num;
-            
+            let numConverter = (num) => num;
+            if (currentLang === 'odia') numConverter = toOdiaNumeral;
+            else if (currentLang === 'hindi' || currentLang === 'konkani') numConverter = toDevanagariNumeral;
+
             if(currentLengthTotal === 0) {
                 document.getElementById('lc_result').innerHTML = `<div style="font-size: 2.2rem; font-weight: bold; color: var(--md-sys-color-primary);">0.00 m</div>`;
                 return;
@@ -974,17 +1109,23 @@
             let cmStr = (currentLengthTotal * 100).toFixed(2);
             let feetStr = (currentLengthTotal * 3.280839895).toFixed(2);
             let inStr = (currentLengthTotal * 39.3700787).toFixed(2);
-
-            let mainDisplay = `<div style="font-size: 2.5rem; font-weight: bold; color: var(--md-sys-color-primary);">${renderOdia(roundedStr)} m</div>`;
             
-            const getLabel = (eng, odi) => currentLang === 'odia' ? odi : (currentLang === 'both' ? `${eng} <span style="opacity:0.75; font-size:0.85em">(${odi})</span>` : eng);
+            let mainDisplay = `<div style="font-size: 2.5rem; font-weight: bold; color: var(--md-sys-color-primary);">${numConverter(roundedStr)} m</div>`;
+            
+            const getLabel = (eng, odi, hin, kon) => {
+                if (currentLang === 'odia') return odi;
+                if (currentLang === 'hindi') return hin;
+                if (currentLang === 'konkani') return kon;
+                if (currentLang === 'both') return `${eng} <span style="opacity:0.75; font-size:0.85em">(${odi})</span>`;
+                return eng;
+            };
 
             let detailsDisplay = `
                 <div class="result-details">
-                    <div class="detail-row"><span>${getLabel("Exact Val", "ସଠିକ୍ ମୂଲ୍ୟ")}</span> <span class="detail-val">${renderOdia(exactStr)} m</span></div>
-                    <div class="detail-row"><span>${getLabel("Total CM", "ମୋଟ ସେମି")}</span> <span class="detail-val">${renderOdia(cmStr)} cm</span></div>
-                    <div class="detail-row"><span>${getLabel("Total Feet", "ମୋଟ ଫୁଟ୍")}</span> <span class="detail-val">${renderOdia(feetStr)} ft</span></div>
-                    <div class="detail-row"><span>${getLabel("Total Inch", "ମୋଟ ଇଞ୍ଚ")}</span> <span class="detail-val">${renderOdia(inStr)} in</span></div>
+                    <div class="detail-row"><span>${getLabel("Exact Val", "ସଠିକ୍ ମୂଲ୍ୟ", "सटीक मान", "अचूक मूल्य")}</span> <span class="detail-val">${numConverter(exactStr)} m</span></div>
+                    <div class="detail-row"><span>${getLabel("Total CM", "ମୋଟ ସେମି", "कुल सेमी", "एकूण सेमी")}</span> <span class="detail-val">${numConverter(cmStr)} cm</span></div>
+                    <div class="detail-row"><span>${getLabel("Total Feet", "ମୋଟ ଫୁଟ୍", "कुल फीट", "एकूण फूट")}</span> <span class="detail-val">${numConverter(feetStr)} ft</span></div>
+                    <div class="detail-row"><span>${getLabel("Total Inch", "ମୋଟ ଇଞ୍ଚ", "कुल इंच", "एकूण इंच")}</span> <span class="detail-val">${numConverter(inStr)} in</span></div>
                 </div>
             `;
 
@@ -1001,9 +1142,13 @@
             let result = (val * conversionRatesToMeters[fromUnit]) / conversionRatesToMeters[toUnit];
             let resultStr = parseFloat(result.toFixed(4)).toString();
             
+            let numConverter = (num) => num;
+            if (currentLang === 'odia') numConverter = toOdiaNumeral;
+            else if (currentLang === 'hindi' || currentLang === 'konkani') numConverter = toDevanagariNumeral;
+
             let resultEng = `${resultStr} ${toUnit}`;
-            let resultOdia = `${toOdiaNumeral(resultStr)} ${toUnit}`;
-            document.getElementById('conv_result').innerHTML = currentLang === 'odia' ? resultOdia : `${resultEng} <span style="font-size: 0.5em; opacity: 0.8; display: block; margin-top: 4px;">(${resultOdia})</span>`;
+            let resultReg = `${numConverter(resultStr)} ${toUnit}`;
+            document.getElementById('conv_result').innerHTML = (currentLang === 'eng' || currentLang === 'both') ? `${resultEng} <span style="font-size: 0.5em; opacity: 0.8; display: block; margin-top: 4px;">(${resultReg})</span>` : resultReg;
         }
 
         function convertBadgeLive() {
@@ -1014,19 +1159,32 @@
             let fromUnit = document.getElementById('bc_from').value;
             let toUnit = document.getElementById('bc_to').value;
             
-            let result = 0;
-            let toUnitTextEng = toUnit === 'badge' ? 'Badges' : 'Numbers';
-            let toUnitTextOdia = toUnit === 'badge' ? 'ବ୍ୟାଜ୍' : 'ସଂଖ୍ୟା';
+            let numConverter = (num) => num;
+            let toUnitText;
+            if (currentLang === 'odia') {
+                numConverter = toOdiaNumeral;
+                toUnitText = toUnit === 'badge' ? 'ବ୍ୟାଚ୍' : 'ସଂଖ୍ୟା';
+            } else if (currentLang === 'hindi') {
+                numConverter = toDevanagariNumeral;
+                toUnitText = toUnit === 'badge' ? 'बैच' : 'संख्या';
+            } else if (currentLang === 'konkani') {
+                numConverter = toDevanagariNumeral;
+                toUnitText = toUnit === 'badge' ? 'बॅच' : 'संख्या';
+            } else {
+                toUnitText = toUnit === 'badge' ? 'Badges' : 'Numbers';
+            }
 
+            let result = 0;
             if (fromUnit === toUnit) result = val;
             else if (fromUnit === 'badge' && toUnit === 'number') result = val * customSize;
             else if (fromUnit === 'number' && toUnit === 'badge') result = val / customSize;
             
             let resultStr = parseFloat(result.toFixed(2)).toString();
-            let resultEng = `${resultStr} ${toUnitTextEng}`;
-            let resultOdia = `${toOdiaNumeral(resultStr)} ${toUnitTextOdia}`;
             
-            document.getElementById('bc_result').innerHTML = currentLang === 'odia' ? resultOdia : `${resultEng} <span style="font-size: 0.5em; opacity: 0.8; display: block; margin-top: 4px;">(${resultOdia})</span>`;
+            let resultEng = `${resultStr} ${toUnit === 'badge' ? 'Badges' : 'Numbers'}`;
+            let resultReg = `${numConverter(resultStr)} ${toUnitText}`;
+            
+            document.getElementById('bc_result').innerHTML = (currentLang === 'eng' || currentLang === 'both') ? `${resultEng} <span style="font-size: 0.5em; opacity: 0.8; display: block; margin-top: 4px;">(${resultReg})</span>` : resultReg;
         }
 
         function openHistoryModal() {
@@ -1066,20 +1224,139 @@
 
         function clearHistory() { localStorage.removeItem('sbg_lc_history'); renderHistory(); }
 
-        function handleHashChange() {
-            const lcModal = document.getElementById('lengthCheckModal');
-            const convModal = document.getElementById('converterModal');
-            const badgeModal = document.getElementById('badgeConverterModal');
-            
-            lcModal.classList.remove('active'); convModal.classList.remove('active'); badgeModal.classList.remove('active');
+        // --- NEW: CONFIG DOCS ---
+        const configDocsData = {
+            doc1: {
+                title: "CABLE ASSEMBLY, JUMPER, CONFIGURABLE",
+                content: `
+                    <h3>General Document Information</h3>
+                    <p>
+                        <strong>Title:</strong> CABLE ASSEMBLY, JUMPER, CONFIGURABLE<br>
+                        <strong>Drawing Number:</strong> A100H3247<br>
+                        <strong>Revision:</strong> BH
+                    </p>
+                    <h3>Configuration Breakdown</h3>
+                    <table>
+                        <thead><tr><th>Code</th><th>Category</th><th>Options / Values</th></tr></thead>
+                        <tbody>
+                            <tr><td><strong>X</strong></td><td>(VERSION)</td><td>F = FIBER LOW LOSS<br>C = ECONOMIC VERSION</td></tr>
+                            <tr><td><strong>a</strong></td><td>FAMILY</td><td>D = JUMPER PLENUM<br>E = JUMPER RISER<br>F = JUMPER LSZH (DUAL RATED)</td></tr>
+                            <tr><td><strong>b</strong></td><td>FIBER TYPE</td><td>Z = LAZRSPEED 300 MULTIMODE<br>X = LAZRSPEED 550 MULTIMODE<br>V = LAZRSPEED WB 550<br>W = TERASPEED SM G657.A1 OR A2<br>G = SINGLEMODE G657.A2</td></tr>
+                            <tr><td><strong>cc</strong></td><td>TERMINATION END A</td><td>K* = LC LOCKING[18]<br>LC = LC UPC<br>LA = LC APC<br>L# = KEYED LC<br>SC = SC UPC<br>SA = SC APC</td></tr>
+                            <tr><td><strong>dd</strong></td><td>TERMINATION END B</td><td>K* = LC LOCKING[18]<br>LC = LC UPC<br>LA = LC APC<br>L# = KEYED LC<br>SC = SC UPC<br>SA = SC APC<br>UC = UNCONNECTORIZED</td></tr>
+                            <tr><td><strong>e</strong></td><td>CONSTRUCTION</td><td>2 = 1.6mm SIMPLEX<br>4 = 1.6mm ZIP CORD</td></tr>
+                            <tr><td><strong>f</strong></td><td>FIBER COUNT</td><td>1 = 1 FIBER<br>2 = 2 FIBER</td></tr>
+                            <tr><td><strong>g</strong></td><td>COLOR</td><td>A = BLUE<br>B = ORANGE<br>C = GREEN<br>D = BROWN<br>E = SLATE<br>F = WHITE<br>G = RED<br>H = BLACK<br>J = YELLOW<br>K = VIOLET<br>L = ROSE<br>M = AQUA<br>N = LIME GREEN</td></tr>
+                            <tr><td><strong>h</strong></td><td>OPTIONS</td><td>X = NO BREAKOUT<br>8 = WITH PORT BLOCKER[20]<br>9 = NO BREAKOUT NO REEL<br>G = GOOGLE, NO BREAKOUT</td></tr>
+                            <tr><td><strong>j</strong></td><td>UNIT OF MEASURE</td><td>F = FEET<br>M = METER<br>D = DECIMETER</td></tr>
+                            <tr><td><strong>kkk</strong></td><td>LENGTH</td><td>FEET: 001 - 999<br>METERS: 001 - 500<br>DECIMETERS: 005 - 990</td></tr>
+                        </tbody>
+                    </table>
+                    <h3>Table 2: Length Tolerances</h3>
+                    <table>
+                        <thead><tr><th>CABLE LENGTH FT (M)</th><th>LENGTH TOLERANCE FT (M)</th></tr></thead>
+                        <tbody>
+                            <tr><td><strong>1 - 1.9 (0.305 - 0.579)</strong></td><td>+0.25/-0.0 (+0.08-0.0)</td></tr>
+                            <tr><td><strong>2 - 14 (1 - 4)</strong></td><td>+0.5/-0.0 (+0.15-0.000)</td></tr>
+                            <tr><td><strong>15 - 100 (5 - 30)</strong></td><td>+1.0/-0.0 (+0.30-0.00)</td></tr>
+                            <tr><td><strong>101 - 200 (31 - 60)</strong></td><td>+1.0/-0.0 (+0.30-0.00)</td></tr>
+                            <tr><td><strong>201 - 500 (61 - 152)</strong></td><td>+1.0/-0.0 (+0.30-0.00)</td></tr>
+                            <tr><td><strong>501 - 3277 (153 - 999)</strong></td><td>+1.0/-0.0 (+0.30-0.00)</td></tr>
+                        </tbody>
+                    </table>`
+            },
+            doc2: {
+                title: "LC UNI-BOOT JUMPER, CONFIGURABLE",
+                content: `
+                    <h3>General Document Information</h3>
+                     <p>
+                        <strong>Title:</strong> LC UNI-BOOT JUMPER, CONFIGURABLE<br>
+                        <strong>Drawing Number:</strong> A110H3439<br>
+                        <strong>Revision:</strong> AL
+                    </p>
+                    <h3>Configuration Breakdown</h3>
+                    <table>
+                        <thead><tr><th>Code</th><th>Category</th><th>Options / Values</th></tr></thead>
+                        <tbody>
+                            <tr><td><strong>a</strong></td><td>PRODUCT TYPE</td><td>U = ULTRA LOW LOSS<br>T = ULL FIM LABELING</td></tr>
+                            <tr><td><strong>b</strong></td><td>FAMILY</td><td>D = JUMPER PLENUM<br>F = JUMPER RISER / LSZH</td></tr>
+                            <tr><td><strong>c</strong></td><td>FIBER TYPE</td><td>X = LAZRSPEED 550 MULTIMODE<br>V = LAZRSPEED WB 550<br>G = TERASPEED SM G.657.A2<br>W = CORNING SMF-28 ULTRA<br>0 = PRYSMIAN SM G.657.A2</td></tr>
+                            <tr><td><strong>dd</strong></td><td>TERMINATION END A</td><td>LU = LC UNI-BOOT<br>SN = SN SENKO NANO (50T)</td></tr>
+                            <tr><td><strong>ee</strong></td><td>TERMINATION END B</td><td>LU = LC UNI-BOOT<br>SN = SN SENKO NANO (50T)<br>UC = UNCONNECTED</td></tr>
+                            <tr><td><strong>f</strong></td><td>CONSTRUCTION</td><td>0 = 2.0mm MP IC<br>K = 1.5mm MP IC</td></tr>
+                            <tr><td><strong>g</strong></td><td>FIBER COUNT</td><td>2 = 2 FIBER</td></tr>
+                            <tr><td><strong>h</strong></td><td>COLOR</td><td>A = BLUE<br>C = GREEN<br>J = YELLOW<br>M = AQUA<br>N = LIME GREEN<br>K = VIOLET<br>G = RED</td></tr>
+                            <tr><td><strong>j</strong></td><td>OPTIONS</td><td>X = NO BREAKOUT<br>G = GOOGLE</td></tr>
+                            <tr><td><strong>k</strong></td><td>UNIT OF MEASURE</td><td>F = FEET<br>M = METER<br>D = DECIMETERS</td></tr>
+                            <tr><td><strong>xxx</strong></td><td>LENGTH</td><td>FEET: 001-999<br>METERS: 001-999<br>DECIMETERS: 001-999</td></tr>
+                        </tbody>
+                    </table>
+                    <h3>Table 2: Length Tolerances</h3>
+                    <table>
+                         <thead><tr><th>CABLE LENGTH FT (M)</th><th>LENGTH TOLERANCE FT (M)</th></tr></thead>
+                        <tbody>
+                            <tr><td><strong>1.0 (0.305)</strong></td><td>+0.25/-0.0 (+0.08/-0.00)</td></tr>
+                            <tr><td><strong>2.0 - 14. (1 - 4)</strong></td><td>+0.5/-0.00 (+0.15/-0.00)</td></tr>
+                            <tr><td><strong>15 - 100 (5 - 30)</strong></td><td>+1.0/-0.0 (+.30/-0.00)</td></tr>
+                            <tr><td><strong>101 - 200 (31 - 60)</strong></td><td>+1.0/-0.0 (+.30/-0.00)</td></tr>
+                            <tr><td><strong>201 - 500 (61 - 152)</strong></td><td>+1.0/-0.0 (+.30/-0.00)</td></tr>
+                            <tr><td><strong>501 - 3277 (153 - 999)</strong></td><td>+1.0/-0.0 (+.30/-0.00)</td></tr>
+                        </tbody>
+                    </table>`
+            }
+        };
+        
+        const colorMap = { "BLUE": "#007bff", "ORANGE": "#fd7e14", "GREEN": "#28a745", "BROWN": "#a52a2a", "SLATE": "#708090", "WHITE": "#f8f9fa", "RED": "#dc3545", "BLACK": "#343a40", "YELLOW": "#ffc107", "VIOLET": "#8f00ff", "ROSE": "#ff007f", "AQUA": "#00ffff", "LIME GREEN": "#32cd32" };
+        
+        function formatConfigContent(htmlContent) {
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = htmlContent;
+            const cells = tempDiv.querySelectorAll('td:last-child');
+            cells.forEach(cell => {
+                let cellHtml = cell.innerHTML;
+                Object.keys(colorMap).forEach(colorName => {
+                    const regex = new RegExp(`\\b(${colorName})\\b`, 'gi');
+                    cellHtml = cellHtml.replace(regex, `<span class="color-swatch" style="background-color:${colorMap[colorName]}"></span>$1`);
+                });
+                cell.innerHTML = cellHtml;
+            });
+            return tempDiv.innerHTML;
+        }
 
-            if(window.location.hash === '#lengthcheck') {
-                lcModal.classList.add('active'); updateUI(); closeMobileMenu();
-            } else if (window.location.hash === '#converter') {
-                convModal.classList.add('active'); convertLengthLive(); updateUI(); closeMobileMenu();
-            } else if (window.location.hash === '#badgeconverter') {
-                document.getElementById('bc_size').value = badgeMultiplier; 
-                badgeModal.classList.add('active'); convertBadgeLive(); updateUI(); closeMobileMenu();
+        function showConfigDoc(docId) {
+            const data = configDocsData[docId];
+            if (!data) return;
+
+            document.getElementById('configViewerTitle').innerText = data.title;
+            document.getElementById('configViewerBody').innerHTML = formatConfigContent(data.content);
+            document.getElementById('configDocsSelection').classList.add('hidden');
+            document.getElementById('configDocsViewer').classList.add('visible');
+        }
+
+        function showConfigSelection() {
+            document.getElementById('configDocsSelection').classList.remove('hidden');
+            document.getElementById('configDocsViewer').classList.remove('visible');
+        }
+
+
+        // --- ROUTING & EVENTS ---
+        function handleHashChange() {
+            const modals = document.querySelectorAll('.modal-overlay');
+            modals.forEach(m => m.classList.remove('active'));
+
+            const hash = window.location.hash;
+            let modalToShow = null;
+
+            if (hash === '#lengthcheck') modalToShow = 'lengthCheckModal';
+            else if (hash === '#converter') modalToShow = 'converterModal';
+            else if (hash === '#badgeconverter') modalToShow = 'badgeConverterModal';
+            else if (hash === '#config-docs') modalToShow = 'configDocsModal';
+
+            if (modalToShow) {
+                document.getElementById(modalToShow).classList.add('active');
+                if (modalToShow === 'configDocsModal') showConfigSelection();
+                updateUI();
+                closeMobileMenu();
             }
         }
 
@@ -1091,7 +1368,6 @@
             const currentScrollY = window.scrollY;
             const mainNav = document.getElementById('mainNav');
             
-            // Handle Top Nav visibility
             if (window.innerWidth >= 768) {
                 if (currentScrollY > lastScrollY && currentScrollY > 100) {
                     mainNav.classList.add('nav-hidden');
@@ -1100,27 +1376,19 @@
                 }
             }
 
-            // Handle floating attendance link hide on scroll
-            const fa = document.getElementById('floatingAttendance');
-            if (fa) {
-                if (currentScrollY > 50) {
-                    fa.classList.add('hidden-on-scroll');
-                } else {
-                    fa.classList.remove('hidden-on-scroll');
-                }
-            }
-
+            // REMOVED HIDING LOGIC FOR FLOATING BUTTONS
+            
             lastScrollY = currentScrollY;
         });
 
         document.getElementById('stepInput').addEventListener('input', function(e) {
-            step = parseOdiaInput(e.target.value, 1);
+            step = parseRegionalInput(e.target.value, 1);
             localStorage.setItem('sbg_step', step);
         });
         document.getElementById('stepInput').addEventListener('blur', updateUI);
 
         document.getElementById('badgeSizeInput').addEventListener('input', function(e) {
-            let parsedSize = parseOdiaInput(e.target.value, 6);
+            let parsedSize = parseRegionalInput(e.target.value, 6);
             if (parsedSize > 0) {
                 badgeMultiplier = parsedSize;
                 localStorage.setItem('sbg_badge_mult', badgeMultiplier);
@@ -1129,7 +1397,14 @@
         document.getElementById('badgeSizeInput').addEventListener('blur', updateUI);
 
         document.getElementById('langSwitch').addEventListener('change', function(e) {
-            currentLang = e.target.value; updateUI();
+            if (e.target.value === 'report') {
+                document.getElementById('reportModal').classList.add('active');
+                e.target.value = lastValidLang;
+                return;
+            }
+            currentLang = e.target.value; 
+            lastValidLang = currentLang;
+            updateUI();
         });
 
         document.getElementById('targetSelect').addEventListener('change', function(e) {
@@ -1149,7 +1424,21 @@
             targetValue = parseInt(e.target.value) || 0; updateUI();
         });
 
+        function setDynamicSplash() {
+            const hash = window.location.hash;
+            let title = "Fiber Count";
+            let subtitle = "Sandeep Biswal G Apps";
+            if (hash === '#lengthcheck') title = "Fiber Length Check";
+            else if (hash === '#converter') title = "Length Converter";
+            else if (hash === '#badgeconverter') title = "Badge Converter";
+            else if (hash === '#config-docs') title = "Configurable Docs";
+
+            document.getElementById('loaderTitle').innerHTML = title;
+            document.getElementById('loaderSubtitle').innerHTML = subtitle;
+        }
+
         window.addEventListener('load', () => {
+            setDynamicSplash();
             updateUI();
             handleHashChange();
 
