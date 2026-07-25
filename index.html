@@ -147,15 +147,13 @@
             transition: background-color 0.6s, color 0.6s; font-size: 0.95rem;
         }
 
-        main { flex: 1; padding: 16px; max-width: 1200px; margin: 0 auto; width: 100%; display: flex; flex-direction: column; gap: 16px; }
+        main { flex: 1; padding: 16px; max-width: 1200px; margin: 0 auto; width: 100%; display: flex; flex-direction: column; gap: 16px; transform-origin: top center; transition: zoom 0.3s; }
 
         .top-actions { display: flex; justify-content: center; width: 100%; gap: 12px; flex-wrap: wrap; margin-bottom: 8px; }
         .btn-switch-mode {
-            background-color: var(--md-sys-color-primary-container); color: var(--md-sys-color-on-primary-container);
+            background-color: var(--md-sys-color-surface-variant); color: var(--md-sys-color-on-surface);
             border: none; padding: 10px 20px; border-radius: 100px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); font-size: 0.95rem;
         }
-        #rotateIcon { transition: transform 0.4s ease; fill: currentColor; }
-        .rotated { transform: rotate(180deg); }
 
         .grid-container { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
         .card {
@@ -167,26 +165,27 @@
         .card h2 { font-size: 1.2rem; }
         .number-display { font-size: 3.5rem; font-weight: 700; color: var(--md-sys-color-primary); margin: 8px 0; word-break: break-all; }
         
-        #interaction-area { display: flex; flex-direction: column; align-items: center; margin-top: 12px; width: 100%; }
-        
-        .controls { display: flex; gap: 16px; margin-bottom: 8px; justify-content: center; align-items: center; }
-        
+        .controls { display: flex; gap: 16px; margin-top: 12px; justify-content: center; align-items: center; width: 100%; }
         .control-btn {
             border: none; border-radius: 100px; font-size: 2rem; font-weight: 700;
             cursor: pointer; transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex; align-items: center; justify-content: center;
-            height: 60px; min-width: 60px; padding: 0 20px;
+            height: 60px; flex: 1; max-width: 100px; padding: 0 20px;
         }
         .control-btn:active { transform: scale(0.92); }
-        .control-btn .icon { line-height: 1; margin-top: -4px; }
-        .control-btn .btn-text { display: none; }
 
         .btn-inc { background-color: var(--md-sys-color-primary); color: var(--md-sys-color-on-primary); }
         .btn-dec { background-color: var(--md-sys-color-secondary-container); color: var(--md-sys-color-on-surface); }
         .btn-reset { background-color: var(--md-sys-color-error); color: var(--md-sys-color-on-error); padding: 10px 20px; margin-top: auto; border:none; border-radius:100px; font-weight: 600; cursor:pointer;}
+        .btn-outline {
+            background: transparent; color: var(--md-sys-color-primary); border: 2px solid var(--md-sys-color-primary);
+            padding: 10px 20px; border-radius: 100px; font-weight: 600; cursor: pointer; width: 100%; text-align: center;
+            transition: background 0.3s, color 0.3s; font-size: 1rem;
+        }
+        .btn-outline:hover { background: var(--md-sys-color-primary-container); }
 
         /* Stepper & Input Controls */
-        .step-control { display: flex; align-items: center; gap: 8px; background: var(--md-sys-color-surface-variant); padding: 6px 12px; border-radius: 100px; margin-bottom: 16px; transition: background-color 0.6s; flex-wrap: wrap; justify-content: center; font-size: 0.95rem;}
+        .step-control { display: flex; align-items: center; gap: 8px; background: var(--md-sys-color-surface-variant); padding: 6px 12px; border-radius: 100px; margin-bottom: 16px; transition: background-color 0.6s; flex-wrap: wrap; justify-content: center; font-size: 0.95rem; width: 100%; max-width: 300px; margin: 0 auto 16px;}
         .step-control input { color: var(--md-sys-color-on-surface); width: 50px; border: none; background: transparent; font-size: 1.1rem; font-weight: bold; text-align: center; outline: none; font-family: 'Google Sans', sans-serif; transition: color 0.6s; }
         
         .stepper-group { display: flex; align-items: center; gap: 4px; }
@@ -221,8 +220,24 @@
             font-weight: 600; font-size: 0.95rem; white-space: nowrap;
         }
 
-        #floatingAttendance { left: 0; top: 60%; transform: translateY(-50%); border-radius: 0 24px 24px 0; }
-        #floatingDocsBtn { right: 0; top: 60%; transform: translateY(-50%); border-radius: 24px 0 0 24px; }
+        #floatingAttendance { left: 0; top: 45%; transform: translateY(-50%); border-radius: 0 24px 24px 0; }
+        #floatingOrderBtn { left: 0; top: 58%; transform: translateY(-50%); border-radius: 0 24px 24px 0; background: var(--md-sys-color-secondary-container); color: var(--md-sys-color-on-surface); border: 2px solid var(--md-sys-color-primary);}
+        
+        #floatingDocsBtn { right: 0; top: 45%; transform: translateY(-50%); border-radius: 24px 0 0 24px; }
+        #floatingScaleBtn { right: 0; top: 58%; transform: translateY(-50%); border-radius: 24px 0 0 24px; background: var(--md-sys-color-secondary-container); color: var(--md-sys-color-on-surface); border: 2px solid var(--md-sys-color-primary);}
+
+        /* Virtual Scale CSS */
+        .virtual-scale {
+            position: fixed; bottom: 0; left: 0; width: 100vw; height: 90px;
+            background: rgba(255, 255, 255, 0.92); border-top: 2px solid var(--md-sys-color-primary); z-index: 2500;
+            backdrop-filter: blur(8px); box-shadow: 0 -4px 12px rgba(0,0,0,0.15); display: none; color: #000;
+        }
+        body.dark-theme .virtual-scale { background: rgba(30, 30, 30, 0.95); color: #fff; }
+        .scale-inch { position: absolute; top: 0; left: 0; width: 100%; height: 50%; border-bottom: 1px solid rgba(128,128,128,0.5); }
+        .scale-cm { position: absolute; bottom: 0; left: 0; width: 100%; height: 50%; }
+        .tick { position: absolute; background: currentColor; width: 1.5px; }
+        .tick-inch { top: 0; }
+        .tick-cm { bottom: 0; }
         
         /* Promo Card Fixes */
         .promo-card {
@@ -243,6 +258,7 @@
             color: #ffffff; border-top-left-radius: 40px; border-top-right-radius: 40px; 
             margin-top: 24px; display: flex; flex-direction: column; align-items: center;
             box-shadow: 0 -4px 16px rgba(0,0,0,0.1); transition: background 0.6s;
+            padding-bottom: 120px; transform-origin: bottom center;
         }
 
         /* Modal Styles */
@@ -268,12 +284,6 @@
         }
         .lc-layout .styled-input { width: 100%; margin-bottom: 8px; margin-top: 4px; box-sizing: border-box; }
         .lc-layout label { font-size: 0.9rem; font-weight: 600; opacity: 0.9; margin-left: 8px; display: block; }
-        .btn-outline {
-            background: transparent; color: var(--md-sys-color-primary); border: 2px solid var(--md-sys-color-primary);
-            padding: 10px 20px; border-radius: 100px; font-weight: 600; cursor: pointer; width: 100%; text-align: center;
-            transition: background 0.3s, color 0.3s; font-size: 1rem;
-        }
-        .btn-outline:hover { background: var(--md-sys-color-primary-container); }
         
         .history-wrapper {
             width: 100%; flex-direction: column; flex: 1; background: var(--md-sys-color-surface-variant); border-radius: 16px; padding: 16px;
@@ -282,7 +292,6 @@
         .history-item { font-size: 0.95rem; padding: 12px; border-bottom: 1px solid rgba(0,0,0,0.08); }
         .history-item:last-child { border-bottom: none; }
         
-        /* Details layout for exact result (One Line Grid) */
         .result-details { font-size: 0.95rem; opacity: 0.95; margin-top: 12px; width: 100%; background: rgba(0,0,0,0.04); padding: 12px 16px; border-radius: 16px; display: flex; flex-direction: column; gap: 8px; }
         body.dark-theme .result-details { background: rgba(255,255,255,0.05); }
         .detail-row { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(0,0,0,0.04); padding-bottom: 6px; }
@@ -295,14 +304,16 @@
             text-align: center; border-radius: 100px; padding: 16px; position: fixed; z-index: 3000; left: 50%; bottom: 30px;
             transform: translateX(-50%); font-weight: 600; box-shadow: 0 4px 12px rgba(0,0,0,0.2); opacity: 0; transition: opacity 0.3s, bottom 0.3s;
         }
-        #toast.show { visibility: visible; opacity: 1; bottom: 60px; }
+        #toast.show { visibility: visible; opacity: 1; bottom: 100px; }
 
-        /* Config Docs Modal Styles */
-        #configDocsModal .modal-content { overflow: hidden; }
-        .config-docs-container { width: 100%; height: 100%; display: flex; flex-direction: column; position: relative; overflow: hidden;}
-        .config-docs-selection { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 20px; padding: 20px; height: 100%; transition: transform 0.4s ease-in-out, opacity 0.3s; }
-        .config-docs-selection.hidden { transform: translateX(-100%); opacity: 0; pointer-events: none; position: absolute; }
-
+        /* Config Docs Enhancements */
+        .table-responsive { width: 100%; overflow-x: auto; margin-top: 16px; border-radius: 8px; border: 1px solid var(--md-sys-color-surface-variant); }
+        .config-viewer-body table { width: 100%; border-collapse: collapse; min-width: 500px; margin-top: 0; font-size: 0.9rem;}
+        .config-viewer-body th, .config-viewer-body td { border: 1px solid var(--md-sys-color-surface-variant); padding: 10px 12px; text-align: left; }
+        .config-viewer-body th { background-color: var(--md-sys-color-secondary-container); font-weight: 700; }
+        .config-viewer-body { padding: 20px; overflow-y: auto; flex: 1; height: 100%; box-sizing: border-box; }
+        .config-docs-viewer { display: flex; flex-direction: column; height: 100%; width: 100%; position: absolute; top:0; left:0; background: var(--md-sys-color-background); transform: translateX(100%); opacity:0; transition: transform 0.4s ease-in-out, opacity 0.3s; z-index: 10; }
+        
         .config-btn {
             background: var(--md-sys-color-primary-container); color: var(--md-sys-color-on-primary-container);
             border: none; border-radius: 24px; padding: 24px 32px; font-size: 1.2rem; font-weight: 700;
@@ -312,39 +323,21 @@
         .config-btn:hover { transform: translateY(-4px); background-color: var(--md-sys-color-secondary-container); }
         .config-btn small { display: block; font-size: 0.8em; font-weight: 500; opacity: 0.8; margin-top: 4px; }
         
-        .config-docs-viewer { display: flex; flex-direction: column; height: 100%; position: absolute; top:0; left:0; width:100%; background: var(--md-sys-color-background); transform: translateX(100%); opacity:0; transition: transform 0.4s ease-in-out, opacity 0.3s; }
-        .config-docs-viewer.visible { transform: translateX(0); opacity: 1; }
-
         .config-viewer-header { padding: 16px 20px; display: flex; align-items: center; gap: 16px; border-bottom: 1px solid var(--md-sys-color-surface-variant); flex-shrink: 0; }
         .config-back-btn { background: var(--md-sys-color-surface-variant); border-radius: 50%; border: none; width: 36px; height: 36px; font-size: 1.5rem; cursor: pointer; display: flex; justify-content: center; align-items: center; }
-        .config-viewer-header h3 { font-size: 1.1rem; color: var(--md-sys-color-primary); }
-        .config-viewer-body { padding: 20px; overflow-y: auto; flex-grow: 1; }
-        .config-viewer-body h2 { font-size: 1.4rem; margin-bottom: 12px; }
-        .config-viewer-body h3 { font-size: 1.1rem; margin-top: 24px; margin-bottom: 12px; border-bottom: 2px solid var(--md-sys-color-primary); padding-bottom: 6px;}
-        .config-viewer-body p { margin-bottom: 12px; line-height: 1.6; }
-        .config-viewer-body table { width: 100%; border-collapse: collapse; margin-top: 16px; font-size: 0.9rem; }
-        .config-viewer-body th, .config-viewer-body td { border: 1px solid var(--md-sys-color-surface-variant); padding: 10px 12px; text-align: left; }
-        .config-viewer-body th { background-color: var(--md-sys-color-secondary-container); font-weight: 700; }
-        .config-viewer-body td:first-child, .config-viewer-body th:first-child { text-align: center; font-weight: bold; }
         .color-swatch { display: inline-block; width: 14px; height: 14px; border-radius: 50%; margin-right: 8px; vertical-align: middle; border: 1px solid rgba(0,0,0,0.2); }
         body.dark-theme .color-swatch { border-color: rgba(255,255,255,0.2); }
+        .config-docs-container { width: 100%; height: 100%; display: flex; flex-direction: column; position: relative; overflow: hidden;}
+        .config-docs-selection { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 20px; padding: 20px; height: 100%; transition: transform 0.4s ease-in-out, opacity 0.3s; }
+        .config-docs-selection.hidden { transform: translateX(-100%); opacity: 0; pointer-events: none; position: absolute; }
 
-        /* Report Modal */
-        #reportModal .modal-content {
-            flex-direction: column; text-align: center; padding: 24px;
-            max-width: 500px; width: 90vw; border-radius: 24px; height: auto;
-        }
-        #reportModal h2 { font-size: 1.3rem; margin-bottom: 16px; color: var(--md-sys-color-primary); }
-        #reportModal p { margin-bottom: 12px; line-height: 1.6; }
-        #reportModal a { color: var(--md-sys-color-primary); font-weight: 600; text-decoration: none; }
-        #reportModal a:hover { text-decoration: underline; }
 
         @media (min-width: 768px) {
             .lc-layout { flex-direction: row; align-items: flex-start; justify-content: center; gap: 64px; overflow: hidden; height: auto; max-height: 90vh; }
             .lc-left { flex: 1; max-width: 450px; justify-content: center; }
             .lc-right { flex: 1; max-width: 450px; margin-top: 0; justify-content: center; }
             .modal-close { display: none; } 
-            #historyModal .modal-content, #configDocsModal .modal-content { max-width: 1000px; max-height: 90vh; border-radius: 24px; padding: 24px; }
+            #historyModal .modal-content, #configDocsModal .modal-content, #orderTrackerModal .modal-content, #scaleCalibrationModal .modal-content { max-width: 1000px; max-height: 90vh; border-radius: 24px; padding: 24px; }
         }
 
         @media (max-width: 768px) {
@@ -365,11 +358,25 @@
 
     <div id="loader">
         <div id="loader-content">
-            <h1 id="loaderTitle" data-key="loaderTitle">Fiber Count<span class="odia-sub">ଫାଇବର ଗଣନା</span></h1>
+            <h1 id="loaderTitle">Fiber Count<span class="odia-sub">ଫାଇବର ଗଣନା</span></h1>
             <h2 id="loaderSubtitle"><span class="odia-sub">Sandeep Biswal G Apps</span></h2>
         </div>
         <div class="loader-footer" data-key="footerCredit">by Sandeep Biswal G</div>
     </div>
+    
+    <script>
+        // Execute immediately to prevent flicker and show correct dynamic text
+        (function(){
+            const hash = window.location.hash;
+            let title = "Fiber Count";
+            if (hash === '#lengthcheck') title = "Fiber Length Check";
+            else if (hash === '#converter') title = "Length Converter";
+            else if (hash === '#badgeconverter') title = "Badge Converter";
+            else if (hash === '#config-docs') title = "Configurable Docs";
+            else if (hash === '#orderTracker') title = "Order Tracker";
+            document.getElementById('loaderTitle').innerHTML = title + '<span class="odia-sub">ଫାଇବର ଗଣନା</span>';
+        })();
+    </script>
 
     <!-- Toast Notification -->
     <div id="toast">Data Stored Successfully!</div>
@@ -381,13 +388,21 @@
         </svg>
         <span>Attendance</span>
     </a>
+    <a href="#orderTracker" class="floating-action-btn" id="floatingOrderBtn">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+        <span data-key="orderTracker">Orders / Laps</span>
+    </a>
+    
     <a href="#config-docs" class="floating-action-btn" id="floatingDocsBtn">
         <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
             <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zM6 20V4h7v5h5v11H6z"/>
         </svg>
         <span>Docs</span>
     </a>
-
+    <a href="javascript:void(0)" onclick="toggleScale()" class="floating-action-btn" id="floatingScaleBtn">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M21 4H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H3V6h18v12zm-2-9h-2v2h2v-2zm-4 0h-2v2h2v-2zm-4 0H9v2h2v-2zm-4 0H5v4h2v-4z"/></svg>
+        <span data-key="scaleBtn">Virtual Scale</span>
+    </a>
 
     <div id="floatingProgress">
         <div class="float-info">
@@ -410,7 +425,7 @@
                 <a href="https://imsbg.github.io/number-increment/calc" class="nav-btn"><span data-key="navLink1">Smart Calc</span></a>
                 <a href="#lengthcheck" class="nav-btn"><span data-key="lengthCheckBtn">Length Check</span></a>
                 <a href="#converter" class="nav-btn"><span data-key="converterBtn">Length Converter</span></a>
-                <a href="#badgeconverter" class="nav-btn"><span data-key="badgeConvBtn">Badge Converter</span></a>
+                <a href="#badgeconverter" class="nav-btn"><span data-key="badgeConvBtn">Batch Converter</span></a>
 
                 <select id="langSwitch">
                     <option value="both">Eng &amp; Odia</option>
@@ -429,22 +444,24 @@
         </div>
     </nav>
 
-    <main>
+    <main id="appMain">
         <div class="top-actions">
-            <button class="btn-switch-mode" onclick="toggleMode()">
-                <svg id="rotateIcon" viewBox="0 0 24 24" width="20" height="20">
-                    <path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/>
-                </svg>
-                <span id="modeText" data-key="modeNumber">Mode: Num Increment</span>
-            </button>
-            
-            <button class="btn-switch-mode" onclick="cycleZoom()" style="background: var(--md-sys-color-surface-variant); color: var(--md-sys-color-on-surface);">
+            <button class="btn-switch-mode" onclick="cycleZoom()">
                 <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
                     <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
                     <path d="M12 10h-2v2H9v-2H7V9h2V7h1v2h2v1z"/>
                 </svg>
                 <span id="zoomText" data-key="zoomText">Zoom: 100%</span>
             </button>
+        </div>
+        
+        <div class="step-control">
+            <label data-key="stepLabel">Increment Step:</label>
+            <div class="stepper-group">
+                <button class="stepper-btn" onclick="adjustInput('stepInput', -1)">-</button>
+                <input type="text" id="stepInput" min="1" value="1">
+                <button class="stepper-btn" onclick="adjustInput('stepInput', 1)">+</button>
+            </div>
         </div>
 
         <div class="card target-card">
@@ -465,6 +482,11 @@
                     <span data-key="btnReset">Reset Data</span>
                 </button>
             </div>
+            
+            <div id="orderInfoDisplay" style="display:none; background: var(--md-sys-color-primary-container); color: var(--md-sys-color-on-primary-container); padding: 8px 12px; border-radius: 8px; margin-bottom: 12px; font-weight: bold; font-size: 0.9rem; text-align: left;">
+                Active Order
+            </div>
+
             <div id="progressContainer" style="display:none;">
                 <div class="target-progress-bg">
                     <div class="target-progress-fill" id="progressFill"></div>
@@ -477,52 +499,107 @@
         </div>
 
         <div class="grid-container">
+            <!-- Numbers Card -->
             <div class="card" id="card-number">
                 <h2 data-key="currentNum">Current Number</h2>
                 <div class="number-display" id="countDisplay">0</div>
-                <div id="anchor-number"></div>
+                <div class="controls">
+                    <button class="btn-dec control-btn" onclick="changeCount(-1, false)">-</button>
+                    <button class="btn-inc control-btn" onclick="changeCount(1, false)">+</button>
+                </div>
             </div>
 
+            <!-- Batches Card -->
             <div class="card" id="card-badge">
                 <svg class="svg-badge" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path d="M12 2l2.4 7.4h7.6l-6.1 4.5 2.3 7.1-6.2-4.6-6.2 4.6 2.3-7.1-6.1-4.5h7.6z"/>
                 </svg>
-                <h2 data-key="badges">Total Badges</h2>
+                <h2 data-key="badges">Total Batches</h2>
                 <div class="number-display" id="badgeDisplay">0</div>
-                <div id="smallTotalDisplay" data-key="smallTotalDisplay" style="font-size: 1.1rem; font-weight: 700; color: var(--md-sys-color-primary); opacity: 0.8; margin-top: -12px; margin-bottom: 8px;">(Total: 0)</div>
                 
-                <div class="step-control" style="margin-top: 8px; margin-bottom: 0;">
-                    <label data-key="badgeSizeSet">Set Badge Size:</label>
+                <div class="controls">
+                    <button class="btn-dec control-btn" onclick="changeCount(-1, true)">-</button>
+                    <button class="btn-inc control-btn" onclick="changeCount(1, true)">+</button>
+                </div>
+                
+                <button class="btn-outline" style="margin-top: 16px; padding: 10px 24px; font-size: 0.95rem; width:100%; max-width:220px; display:flex; align-items:center; justify-content:center; gap:8px;" onclick="saveCurrentLap()">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+                    <span data-key="saveLap">Save Lap</span>
+                </button>
+
+                <div class="step-control" style="margin-top: 16px; margin-bottom: 0;">
+                    <label data-key="badgeSizeSet">Set Batch Size:</label>
                     <div class="stepper-group">
                         <button class="stepper-btn" onclick="adjustInput('badgeSizeInput', -1)">-</button>
                         <input type="text" id="badgeSizeInput" min="1" value="6">
                         <button class="stepper-btn" onclick="adjustInput('badgeSizeInput', 1)">+</button>
                     </div>
                 </div>
-                <p style="opacity: 0.7; margin-top: 8px; font-size:0.9rem;" id="badgeDescText">1 Badge = 6 Increments</p>
-                <div id="anchor-badge"></div>
+                <p style="opacity: 0.7; margin-top: 8px; font-size:0.9rem;" id="badgeDescText">1 Batch = 6 Increments</p>
             </div>
         </div>
     </main>
-
-    <div id="interaction-area">
-        <div class="step-control">
-            <label data-key="stepLabel">Increment Step:</label>
-            <div class="stepper-group">
-                <button class="stepper-btn" onclick="adjustInput('stepInput', -1)">-</button>
-                <input type="text" id="stepInput" min="1" value="1">
-                <button class="stepper-btn" onclick="adjustInput('stepInput', 1)">+</button>
+    
+    <!-- Order Tracker Modal -->
+    <div id="orderTrackerModal" class="modal-overlay" onclick="closeModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="window.location.hash=''">✕</button>
+            <div class="lc-layout">
+                <div class="lc-left">
+                    <h2 style="margin-bottom: 12px; margin-top: 0; color: var(--md-sys-color-primary); display: flex; align-items: center; gap: 8px; font-size:1.3rem;">
+                        <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+                        <span data-key="orderTracker">Order Tracker</span>
+                    </h2>
+                    <p style="font-size:0.9rem; opacity:0.8; margin-bottom:12px;" data-key="newOrderInfo">Starting a new order resets the counter.</p>
+                    
+                    <div><label data-key="orderId">Order ID</label><input type="text" id="order_id" class="styled-input" placeholder="e.g. 6009001234"></div>
+                    <div><label data-key="partNum">Part Number</label><input type="text" id="order_part" class="styled-input" placeholder="e.g. FFWLCLC42-JXM010"></div>
+                    <div><label data-key="totalTarget">Total Qty</label><input type="number" id="order_target" class="styled-input" placeholder="e.g. 1000"></div>
+                    <div><label data-key="preparedQty">Already Prepared (Inline Qty)</label><input type="number" id="order_prepared" class="styled-input" placeholder="e.g. 150"></div>
+                    
+                    <div style="display: flex; gap: 12px; margin-top: 12px;">
+                        <button class="btn-dec" style="flex: 1; padding: 10px; border-radius: 100px; border: none; font-weight: bold; cursor: pointer;" onclick="clearOrderData()"><span data-key="lcClear">Clear</span></button>
+                        <button class="btn-inc" style="flex: 2; padding: 10px; border-radius: 100px; border: none; font-weight: bold; cursor: pointer;" onclick="startOrder()"><span data-key="startOrder">Set Active Order</span></button>
+                    </div>
+                </div>
+                <div class="lc-right">
+                    <div style="width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; border-bottom: 1px solid var(--md-sys-color-surface-variant); background: var(--md-sys-color-secondary-container); border-radius: 16px 16px 0 0;">
+                        <h3 style="font-size: 1.1rem; color: var(--md-sys-color-on-surface);" data-key="lapHistory">Lap History</h3>
+                        <button class="btn-inc" style="padding: 6px 16px; border-radius: 100px; border: none; font-size:0.8rem; cursor:pointer;" onclick="saveCurrentLap()"><span data-key="saveLap">Save Lap</span></button>
+                    </div>
+                    <div id="lap_history" class="history-wrapper" style="border-radius: 0 0 16px 16px; max-height: 250px;"></div>
+                    
+                    <button class="btn-dec" style="width: 100%; padding: 12px; margin-top: auto; font-size: 1rem; border:none; border-radius: 100px; font-weight: bold; cursor:pointer;" onclick="window.location.hash=''">
+                        <span data-key="lcBackBtn">Back to Tracker</span>
+                    </button>
+                </div>
             </div>
         </div>
-        
-        <div class="controls">
-            <button class="btn-dec control-btn" onclick="changeCount(-1)">
-                <span class="icon">-</span>
-            </button>
-            <button class="btn-inc control-btn" onclick="changeCount(1)">
-                <span class="icon">+</span>
+    </div>
+    
+    <!-- Scale Calibration Modal -->
+    <div id="scaleCalibrationModal" class="modal-overlay" onclick="closeModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()" style="max-width:400px; height:auto; padding:24px; text-align:center; flex-direction:column;">
+            <button class="modal-close" onclick="window.location.hash=''">✕</button>
+            <h2 data-key="calibration" style="color:var(--md-sys-color-primary); margin-bottom:12px;">Calibrate Scale</h2>
+            <p data-key="adjustPPI" style="opacity:0.8; font-size:0.95rem; margin-bottom:20px;">Adjust slider to match physical ruler placed on screen.</p>
+            
+            <label style="font-weight:bold; font-size:1.1rem; display:block; margin-bottom:8px;">PPI: <span id="ppiValDisplay">96</span></label>
+            <input type="range" id="ppiSlider" min="50" max="250" step="0.5" style="width:100%; margin-bottom: 24px;">
+            
+            <button class="btn-inc" style="width: 100%; padding: 12px; border-radius:100px; border:none; font-weight:bold; cursor:pointer;" onclick="saveCalibration()">
+                <span data-key="lcSave">Save Configuration</span>
             </button>
         </div>
+    </div>
+
+    <!-- Virtual Scale Container -->
+    <div id="virtualScale" class="virtual-scale">
+        <button onclick="window.location.hash='#scaleCalibrationModal'" style="position:absolute; left:16px; top:50%; transform:translateY(-50%); z-index:10; background:var(--md-sys-color-primary); color:white; border:none; padding:6px 12px; border-radius:8px; font-size:12px; cursor:pointer; font-weight:bold;">
+            <span data-key="calibration">Calibrate</span>
+        </button>
+        <div class="scale-inch" id="scaleInch"></div>
+        <div class="scale-cm" id="scaleCm"></div>
     </div>
 
     <!-- Fiber Length Check Modal -->
@@ -552,7 +629,6 @@
                         </div>
                     </div>
                     <button class="btn-outline" onclick="openHistoryModal()"><span data-key="lcViewHistory">View History</span></button>
-                    
                     <button class="btn-dec" style="width: 100%; padding: 12px; margin-top: auto; font-size: 1rem; border:none; border-radius: 100px; font-weight: bold; cursor:pointer;" onclick="window.location.hash=''">
                         <span data-key="lcBackBtn">Back to Tracker</span>
                     </button>
@@ -596,6 +672,13 @@
                             <option value="ft">Feet (ft)</option>
                         </select>
                     </div>
+                    
+                    <div style="display:flex; justify-content:center; margin: 4px 0;">
+                        <button onclick="swapConvUnits()" style="background:var(--md-sys-color-surface-variant); color:var(--md-sys-color-on-surface); border:none; border-radius:50%; width:36px; height:36px; cursor:pointer; display:flex; align-items:center; justify-content:center; transition: background 0.3s;" title="Swap Units">
+                            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M16 17.01V10h-2v7.01h-3L15 21l4-3.99h-3zM9 3L5 6.99h3V14h2V6.99h3L9 3z"/></svg>
+                        </button>
+                    </div>
+
                     <div>
                         <label data-key="convTo">To Unit</label>
                         <select id="conv_to" class="styled-input" onchange="convertLengthLive()">
@@ -628,17 +711,17 @@
                 <div class="lc-left">
                     <h2 style="margin-bottom: 12px; margin-top: 0; color: var(--md-sys-color-primary); display: flex; align-items: center; gap: 8px; font-size:1.3rem;">
                         <svg class="svg-badge" viewBox="0 0 24 24" style="width: 24px; height: 24px; margin: 0;"><path d="M12 2l2.4 7.4h7.6l-6.1 4.5 2.3 7.1-6.2-4.6-6.2 4.6 2.3-7.1-6.1-4.5h7.6z"/></svg>
-                        <span data-key="badgeConvTitle">Badge Converter</span>
+                        <span data-key="badgeConvTitle">Batch Converter</span>
                     </h2>
                     <div><label data-key="convInput">Enter Value</label><input type="number" id="bc_input" class="styled-input" placeholder="e.g. 10" oninput="convertBadgeLive()" value="1"></div>
                     <div>
-                        <label data-key="badgeSizeSet">Custom Badge Size</label>
+                        <label data-key="badgeSizeSet">Custom Batch Size</label>
                         <input type="number" id="bc_size" class="styled-input" placeholder="e.g. 6" oninput="convertBadgeLive()" value="6">
                     </div>
                     <div>
                         <label data-key="convFrom">From</label>
                         <select id="bc_from" class="styled-input" onchange="convertBadgeLive()">
-                            <option value="badge">Badge</option>
+                            <option value="badge">Batch</option>
                             <option value="number">Number</option>
                         </select>
                     </div>
@@ -646,7 +729,7 @@
                         <label data-key="convTo">To</label>
                         <select id="bc_to" class="styled-input" onchange="convertBadgeLive()">
                             <option value="number">Number</option>
-                            <option value="badge">Badge</option>
+                            <option value="badge">Batch</option>
                         </select>
                     </div>
                 </div>
@@ -687,9 +770,7 @@
                         <button class="config-back-btn" onclick="showConfigSelection()">‹</button>
                         <h3 id="configViewerTitle">Document</h3>
                     </div>
-                    <div class="config-viewer-body" id="configViewerBody">
-                        <!-- Content will be injected here -->
-                    </div>
+                    <div class="config-viewer-body" id="configViewerBody"></div>
                 </div>
              </div>
         </div>
@@ -697,22 +778,21 @@
 
     <!-- Report Language Modal -->
     <div id="reportModal" class="modal-overlay">
-        <div class="modal-content">
+        <div class="modal-content" style="max-width:500px; padding:24px; text-align:center; flex-direction:column; border-radius: 24px;">
              <button class="modal-close" onclick="document.getElementById('reportModal').classList.remove('active')">✕</button>
              <div>
-                <h2 data-key="reportLang">Report a Translation</h2>
-                <p data-key="reportText">Need to report a translation error or request a new language?</p>
-                <p data-key="reportEmail">Send us an email and we'll get right on it!</p>
-                <p><a href="mailto:message.sbg@gmail.com">message.sbg@gmail.com</a></p>
-                <button class="btn-inc" style="padding: 10px 30px; border-radius:100px; border:none; font-weight:bold; cursor:pointer; margin-top: 16px;" onclick="document.getElementById('reportModal').classList.remove('active')">
+                <h2 data-key="reportLang" style="color: var(--md-sys-color-primary); margin-bottom:16px;">Report a Translation</h2>
+                <p data-key="reportText" style="line-height:1.6; margin-bottom:12px;">Need to report a translation error or request a new language?</p>
+                <p data-key="reportEmail" style="line-height:1.6; margin-bottom:12px;">Send us an email and we'll get right on it!</p>
+                <p><a href="mailto:message.sbg@gmail.com" style="color:var(--md-sys-color-primary); font-weight:bold; text-decoration:none;">message.sbg@gmail.com</a></p>
+                <button class="btn-inc" style="padding: 10px 30px; border-radius:100px; border:none; font-weight:bold; cursor:pointer; margin-top: 24px;" onclick="document.getElementById('reportModal').classList.remove('active')">
                     <span data-key="reportClose">Close</span>
                 </button>
              </div>
         </div>
     </div>
 
-
-    <footer>
+    <footer id="appFooter">
         <a href="https://play.google.com/store/apps/details?id=in.sandeep.plyxogames" target="_blank" class="promo-card" style="max-width: 600px;">
             <div class="promo-title" data-key="promoTitle">Download Plyxo Games</div>
             <div class="promo-sub" data-key="promoSub">Where Every Move Matters.</div>
@@ -777,8 +857,7 @@
         const manifestBlob = new Blob([JSON.stringify(manifestJSON)], {type: 'application/json'});
         document.getElementById('dynamic-manifest').href = URL.createObjectURL(manifestBlob);
 
-        // --- CORE APP ---
-        // Core Variables
+        // --- CORE APP VARIABLES ---
         let count = parseInt(localStorage.getItem('sbg_count')) || 0;
         let step = parseInt(localStorage.getItem('sbg_step')) || 1;
         let badgeMultiplier = parseInt(localStorage.getItem('sbg_badge_mult')) || 6;
@@ -786,19 +865,28 @@
         let lastValidLang = currentLang;
 
         let targetValue = parseInt(localStorage.getItem('sbg_target')) || 0;
-        let activeMode = localStorage.getItem('sbg_mode') || 'number'; 
         let currentLengthTotal = 0;
         let lastSavedHash = ""; 
+        
+        // Order Tracker System
+        let orderData = JSON.parse(localStorage.getItem('sbg_order_data')) || { active: false, orderId: '', partNum: '', target: 0, prepared: 0, laps: [] };
 
-        // Zoom Logic Update
+        // Zoom Logic - Only scale main and footer to isolate absolute UI elements
         let zoomLevels = [1, 0.9, 0.8];
         let currentZoomIndex = 0;
         function cycleZoom() {
             currentZoomIndex = (currentZoomIndex + 1) % zoomLevels.length;
             let zoomVal = zoomLevels[currentZoomIndex];
-            document.body.style.zoom = zoomVal;
+            
+            document.getElementById('appMain').style.zoom = zoomVal;
+            document.getElementById('appFooter').style.zoom = zoomVal;
+            
             updateUI();
         }
+        
+        // Virtual Scale Logic
+        let scaleVisible = false;
+        let pxPerInch = parseFloat(localStorage.getItem('sbg_ppi')) || 96;
 
         document.getElementById('stepInput').value = step;
         document.getElementById('badgeSizeInput').value = badgeMultiplier;
@@ -824,8 +912,6 @@
             custom: { eng: "Custom", odia: "କଷ୍ଟମ୍", hin: "कस्टम", kon: "कस्टम" },
             remainingText: { eng: "Remaining Count:", odia: "ବାକି ସଂଖ୍ୟା:", hin: "शेष संख्या:", kon: "उर्वरित संख्या:" },
             targetReached: { eng: "Target Reached! 🎉", odia: "ଲକ୍ଷ୍ୟ ପୂରଣ ହେଲା! 🎉", hin: "लक्ष्य पूरा हुआ! 🎉", kon: "लक्ष्य गाठले! 🎉" },
-            modeNumber: { eng: "Mode: Num Increment", odia: "ମୋଡ୍: ସଂଖ୍ୟା ବୃଦ୍ଧି", hin: "मोड: संख्या वृद्धि", kon: "मोड: संख्या वाढ" },
-            modeBadge: { eng: "Mode: Batch Increment", odia: "ମୋଡ୍: ବ୍ୟାଚ୍ ବୃଦ୍ଧି", hin: "मोड: बैच वृद्धि", kon: "मोड: बॅच वाढ" },
             footerCredit: { eng: "by Sandeep Biswal G", odia: "ସନ୍ଦୀପ୍ ବିଶ୍ୱାଳ ଜି ଙ୍କ ଦ୍ଵାରା", hin: "संदीप् बिस्वाल जी द्वारा", kon: "संदीप् बिस्वाल जी यांच्याद्वारे" },
             promoTitle: { eng: "Download Plyxo Games", odia: "ଡାଉନଲୋଡ୍ Plyxo Games", hin: "Plyxo गेम्स डाउनलोड करें", kon: "Plyxo गेम्स डाउनलोड करा" },
             promoSub: { eng: "Where Every Move Matters.", odia: "ଯେଉଁଠି ପ୍ରତିଟି ପଦକ୍ଷେପ ଗୁରୁତ୍ୱପୂର୍ଣ୍ଣ ।", hin: "जहाँ हर चाल मायने रखती है।", kon: "जिथे प्रत्येक हालचाल महत्त्वाची आहे." },
@@ -838,7 +924,7 @@
             lcRead2: { eng: "Reading End 2", odia: "ରିଡିଂ ଏଣ୍ଡ୍ ୨", hin: "रीडिंग सिरा 2", kon: "रीडिंग टोक 2" },
             lcEnd1: { eng: "End 1 Prep (cm)", odia: "ଏଣ୍ଡ୍ ୧ ପ୍ରସ୍ତୁତି (cm)", hin: "सिरा 1 तैयारी (cm)", kon: "टोक 1 तयारी (cm)" },
             lcEnd2: { eng: "End 2 Prep (cm)", odia: "ଏଣ୍ଡ୍ ୨ ପ୍ରସ୍ତୁତି (cm)", hin: "सिरा 2 तैयारी (cm)", kon: "टोक 2 तयारी (cm)" },
-            lcSave: { eng: "Save to History", odia: "ଇତିହାସରେ ସେଭ୍ କରନ୍ତୁ", hin: "इतिहास में सहेजें", kon: "इतिहासात सेव्ह करा" },
+            lcSave: { eng: "Save Configuration", odia: "ସେଭ୍ କରନ୍ତୁ", hin: "सेटिंग्स सहेजें", kon: "सेटिंग्ज सेव्ह करा" },
             lcClearInputs: { eng: "Clear Inputs", odia: "ଇନପୁଟ୍ ସଫା କରନ୍ତୁ", hin: "इनपुट साफ़ करें", kon: "इनपुट साफ करा" },
             lcHistTitle: { eng: "History", odia: "ଇତିହାସ", hin: "इतिहास", kon: "इतिहास" },
             lcClear: { eng: "Clear", odia: "ସଫା କରନ୍ତୁ", hin: "साफ़ करें", kon: "साफ करा" },
@@ -853,11 +939,23 @@
             dataStored: { eng: "Data Stored Successfully!", odia: "ଡାଟା ସଫଳତାର ସହ ସେଭ୍ ହେଲା!", hin: "डेटा सफलतापूर्वक संग्रहीत हुआ!", kon: "डेटा यशस्वीरित्या सेव्ह झाला!" },
             dataExists: { eng: "Already Saved!", odia: "ପୂର୍ବରୁ ସେଭ୍ ହୋଇଛି!", hin: "पहले से सहेजा गया!", kon: "आधीच सेव्ह केले आहे!" },
             zoomText: { eng: "Zoom ", odia: "ଜୁମ୍ ", hin: "ज़ूम ", kon: "ज़ूम" },
-            smallTotalDisplay: { eng: "(Total: ", odia: "(ମୋଟ: ", hin: "(कुल: ", kon: "(एकूण: " },
-            reportLang: { eng: "Report/Add Language ", odia: "ରିପୋର୍ଟ/ଭାଷା ଯୋଡ଼ନ୍ତୁ", hin: "अनुवाद रिपोर्ट/भाषा जोड़ें", kon: "अनुवाद तक्रार/भाषा जोडा" },
+            reportLang: { eng: "Report/Add Language", odia: "ରିପୋର୍ଟ/ଭାଷା ଯୋଡ଼ନ୍ତୁ", hin: "अनुवाद रिपोर्ट/भाषा जोड़ें", kon: "अनुवाद तक्रार/भाषा जोडा" },
             reportText: { eng: "Need to report a translation error or request a new language?", odia: "ଅନୁବାଦ ତ୍ରୁଟି ରିପୋର୍ଟ କରିବାକୁ କିମ୍ବା ନୂଆ ଭାଷା ଅନୁରୋଧ କରିବାକୁ ଚାହୁଁଛନ୍ତି କି?", hin: "अनुवाद में कोई त्रुटि रिपोर्ट करनी है या एक नई भाषा का अनुरोध करना है?", kon: "भाषांतरात त्रुटी आढळल्यास किंवा नवीन भाषेची विनंती करायची आहे का?" },
-            reportEmail: { eng: "Send us an email and we'll get right on it!", odia: "ଆମକୁ ଏକ ଇମେଲ୍ ପଠାନ୍ତୁ ଏବଂ ଆମେ ଏହା ଉପରେ କାର୍ଯ୍ୟ କରିବୁ!", hin: "हमें एक ईमेल भेजें और हम इसे तुरंत ठीक कर देंगे!", kon: "आम्हाला ईमेल पाठवा आणि आम्ही ते त्वरित करू!" },
-            reportClose: { eng: "Close", odia: "ବନ୍ଦ କରନ୍ତୁ", hin: "बंद करें", kon: "बंद करा" }
+            reportEmail: { eng: "Send us an email and we'll get right on it!", odia: "ଆମକୁ ଏକ ଇମେଲ୍ ପଠାନ୍ତୁ ଏବଂ ଆମେ ଏହା ଉପରେ କାର୍ଯ୍ୟ କରିବୁ!", hin: "हमें एक ईमेल भेजें और हम इसे तुरंत ठीक कर देंगे!", kon: "आम्हाला ईमेल पाठवा और हम इसे त्वरित करेंगे!" },
+            reportClose: { eng: "Close", odia: "ବନ୍ଦ କରନ୍ତୁ", hin: "बंद करें", kon: "बंद करा" },
+            orderTracker: { eng: "Orders / Laps", odia: "ଅର୍ଡର / ଲ୍ୟାପ୍", hin: "ऑर्डर / लैप", kon: "ऑर्डर / लॅप" },
+            startOrder: { eng: "Set Active Order", odia: "ସକ୍ରିୟ ଅର୍ଡର ସେଟ୍ କରନ୍ତୁ", hin: "सक्रिय ऑर्डर सेट करें", kon: "सक्रिय ऑर्डर सेट करा" },
+            orderId: { eng: "Order ID", odia: "ଅର୍ଡର ID", hin: "ऑर्डर ID", kon: "ऑर्डर ID" },
+            partNum: { eng: "Part Number", odia: "ପାର୍ଟ ନମ୍ବର", hin: "पार्ट नंबर", kon: "पार्ट नंबर" },
+            totalTarget: { eng: "Total Qty", odia: "ମୋଟ ପରିମାଣ", hin: "कुल परिमाण", kon: "एकूण माप" },
+            preparedQty: { eng: "Already Prepared (Inline Qty)", odia: "ପୂର୍ବରୁ ପ୍ରସ୍ତୁତ", hin: "पहले से तैयार", kon: "आधीच तयार" },
+            saveLap: { eng: "Save Lap", odia: "ଲ୍ୟାପ୍ ସେଭ୍ କରନ୍ତୁ", hin: "लैप सहेजें", kon: "लॅप सेव्ह करा" },
+            lapSaved: { eng: "Lap Saved!", odia: "ଲ୍ୟାପ୍ ସେଭ୍ ହେଲା!", hin: "लैप सहेजा गया!", kon: "लॅप सेव्ह झाले!" },
+            lapHistory: { eng: "Lap History", odia: "ଲ୍ୟାପ୍ ଇତିହାସ", hin: "लैप इतिहास", kon: "लॅप इतिहास" },
+            newOrderInfo: { eng: "Starting a new order resets the counter.", odia: "ନୂଆ ଅର୍ଡର କାଉଣ୍ଟର ରିସେଟ୍ କରିଥାଏ।", hin: "नया ऑर्डर काउंटर रीसेट करता है।", kon: "नवीन ऑर्डर काउंटर रीसेट करते." },
+            scaleBtn: { eng: "Virtual Scale", odia: "ଭର୍ଚୁଆଲ୍ ସ୍କେଲ୍", hin: "वर्चुअल स्केल", kon: "व्हर्च्युअल स्केल" },
+            calibration: { eng: "Calibrate Scale", odia: "ସ୍କେଲ୍ କାଲିବ୍ରେସନ୍", hin: "स्केल अंशांकन", kon: "स्केल कॅलिब्रेशन" },
+            adjustPPI: { eng: "Adjust slider to match physical ruler placed on screen.", odia: "ସ୍କ୍ରିନ୍ ଉପରେ ଥିବା ପ୍ରକୃତ ସ୍କେଲ୍ ସହିତ ସମାନ କରିବାକୁ ସ୍ଲାଇଡର୍ ଆଡଜଷ୍ଟ୍ କରନ୍ତୁ।", hin: "भौतिक पैमाने से मिलान करने के लिए स्लाइडर समायोजित करें।", kon: "भौतिक मोजपट्टीशी जुळण्यासाठी स्लाइडर समायोजित करा." }
         };
 
         function toOdiaNumeral(num) {
@@ -905,14 +1003,6 @@
             }
         }
 
-        function toggleMode() {
-            activeMode = activeMode === 'number' ? 'badge' : 'number';
-            localStorage.setItem('sbg_mode', activeMode);
-            const rotateIcon = document.getElementById('rotateIcon');
-            rotateIcon.classList.toggle('rotated');
-            updateUI();
-        }
-
         function applyTranslations() {
             document.querySelectorAll('[data-key]').forEach(el => {
                 const key = el.getAttribute('data-key');
@@ -923,12 +1013,7 @@
                 if (currentLang === 'both') {
                     el.innerHTML = `${translations[key].eng}<span class="odia-sub${extraClass}">${translations[key].odia}</span>`;
                 } else {
-                    let langKey;
-                    if (currentLang === 'odia') langKey = 'odia';
-                    else if (currentLang === 'hindi') langKey = 'hin';
-                    else if (currentLang === 'konkani') langKey = 'kon';
-                    else langKey = 'eng';
-                    
+                    let langKey = (currentLang === 'odia') ? 'odia' : ((currentLang === 'hindi') ? 'hin' : ((currentLang === 'konkani') ? 'kon' : 'eng'));
                     el.innerHTML = translations[key][langKey] || translations[key]['eng'];
                 }
             });
@@ -941,17 +1026,6 @@
             localStorage.setItem('sbg_target', targetValue);
             localStorage.setItem('sbg_badge_mult', badgeMultiplier);
 
-            const interactionArea = document.getElementById('interaction-area');
-            const modeTextEl = document.getElementById('modeText');
-
-            if (activeMode === 'badge') {
-                document.getElementById('anchor-badge').appendChild(interactionArea);
-                modeTextEl.setAttribute('data-key', 'modeBadge');
-            } else {
-                document.getElementById('anchor-number').appendChild(interactionArea);
-                modeTextEl.setAttribute('data-key', 'modeNumber');
-            }
-            
             let numConverter = (num) => num;
             if (currentLang === 'odia') numConverter = toOdiaNumeral;
             else if (currentLang === 'hindi' || currentLang === 'konkani') numConverter = toDevanagariNumeral;
@@ -962,22 +1036,15 @@
             document.getElementById('countDisplay').innerText = numConverter(count);
             document.getElementById('badgeDisplay').innerText = numConverter(badges);
             
-            applyTranslations(); // Apply text first
-            
-            // Then update elements with dynamic numbers
-            document.getElementById('smallTotalDisplay').innerHTML = `${translations['smallTotalDisplay'][currentLang === 'both' ? 'eng' : (currentLang === 'odia' ? 'odia' : (currentLang === 'hindi' ? 'hin' : (currentLang === 'konkani' ? 'kon' : 'eng')))] || '(Total: '}${numConverter(count)})`;
-            if(currentLang === 'both') {
-                document.getElementById('smallTotalDisplay').innerHTML += `<span class="odia-sub">${translations.smallTotalDisplay.odia}${toOdiaNumeral(count)})</span>`;
-            }
+            applyTranslations(); 
 
             let zoomVal = zoomLevels[currentZoomIndex];
             document.getElementById('zoomText').innerText = `${translations['zoomText'][currentLang === 'both' ? 'eng' : (currentLang === 'odia' ? 'odia' : (currentLang === 'hindi' ? 'hin' : (currentLang === 'konkani' ? 'kon' : 'eng')))] || 'Zoom: '}${Math.round(zoomVal * 100)}%`;
 
-
             document.getElementById('stepInput').value = numConverter(step);
             document.getElementById('badgeSizeInput').value = numConverter(badgeMultiplier);
 
-            let bDescEng = `1 Badge = ${badgeMultiplier} Increments`;
+            let bDescEng = `1 Batch = ${badgeMultiplier} Increments`;
             let bDescOdia = `୧ ବ୍ୟାଚ୍ = ${toOdiaNumeral(badgeMultiplier)} ସଂଖ୍ୟା`;
             let bDescHin = `१ बैच = ${toDevanagariNumeral(badgeMultiplier)} संख्या`;
             let bDescKon = `१ बॅच = ${toDevanagariNumeral(badgeMultiplier)} संख्या`;
@@ -989,12 +1056,25 @@
             else document.getElementById('badgeDescText').innerHTML = bDescEng;
 
 
+            // Target Calculation (Includes Active Order Check)
+            let effectiveTarget = targetValue;
+            let effectiveCount = count;
+            
+            if (orderData.active && orderData.target > 0) {
+                effectiveTarget = orderData.target;
+                effectiveCount = count + orderData.prepared;
+                document.getElementById('orderInfoDisplay').style.display = 'block';
+                document.getElementById('orderInfoDisplay').innerText = `Order: ${orderData.orderId || 'N/A'} | Part: ${orderData.partNum || 'N/A'} | Started: ${orderData.prepared} prepared`;
+            } else {
+                document.getElementById('orderInfoDisplay').style.display = 'none';
+            }
+
             const progressContainer = document.getElementById('progressContainer');
-            if (targetValue > 0) {
+            if (effectiveTarget > 0) {
                 document.body.classList.add('target-active');
                 progressContainer.style.display = 'block';
-                let remaining = targetValue - count;
-                let percentage = (count / targetValue) * 100;
+                let remaining = effectiveTarget - effectiveCount;
+                let percentage = (effectiveCount / effectiveTarget) * 100;
                 if (percentage > 100) percentage = 100;
                 if (percentage < 0) percentage = 0;
 
@@ -1009,13 +1089,14 @@
                     document.body.classList.add('target-reached-bg');
                 } else {
                     statusEl.setAttribute('data-key', 'remainingText'); floatStatusEl.setAttribute('data-key', 'remainingText');
+                    document.body.classList.remove('target-reached-bg'); // Ensure removal if decreased
                     translations.remainingText.eng = `Remaining Count: <span style="color:var(--md-sys-color-primary)">${remaining}</span>`;
                     translations.remainingText.odia = `ବାକି ସଂଖ୍ୟା: <span style="color:var(--md-sys-color-primary)">${toOdiaNumeral(remaining)}</span>`;
                     translations.remainingText.hin = `शेष संख्या: <span style="color:var(--md-sys-color-primary)">${toDevanagariNumeral(remaining)}</span>`;
                     translations.remainingText.kon = `उर्वरित संख्या: <span style="color:var(--md-sys-color-primary)">${toDevanagariNumeral(remaining)}</span>`;
                 }
                 
-                let finalTargetText = `${numConverter(count)} / ${numConverter(targetValue)}`;
+                let finalTargetText = `${numConverter(effectiveCount)} / ${numConverter(effectiveTarget)}`;
                 document.getElementById('targetDisplay').innerText = finalTargetText;
                 document.getElementById('floatTargetDisplay').innerText = finalTargetText;
             } else {
@@ -1027,11 +1108,12 @@
             updateLengthResultUI(); 
             convertLengthLive(); 
             convertBadgeLive();
-            applyTranslations(); // Re-apply for any elements changed by progress logic
+            applyTranslations(); 
         }
 
-        function changeCount(direction) {
-            let multiplier = activeMode === 'badge' ? badgeMultiplier : 1;
+        // isBadge determines if multiplier applies
+        function changeCount(direction, isBadge) {
+            let multiplier = isBadge ? badgeMultiplier : 1;
             count += (step * multiplier * direction);
             if(count < 0) count = 0; 
             updateUI();
@@ -1039,6 +1121,200 @@
 
         function resetData() { count = 0; step = 1; updateUI(); }
 
+        function showToast(msgKey) {
+            const toast = document.getElementById("toast");
+            let langKey = (currentLang === 'odia') ? 'odia' : ((currentLang === 'hindi') ? 'hin' : ((currentLang === 'konkani') ? 'kon' : 'eng'));
+            
+            if (currentLang === 'both') {
+                toast.innerHTML = `${translations[msgKey].eng} <br><span style="font-size:0.85em">${translations[msgKey].odia}</span>`;
+            } else {
+                toast.innerHTML = translations[msgKey][langKey];
+            }
+            toast.className = "toast show";
+            setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 3000);
+        }
+
+        // --- ORDER / LAP TRACKER LOGIC ---
+        function clearOrderData() {
+            document.getElementById('order_id').value = '';
+            document.getElementById('order_part').value = '';
+            document.getElementById('order_target').value = '';
+            document.getElementById('order_prepared').value = '';
+            orderData.active = false;
+            orderData.orderId = '';
+            orderData.partNum = '';
+            orderData.target = 0;
+            orderData.prepared = 0;
+            localStorage.setItem('sbg_order_data', JSON.stringify(orderData));
+            updateUI();
+        }
+
+        function startOrder() {
+            let oid = document.getElementById('order_id').value;
+            let pnum = document.getElementById('order_part').value;
+            let oTarget = parseInt(document.getElementById('order_target').value) || 0;
+            let oPrep = parseInt(document.getElementById('order_prepared').value) || 0;
+            
+            orderData.active = true;
+            orderData.orderId = oid;
+            orderData.partNum = pnum;
+            orderData.target = oTarget;
+            orderData.prepared = oPrep;
+            
+            // Start a new order resets the counter globally as per prompt
+            count = 0;
+            
+            localStorage.setItem('sbg_order_data', JSON.stringify(orderData));
+            window.location.hash = ''; // close modal
+            updateUI();
+            showToast('dataStored');
+        }
+
+        function saveCurrentLap() {
+            let timeStr = new Date().toLocaleString();
+            let c_order = orderData.active ? orderData.orderId : 'General';
+            orderData.laps.unshift({ time: timeStr, count: count, orderId: c_order });
+            if (orderData.laps.length > 50) orderData.laps.pop();
+            localStorage.setItem('sbg_order_data', JSON.stringify(orderData));
+            renderLapHistory();
+            showToast('lapSaved');
+        }
+
+        function renderLapHistory() {
+            const container = document.getElementById('lap_history');
+            if(orderData.laps.length === 0) {
+                container.innerHTML = '<div style="padding: 24px; opacity: 0.6; text-align:center; font-style: italic;">No laps saved.</div>';
+                return;
+            }
+            container.innerHTML = orderData.laps.map(l => 
+                `<div class="history-item">
+                    <div style="font-size:0.75rem; opacity:0.7; margin-bottom: 4px;">${l.time}</div>
+                    <div style="display:flex; justify-content:space-between; font-weight:bold;">
+                        <span>Order: ${l.orderId}</span>
+                        <span style="color:var(--md-sys-color-primary)">Count: ${l.count}</span>
+                    </div>
+                </div>`
+            ).join('');
+        }
+
+        function populateOrderModal() {
+            if (orderData.active) {
+                document.getElementById('order_id').value = orderData.orderId;
+                document.getElementById('order_part').value = orderData.partNum;
+                document.getElementById('order_target').value = orderData.target;
+                document.getElementById('order_prepared').value = orderData.prepared;
+            }
+            renderLapHistory();
+        }
+
+        // --- VIRTUAL SCALE LOGIC ---
+        function toggleScale() {
+            scaleVisible = !scaleVisible;
+            const scaleDiv = document.getElementById('virtualScale');
+            scaleDiv.style.display = scaleVisible ? 'block' : 'none';
+            if (scaleVisible) drawScale();
+        }
+
+        function updatePPI(val) {
+            pxPerInch = parseFloat(val);
+            document.getElementById('ppiValDisplay').innerText = val;
+            drawScale();
+        }
+        
+        function saveCalibration() {
+            localStorage.setItem('sbg_ppi', pxPerInch);
+            window.location.hash = ''; // Close modal
+            showToast('dataStored');
+        }
+
+        function drawScale() {
+            const inchContainer = document.getElementById('scaleInch');
+            const cmContainer = document.getElementById('scaleCm');
+            if(!inchContainer || !cmContainer) return;
+            inchContainer.innerHTML = ''; cmContainer.innerHTML = '';
+            
+            // Width isn't impacted by our specific main/footer zoom isolation
+            const width = window.innerWidth; 
+            const pxPerCm = pxPerInch / 2.54;
+
+            // Inches (Top)
+            for(let i = 0; (i * pxPerInch) <= width; i++) {
+                let tick = document.createElement('div');
+                tick.className = 'tick tick-inch';
+                tick.style.left = (i * pxPerInch) + 'px';
+                tick.style.height = '100%';
+                if(i > 0) {
+                    let label = document.createElement('span');
+                    label.innerText = i; 
+                    label.style.position = 'absolute'; 
+                    label.style.top = '4px'; 
+                    label.style.left = '4px'; 
+                    label.style.fontSize = '12px'; 
+                    label.style.fontWeight = 'bold';
+                    label.style.background = 'var(--md-sys-color-primary)';
+                    label.style.color = 'var(--md-sys-color-on-primary)';
+                    label.style.padding = '2px 6px';
+                    label.style.borderRadius = '6px';
+                    label.style.boxShadow = '0 2px 4px rgba(0,0,0,0.2)';
+                    label.style.zIndex = '10';
+                    label.style.lineHeight = '1';
+                    tick.appendChild(label);
+                }
+                inchContainer.appendChild(tick);
+                
+                // Sub-ticks 1/16th inch
+                for(let j=1; j<16; j++) {
+                    let subTickX = (i * pxPerInch) + (j * (pxPerInch/16));
+                    if(subTickX > width) break;
+                    let subTick = document.createElement('div');
+                    subTick.className = 'tick tick-inch';
+                    subTick.style.left = subTickX + 'px';
+                    subTick.style.height = (j%8===0) ? '60%' : (j%4===0) ? '40%' : (j%2===0) ? '25%' : '15%';
+                    inchContainer.appendChild(subTick);
+                }
+            }
+
+            // CM (Bottom)
+            for(let i = 0; (i * pxPerCm) <= width; i++) {
+                let tick = document.createElement('div');
+                tick.className = 'tick tick-cm';
+                tick.style.left = (i * pxPerCm) + 'px';
+                tick.style.height = '100%';
+                if(i > 0) {
+                    let label = document.createElement('span');
+                    label.innerText = i; 
+                    label.style.position = 'absolute'; 
+                    label.style.bottom = '4px'; 
+                    label.style.left = '4px'; 
+                    label.style.fontSize = '12px'; 
+                    label.style.fontWeight = 'bold';
+                    label.style.background = 'var(--md-sys-color-primary)';
+                    label.style.color = 'var(--md-sys-color-on-primary)';
+                    label.style.padding = '2px 6px';
+                    label.style.borderRadius = '6px';
+                    label.style.boxShadow = '0 2px 4px rgba(0,0,0,0.2)';
+                    label.style.zIndex = '10';
+                    label.style.lineHeight = '1';
+                    tick.appendChild(label);
+                }
+                cmContainer.appendChild(tick);
+                
+                // MM Ticks
+                for(let j=1; j<10; j++) {
+                    let subTickX = (i * pxPerCm) + (j * (pxPerCm/10));
+                    if(subTickX > width) break;
+                    let subTick = document.createElement('div');
+                    subTick.className = 'tick tick-cm';
+                    subTick.style.left = subTickX + 'px';
+                    subTick.style.height = (j===5) ? '60%' : '30%';
+                    cmContainer.appendChild(subTick);
+                }
+            }
+        }
+        window.addEventListener('resize', () => { if(scaleVisible) drawScale(); });
+
+
+        // --- LENGTH CHECK & CALCULATORS LOGIC ---
         function calculateLengthLive() {
             let r1 = parseFloat(document.getElementById('lc_read1').value) || 0;
             let r2 = parseFloat(document.getElementById('lc_read2').value) || 0;
@@ -1048,23 +1324,6 @@
             let baseMeters = diff / 3.28;
             currentLengthTotal = baseMeters + (e1 / 100) + (e2 / 100);
             updateLengthResultUI();
-        }
-
-        function showToast(msgKey) {
-            const toast = document.getElementById("toast");
-            let langKey;
-            if (currentLang === 'odia') langKey = 'odia';
-            else if (currentLang === 'hindi') langKey = 'hin';
-            else if (currentLang === 'konkani') langKey = 'kon';
-            else langKey = 'eng';
-            
-            if (currentLang === 'both') {
-                toast.innerHTML = `${translations[msgKey].eng} <br><span style="font-size:0.85em">${translations[msgKey].odia}</span>`;
-            } else {
-                toast.innerHTML = translations[msgKey][langKey];
-            }
-            toast.className = "toast show";
-            setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 3000);
         }
 
         function saveLengthToHistory() {
@@ -1151,6 +1410,15 @@
             document.getElementById('conv_result').innerHTML = (currentLang === 'eng' || currentLang === 'both') ? `${resultEng} <span style="font-size: 0.5em; opacity: 0.8; display: block; margin-top: 4px;">(${resultReg})</span>` : resultReg;
         }
 
+        function swapConvUnits() {
+            let from = document.getElementById('conv_from');
+            let to = document.getElementById('conv_to');
+            let temp = from.value;
+            from.value = to.value;
+            to.value = temp;
+            convertLengthLive();
+        }
+
         function convertBadgeLive() {
             let val = parseFloat(document.getElementById('bc_input').value);
             if (isNaN(val)) val = 0;
@@ -1171,7 +1439,7 @@
                 numConverter = toDevanagariNumeral;
                 toUnitText = toUnit === 'badge' ? 'बॅच' : 'संख्या';
             } else {
-                toUnitText = toUnit === 'badge' ? 'Badges' : 'Numbers';
+                toUnitText = toUnit === 'badge' ? 'Batches' : 'Numbers';
             }
 
             let result = 0;
@@ -1181,7 +1449,7 @@
             
             let resultStr = parseFloat(result.toFixed(2)).toString();
             
-            let resultEng = `${resultStr} ${toUnit === 'badge' ? 'Badges' : 'Numbers'}`;
+            let resultEng = `${resultStr} ${toUnit === 'badge' ? 'Batches' : 'Numbers'}`;
             let resultReg = `${numConverter(resultStr)} ${toUnitText}`;
             
             document.getElementById('bc_result').innerHTML = (currentLang === 'eng' || currentLang === 'both') ? `${resultEng} <span style="font-size: 0.5em; opacity: 0.8; display: block; margin-top: 4px;">(${resultReg})</span>` : resultReg;
@@ -1224,93 +1492,50 @@
 
         function clearHistory() { localStorage.removeItem('sbg_lc_history'); renderHistory(); }
 
-        // --- NEW: CONFIG DOCS ---
+        // --- CONFIG DOCS LOGIC ---
         const configDocsData = {
             doc1: {
                 title: "CABLE ASSEMBLY, JUMPER, CONFIGURABLE",
-                content: `
-                    <h3>General Document Information</h3>
-                    <p>
-                        <strong>Title:</strong> CABLE ASSEMBLY, JUMPER, CONFIGURABLE<br>
-                        <strong>Drawing Number:</strong> A100H3247<br>
-                        <strong>Revision:</strong> BH
-                    </p>
-                    <h3>Configuration Breakdown</h3>
+                content: `<h3>General Document Information</h3>
+                    <p><strong>Drawing Number:</strong> A100H3247<br><strong>Revision:</strong> BH</p>
                     <table>
                         <thead><tr><th>Code</th><th>Category</th><th>Options / Values</th></tr></thead>
                         <tbody>
-                            <tr><td><strong>X</strong></td><td>(VERSION)</td><td>F = FIBER LOW LOSS<br>C = ECONOMIC VERSION</td></tr>
-                            <tr><td><strong>a</strong></td><td>FAMILY</td><td>D = JUMPER PLENUM<br>E = JUMPER RISER<br>F = JUMPER LSZH (DUAL RATED)</td></tr>
-                            <tr><td><strong>b</strong></td><td>FIBER TYPE</td><td>Z = LAZRSPEED 300 MULTIMODE<br>X = LAZRSPEED 550 MULTIMODE<br>V = LAZRSPEED WB 550<br>W = TERASPEED SM G657.A1 OR A2<br>G = SINGLEMODE G657.A2</td></tr>
-                            <tr><td><strong>cc</strong></td><td>TERMINATION END A</td><td>K* = LC LOCKING[18]<br>LC = LC UPC<br>LA = LC APC<br>L# = KEYED LC<br>SC = SC UPC<br>SA = SC APC</td></tr>
-                            <tr><td><strong>dd</strong></td><td>TERMINATION END B</td><td>K* = LC LOCKING[18]<br>LC = LC UPC<br>LA = LC APC<br>L# = KEYED LC<br>SC = SC UPC<br>SA = SC APC<br>UC = UNCONNECTORIZED</td></tr>
-                            <tr><td><strong>e</strong></td><td>CONSTRUCTION</td><td>2 = 1.6mm SIMPLEX<br>4 = 1.6mm ZIP CORD</td></tr>
                             <tr><td><strong>f</strong></td><td>FIBER COUNT</td><td>1 = 1 FIBER<br>2 = 2 FIBER</td></tr>
                             <tr><td><strong>g</strong></td><td>COLOR</td><td>A = BLUE<br>B = ORANGE<br>C = GREEN<br>D = BROWN<br>E = SLATE<br>F = WHITE<br>G = RED<br>H = BLACK<br>J = YELLOW<br>K = VIOLET<br>L = ROSE<br>M = AQUA<br>N = LIME GREEN</td></tr>
-                            <tr><td><strong>h</strong></td><td>OPTIONS</td><td>X = NO BREAKOUT<br>8 = WITH PORT BLOCKER[20]<br>9 = NO BREAKOUT NO REEL<br>G = GOOGLE, NO BREAKOUT</td></tr>
-                            <tr><td><strong>j</strong></td><td>UNIT OF MEASURE</td><td>F = FEET<br>M = METER<br>D = DECIMETER</td></tr>
                             <tr><td><strong>kkk</strong></td><td>LENGTH</td><td>FEET: 001 - 999<br>METERS: 001 - 500<br>DECIMETERS: 005 - 990</td></tr>
-                        </tbody>
-                    </table>
-                    <h3>Table 2: Length Tolerances</h3>
-                    <table>
-                        <thead><tr><th>CABLE LENGTH FT (M)</th><th>LENGTH TOLERANCE FT (M)</th></tr></thead>
-                        <tbody>
-                            <tr><td><strong>1 - 1.9 (0.305 - 0.579)</strong></td><td>+0.25/-0.0 (+0.08-0.0)</td></tr>
-                            <tr><td><strong>2 - 14 (1 - 4)</strong></td><td>+0.5/-0.0 (+0.15-0.000)</td></tr>
-                            <tr><td><strong>15 - 100 (5 - 30)</strong></td><td>+1.0/-0.0 (+0.30-0.00)</td></tr>
-                            <tr><td><strong>101 - 200 (31 - 60)</strong></td><td>+1.0/-0.0 (+0.30-0.00)</td></tr>
-                            <tr><td><strong>201 - 500 (61 - 152)</strong></td><td>+1.0/-0.0 (+0.30-0.00)</td></tr>
-                            <tr><td><strong>501 - 3277 (153 - 999)</strong></td><td>+1.0/-0.0 (+0.30-0.00)</td></tr>
                         </tbody>
                     </table>`
             },
             doc2: {
                 title: "LC UNI-BOOT JUMPER, CONFIGURABLE",
-                content: `
-                    <h3>General Document Information</h3>
-                     <p>
-                        <strong>Title:</strong> LC UNI-BOOT JUMPER, CONFIGURABLE<br>
-                        <strong>Drawing Number:</strong> A110H3439<br>
-                        <strong>Revision:</strong> AL
-                    </p>
-                    <h3>Configuration Breakdown</h3>
+                content: `<h3>General Document Information</h3>
+                     <p><strong>Drawing Number:</strong> A110H3439<br><strong>Revision:</strong> AL</p>
                     <table>
                         <thead><tr><th>Code</th><th>Category</th><th>Options / Values</th></tr></thead>
                         <tbody>
-                            <tr><td><strong>a</strong></td><td>PRODUCT TYPE</td><td>U = ULTRA LOW LOSS<br>T = ULL FIM LABELING</td></tr>
-                            <tr><td><strong>b</strong></td><td>FAMILY</td><td>D = JUMPER PLENUM<br>F = JUMPER RISER / LSZH</td></tr>
-                            <tr><td><strong>c</strong></td><td>FIBER TYPE</td><td>X = LAZRSPEED 550 MULTIMODE<br>V = LAZRSPEED WB 550<br>G = TERASPEED SM G.657.A2<br>W = CORNING SMF-28 ULTRA<br>0 = PRYSMIAN SM G.657.A2</td></tr>
-                            <tr><td><strong>dd</strong></td><td>TERMINATION END A</td><td>LU = LC UNI-BOOT<br>SN = SN SENKO NANO (50T)</td></tr>
-                            <tr><td><strong>ee</strong></td><td>TERMINATION END B</td><td>LU = LC UNI-BOOT<br>SN = SN SENKO NANO (50T)<br>UC = UNCONNECTED</td></tr>
-                            <tr><td><strong>f</strong></td><td>CONSTRUCTION</td><td>0 = 2.0mm MP IC<br>K = 1.5mm MP IC</td></tr>
                             <tr><td><strong>g</strong></td><td>FIBER COUNT</td><td>2 = 2 FIBER</td></tr>
                             <tr><td><strong>h</strong></td><td>COLOR</td><td>A = BLUE<br>C = GREEN<br>J = YELLOW<br>M = AQUA<br>N = LIME GREEN<br>K = VIOLET<br>G = RED</td></tr>
-                            <tr><td><strong>j</strong></td><td>OPTIONS</td><td>X = NO BREAKOUT<br>G = GOOGLE</td></tr>
-                            <tr><td><strong>k</strong></td><td>UNIT OF MEASURE</td><td>F = FEET<br>M = METER<br>D = DECIMETERS</td></tr>
                             <tr><td><strong>xxx</strong></td><td>LENGTH</td><td>FEET: 001-999<br>METERS: 001-999<br>DECIMETERS: 001-999</td></tr>
-                        </tbody>
-                    </table>
-                    <h3>Table 2: Length Tolerances</h3>
-                    <table>
-                         <thead><tr><th>CABLE LENGTH FT (M)</th><th>LENGTH TOLERANCE FT (M)</th></tr></thead>
-                        <tbody>
-                            <tr><td><strong>1.0 (0.305)</strong></td><td>+0.25/-0.0 (+0.08/-0.00)</td></tr>
-                            <tr><td><strong>2.0 - 14. (1 - 4)</strong></td><td>+0.5/-0.00 (+0.15/-0.00)</td></tr>
-                            <tr><td><strong>15 - 100 (5 - 30)</strong></td><td>+1.0/-0.0 (+.30/-0.00)</td></tr>
-                            <tr><td><strong>101 - 200 (31 - 60)</strong></td><td>+1.0/-0.0 (+.30/-0.00)</td></tr>
-                            <tr><td><strong>201 - 500 (61 - 152)</strong></td><td>+1.0/-0.0 (+.30/-0.00)</td></tr>
-                            <tr><td><strong>501 - 3277 (153 - 999)</strong></td><td>+1.0/-0.0 (+.30/-0.00)</td></tr>
                         </tbody>
                     </table>`
             }
         };
-        
         const colorMap = { "BLUE": "#007bff", "ORANGE": "#fd7e14", "GREEN": "#28a745", "BROWN": "#a52a2a", "SLATE": "#708090", "WHITE": "#f8f9fa", "RED": "#dc3545", "BLACK": "#343a40", "YELLOW": "#ffc107", "VIOLET": "#8f00ff", "ROSE": "#ff007f", "AQUA": "#00ffff", "LIME GREEN": "#32cd32" };
         
         function formatConfigContent(htmlContent) {
             const tempDiv = document.createElement('div');
             tempDiv.innerHTML = htmlContent;
+            
+            // Wrap tables for responsiveness
+            const tables = tempDiv.querySelectorAll('table');
+            tables.forEach(table => {
+                const wrapper = document.createElement('div');
+                wrapper.className = 'table-responsive';
+                table.parentNode.insertBefore(wrapper, table);
+                wrapper.appendChild(table);
+            });
+
             const cells = tempDiv.querySelectorAll('td:last-child');
             cells.forEach(cell => {
                 let cellHtml = cell.innerHTML;
@@ -1351,10 +1576,17 @@
             else if (hash === '#converter') modalToShow = 'converterModal';
             else if (hash === '#badgeconverter') modalToShow = 'badgeConverterModal';
             else if (hash === '#config-docs') modalToShow = 'configDocsModal';
+            else if (hash === '#orderTracker') modalToShow = 'orderTrackerModal';
+            else if (hash === '#scaleCalibrationModal') modalToShow = 'scaleCalibrationModal';
 
             if (modalToShow) {
                 document.getElementById(modalToShow).classList.add('active');
                 if (modalToShow === 'configDocsModal') showConfigSelection();
+                if (modalToShow === 'orderTrackerModal') populateOrderModal();
+                if (modalToShow === 'scaleCalibrationModal') {
+                    document.getElementById('ppiSlider').value = pxPerInch;
+                    document.getElementById('ppiValDisplay').innerText = pxPerInch;
+                }
                 updateUI();
                 closeMobileMenu();
             }
@@ -1375,9 +1607,6 @@
                     mainNav.classList.remove('nav-hidden');
                 }
             }
-
-            // REMOVED HIDING LOGIC FOR FLOATING BUTTONS
-            
             lastScrollY = currentScrollY;
         });
 
@@ -1395,6 +1624,10 @@
             }
         });
         document.getElementById('badgeSizeInput').addEventListener('blur', updateUI);
+
+        document.getElementById('ppiSlider').addEventListener('input', function(e) {
+            updatePPI(e.target.value);
+        });
 
         document.getElementById('langSwitch').addEventListener('change', function(e) {
             if (e.target.value === 'report') {
@@ -1417,28 +1650,23 @@
                 customInput.classList.remove('show-custom');
                 targetValue = parseInt(val) || 0;
             }
+            // Clear order active flag if manual target selected here
+            if (orderData.active) {
+                orderData.active = false;
+                localStorage.setItem('sbg_order_data', JSON.stringify(orderData));
+                showToast('dataStored');
+            }
             updateUI();
         });
 
         document.getElementById('customTargetInput').addEventListener('input', function(e) {
-            targetValue = parseInt(e.target.value) || 0; updateUI();
+            targetValue = parseInt(e.target.value) || 0; 
+            // Also override order data
+            if(orderData.active) { orderData.active = false; localStorage.setItem('sbg_order_data', JSON.stringify(orderData)); }
+            updateUI();
         });
 
-        function setDynamicSplash() {
-            const hash = window.location.hash;
-            let title = "Fiber Count";
-            let subtitle = "Sandeep Biswal G Apps";
-            if (hash === '#lengthcheck') title = "Fiber Length Check";
-            else if (hash === '#converter') title = "Length Converter";
-            else if (hash === '#badgeconverter') title = "Badge Converter";
-            else if (hash === '#config-docs') title = "Configurable Docs";
-
-            document.getElementById('loaderTitle').innerHTML = title;
-            document.getElementById('loaderSubtitle').innerHTML = subtitle;
-        }
-
         window.addEventListener('load', () => {
-            setDynamicSplash();
             updateUI();
             handleHashChange();
 
@@ -1446,7 +1674,7 @@
                 const loader = document.getElementById('loader');
                 loader.style.opacity = '0';
                 setTimeout(() => loader.style.display = 'none', 500);
-            }, 1500);
+            }, 1000);
         });
     </script>
 </body>
