@@ -1,5 +1,4 @@
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <!-- Professional SEO Optimization -->
-    <meta name="description" content="Fiber Count by Sandeep Biswal G is a highly customized, responsive counter, badge tracker, fiber length converter, and calculator utility app available in Odia, English, Hindi, and Konkani.">
-    <meta name="keywords" content="Fiber Count, Num Increment, Number Increment, Sandeep Biswal G, Counter App, Odia, Hindi, Konkani, Android Developer, Utility, Badge Tracker, Plyxo Games, Goa Commscope, Fiber Length Check, Online Calculator, Odia Bhasa App, Configurable Jumper, Cable Assembly">
+    <meta name="description" content="Fiber Count by Sandeep Biswal G is a highly customized, responsive counter, badge tracker, shift calendar, fiber length converter, and calculator utility app available in Odia, English, Hindi, and Konkani.">
+    <meta name="keywords" content="Fiber Count, Num Increment, Number Increment, Sandeep Biswal G, Counter App, Odia, Hindi, Konkani, Android Developer, Utility, Badge Tracker, Shift Calendar, 2026 Holidays, Plyxo Games, Goa Commscope, Fiber Length Check, Configurable Jumper, Cable Assembly, Lap Counter, OCP Calculator">
     <meta name="author" content="Sandeep Biswal G">
     <meta name="robots" content="index, follow">
     <title>Fiber Count - Sandeep Biswal G</title>
@@ -17,7 +16,7 @@
     <link rel="canonical" href="https://imsbg.github.io/fiber/">
     <meta property="og:site_name" content="Fiber Count - Sandeep Biswal G">
     <meta property="og:title" content="Fiber Count - Sandeep Biswal G">
-    <meta property="og:description" content="A highly customized, responsive counter, badge tracker, fiber length calculator, and utility app by Sandeep Biswal G.">
+    <meta property="og:description" content="A highly customized, responsive counter, badge tracker, shift calendar, fiber length calculator, and utility app by Sandeep Biswal G.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://imsbg.github.io/fiber/">
 
@@ -33,7 +32,10 @@
             --md-sys-color-on-primary: #ffffff;
             --md-sys-color-primary-container: #d8e2ff;
             --md-sys-color-on-primary-container: #001a41;
+            --md-sys-color-secondary: #565f71;
+            --md-sys-color-on-secondary: #ffffff;
             --md-sys-color-secondary-container: #dce2f9;
+            --md-sys-color-on-secondary-container: #131c2b;
             --md-sys-color-background: #fdfbff;
             --md-sys-color-surface: #fdfbff;
             --md-sys-color-surface-variant: #e1e2ec;
@@ -41,6 +43,13 @@
             --md-sys-color-error: #ba1a1a;
             --md-sys-color-on-error: #ffffff;
             --border-radius: 20px;
+            
+            /* Shift Calendar Colors - Light */
+            --shift-a-bg: #E8F5E9; --shift-a-text: #2E7D32; 
+            --shift-b-bg: #E3F2FD; --shift-b-text: #1565C0; 
+            --shift-c-bg: #EDE7F6; --shift-c-text: #6200EA; 
+            --shift-off-bg: #FFEBEE; --shift-off-text: #D32F2F; 
+            --holiday-bg: #fff3cd; --holiday-text: #856404;
         }
 
         body.dark-theme {
@@ -48,13 +57,23 @@
             --md-sys-color-on-primary: #062e6f;
             --md-sys-color-primary-container: #004593;
             --md-sys-color-on-primary-container: #d8e2ff;
-            --md-sys-color-secondary-container: #334b6b;
+            --md-sys-color-secondary: #bfc6dc;
+            --md-sys-color-on-secondary: #283141;
+            --md-sys-color-secondary-container: #3e4759;
+            --md-sys-color-on-secondary-container: #dce2f9;
             --md-sys-color-background: #121212;
             --md-sys-color-surface: #1e1e1e;
             --md-sys-color-surface-variant: #333333;
             --md-sys-color-on-surface: #e2e2e2;
             --md-sys-color-error: #ffb4ab;
             --md-sys-color-on-error: #690005;
+            
+            /* Shift Calendar Colors - Dark */
+            --shift-a-bg: #1B3320; --shift-a-text: #81C784; 
+            --shift-b-bg: #102A43; --shift-b-text: #64B5F6; 
+            --shift-c-bg: #22133D; --shift-c-text: #B388FF; 
+            --shift-off-bg: #3B1619; --shift-off-text: #E57373; 
+            --holiday-bg: #332b00; --holiday-text: #ffecb5;
         }
         
         body.dark-theme select, 
@@ -68,9 +87,12 @@
         body.dark-theme .promo-card { background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.1); }
         body.dark-theme.target-reached-bg { background: linear-gradient(135deg, #2b580c 0%, #174b21 100%); }
         body.dark-theme .modal-content { background: var(--md-sys-color-background); color: var(--md-sys-color-on-surface); }
-        body.dark-theme .history-item { border-bottom: 1px solid rgba(255,255,255,0.1); }
+        body.dark-theme .history-item, body.dark-theme .lap-item { border-bottom: 1px solid rgba(255,255,255,0.1); }
+        body.dark-theme .config-viewer-body th, .config-viewer-body td { border: 1px solid var(--md-sys-color-surface-variant); }
+        body.dark-theme .config-viewer-body th { background-color: var(--md-sys-color-secondary-container); }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Google Sans', sans-serif; }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Google Sans', sans-serif; -webkit-tap-highlight-color: transparent; }
 
         body {
             background-color: var(--md-sys-color-background);
@@ -153,7 +175,7 @@
 
         .top-actions { display: flex; justify-content: center; width: 100%; gap: 12px; flex-wrap: wrap; margin-bottom: 8px; }
         .btn-switch-mode {
-            background-color: var(--md-sys-color-surface-variant); color: var(--md-sys-color-on-surface);
+            background-color: var(--md-sys-color-primary-container); color: var(--md-sys-color-on-primary-container);
             border: none; padding: 10px 20px; border-radius: 100px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); font-size: 0.95rem;
         }
 
@@ -167,27 +189,27 @@
         .card h2 { font-size: 1.2rem; }
         .number-display { font-size: 3.5rem; font-weight: 700; color: var(--md-sys-color-primary); margin: 8px 0; word-break: break-all; }
         
-        .controls { display: flex; gap: 16px; margin-top: 12px; justify-content: center; align-items: center; width: 100%; }
+        #interaction-area { display: flex; flex-direction: column; align-items: center; margin-top: 12px; width: 100%; }
+        
+        .controls { display: flex; gap: 16px; margin-bottom: 8px; justify-content: center; align-items: center; }
+        
         .control-btn {
             border: none; border-radius: 100px; font-size: 2rem; font-weight: 700;
             cursor: pointer; transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex; align-items: center; justify-content: center;
-            height: 60px; flex: 1; max-width: 100px; padding: 0 20px;
+            height: 60px; min-width: 60px; padding: 0 20px;
         }
         .control-btn:active { transform: scale(0.92); }
+        .control-btn .icon { line-height: 1; margin-top: -4px; }
+        .control-btn .btn-text { display: none; }
 
         .btn-inc { background-color: var(--md-sys-color-primary); color: var(--md-sys-color-on-primary); }
         .btn-dec { background-color: var(--md-sys-color-secondary-container); color: var(--md-sys-color-on-surface); }
+        .btn-lap { background-color: var(--md-sys-color-secondary); color: var(--md-sys-color-on-secondary); height: 50px; min-width: 50px; font-size: 0.9rem; font-weight: bold;}
         .btn-reset { background-color: var(--md-sys-color-error); color: var(--md-sys-color-on-error); padding: 10px 20px; margin-top: auto; border:none; border-radius:100px; font-weight: 600; cursor:pointer;}
-        .btn-outline {
-            background: transparent; color: var(--md-sys-color-primary); border: 2px solid var(--md-sys-color-primary);
-            padding: 10px 20px; border-radius: 100px; font-weight: 600; cursor: pointer; width: 100%; text-align: center;
-            transition: background 0.3s, color 0.3s; font-size: 1rem;
-        }
-        .btn-outline:hover { background: var(--md-sys-color-primary-container); }
 
         /* Stepper & Input Controls */
-        .step-control { display: flex; align-items: center; gap: 8px; background: var(--md-sys-color-surface-variant); padding: 6px 12px; border-radius: 100px; margin-bottom: 16px; transition: background-color 0.6s; flex-wrap: wrap; justify-content: center; font-size: 0.95rem; width: 100%; max-width: 300px; margin: 0 auto 16px;}
+        .step-control { display: flex; align-items: center; gap: 8px; background: var(--md-sys-color-surface-variant); padding: 6px 12px; border-radius: 100px; margin-bottom: 16px; transition: background-color 0.6s; flex-wrap: wrap; justify-content: center; font-size: 0.95rem;}
         .step-control input { color: var(--md-sys-color-on-surface); width: 50px; border: none; background: transparent; font-size: 1.1rem; font-weight: bold; text-align: center; outline: none; font-family: 'Google Sans', sans-serif; transition: color 0.6s; }
         
         .stepper-group { display: flex; align-items: center; gap: 4px; }
@@ -211,6 +233,17 @@
         .custom-target-input { display: none; margin-left: 8px; width: 90px; }
         .show-custom { display: inline-block !important; }
 
+        /* Lap Feature Styles */
+        #recent-laps-container { margin-top: 20px; width: 100%; text-align: left; }
+        #recent-laps-container h4 { font-size: 0.9rem; color: var(--md-sys-color-on-surface); opacity: 0.8; margin-bottom: 8px; padding-bottom: 8px; border-bottom: 1px solid var(--md-sys-color-surface-variant); display: flex; justify-content: space-between; align-items: center; }
+        .view-all-laps { font-size: 0.8rem; font-weight: 600; color: var(--md-sys-color-primary); text-decoration: none; }
+        .view-all-laps:hover { text-decoration: underline; }
+        #recent-laps-display { max-height: 120px; overflow-y: auto; display: flex; flex-direction: column; gap: 4px; }
+        .lap-item { font-size: 0.9rem; padding: 8px 4px; display: flex; justify-content: space-between; border-bottom: 1px solid rgba(0,0,0,0.05); }
+        .lap-item-time { opacity: 0.7; font-size: 0.8em; }
+        .lap-item-count { font-weight: 700; color: var(--md-sys-color-secondary); }
+        body.dark-theme .lap-item { border-bottom: 1px solid rgba(255,255,255,0.05); }
+
         /* Floating Links */
         .floating-action-btn {
             position: fixed;
@@ -222,11 +255,9 @@
             font-weight: 600; font-size: 0.95rem; white-space: nowrap;
         }
 
-        #floatingAttendance { left: 0; top: 45%; transform: translateY(-50%); border-radius: 0 24px 24px 0; }
-        #floatingOrderBtn { left: 0; top: 58%; transform: translateY(-50%); border-radius: 0 24px 24px 0; background: var(--md-sys-color-secondary-container); color: var(--md-sys-color-on-surface); border: 2px solid var(--md-sys-color-primary);}
+        #floatingAttendance { left: 0; top: 60%; transform: translateY(-50%); border-radius: 0 24px 24px 0; }
+        #floatingDocsBtn { right: 0; top: 60%; transform: translateY(-50%); border-radius: 24px 0 0 24px; }
         
-        #floatingDocsBtn { right: 0; top: 45%; transform: translateY(-50%); border-radius: 24px 0 0 24px; }
-
         /* Promo Card Fixes */
         .promo-card {
             background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2);
@@ -241,12 +272,12 @@
         .nav-collapse .promo-card { background: linear-gradient(135deg, #001a41, #005ac1); color: #ffffff; box-shadow: 0 4px 12px rgba(0, 90, 193, 0.2); }
 
         footer { 
-            padding: 30px 20px 24px 20px; text-align: center; 
+            padding: 30px 20px 40px 20px; text-align: center; 
             background: linear-gradient(135deg, #001a41, var(--md-sys-color-primary));
             color: #ffffff; border-top-left-radius: 40px; border-top-right-radius: 40px; 
             margin-top: 24px; display: flex; flex-direction: column; align-items: center;
             box-shadow: 0 -4px 16px rgba(0,0,0,0.1); transition: background 0.6s;
-            padding-bottom: 120px; transform-origin: bottom center;
+            padding-bottom: 120px; transform-origin: bottom center; position: relative;
         }
 
         /* Modal Styles */
@@ -272,6 +303,12 @@
         }
         .lc-layout .styled-input { width: 100%; margin-bottom: 8px; margin-top: 4px; box-sizing: border-box; }
         .lc-layout label { font-size: 0.9rem; font-weight: 600; opacity: 0.9; margin-left: 8px; display: block; }
+        .btn-outline {
+            background: transparent; color: var(--md-sys-color-primary); border: 2px solid var(--md-sys-color-primary);
+            padding: 10px 20px; border-radius: 100px; font-weight: 600; cursor: pointer; width: 100%; text-align: center;
+            transition: background 0.3s, color 0.3s; font-size: 1rem;
+        }
+        .btn-outline:hover { background: var(--md-sys-color-primary-container); }
         
         .history-wrapper {
             width: 100%; flex-direction: column; flex: 1; background: var(--md-sys-color-surface-variant); border-radius: 16px; padding: 16px;
@@ -280,6 +317,7 @@
         .history-item { font-size: 0.95rem; padding: 12px; border-bottom: 1px solid rgba(0,0,0,0.08); }
         .history-item:last-child { border-bottom: none; }
         
+        /* Details layout for exact result (One Line Grid) */
         .result-details { font-size: 0.95rem; opacity: 0.95; margin-top: 12px; width: 100%; background: rgba(0,0,0,0.04); padding: 12px 16px; border-radius: 16px; display: flex; flex-direction: column; gap: 8px; }
         body.dark-theme .result-details { background: rgba(255,255,255,0.05); }
         .detail-row { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(0,0,0,0.04); padding-bottom: 6px; }
@@ -294,14 +332,12 @@
         }
         #toast.show { visibility: visible; opacity: 1; bottom: 100px; }
 
-        /* Config Docs Enhancements */
-        .table-responsive { width: 100%; overflow-x: auto; margin-top: 16px; border-radius: 8px; border: 1px solid var(--md-sys-color-surface-variant); }
-        .config-viewer-body table { width: 100%; border-collapse: collapse; min-width: 500px; margin-top: 0; font-size: 0.9rem;}
-        .config-viewer-body th, .config-viewer-body td { border: 1px solid var(--md-sys-color-surface-variant); padding: 10px 12px; text-align: left; }
-        .config-viewer-body th { background-color: var(--md-sys-color-secondary-container); font-weight: 700; }
-        .config-viewer-body { padding: 20px; overflow-y: auto; flex: 1; height: 100%; box-sizing: border-box; }
-        .config-docs-viewer { display: flex; flex-direction: column; height: 100%; width: 100%; position: absolute; top:0; left:0; background: var(--md-sys-color-background); transform: translateX(100%); opacity:0; transition: transform 0.4s ease-in-out, opacity 0.3s; z-index: 10; }
-        
+        /* Config Docs Modal Styles */
+        #configDocsModal .modal-content { overflow: hidden; }
+        .config-docs-container { width: 100%; height: 100%; display: flex; flex-direction: column; position: relative; overflow: hidden;}
+        .config-docs-selection { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 20px; padding: 20px; height: 100%; transition: transform 0.4s ease-in-out, opacity 0.3s; }
+        .config-docs-selection.hidden { transform: translateX(-100%); opacity: 0; pointer-events: none; position: absolute; }
+
         .config-btn {
             background: var(--md-sys-color-primary-container); color: var(--md-sys-color-on-primary-container);
             border: none; border-radius: 24px; padding: 24px 32px; font-size: 1.2rem; font-weight: 700;
@@ -311,21 +347,77 @@
         .config-btn:hover { transform: translateY(-4px); background-color: var(--md-sys-color-secondary-container); }
         .config-btn small { display: block; font-size: 0.8em; font-weight: 500; opacity: 0.8; margin-top: 4px; }
         
+        .config-docs-viewer { display: flex; flex-direction: column; height: 100%; position: absolute; top:0; left:0; width:100%; background: var(--md-sys-color-background); transform: translateX(100%); opacity:0; transition: transform 0.4s ease-in-out, opacity 0.3s; }
+        .config-docs-viewer.visible { transform: translateX(0); opacity: 1; }
+
         .config-viewer-header { padding: 16px 20px; display: flex; align-items: center; gap: 16px; border-bottom: 1px solid var(--md-sys-color-surface-variant); flex-shrink: 0; }
         .config-back-btn { background: var(--md-sys-color-surface-variant); border-radius: 50%; border: none; width: 36px; height: 36px; font-size: 1.5rem; cursor: pointer; display: flex; justify-content: center; align-items: center; }
+        .config-viewer-header h3 { font-size: 1.1rem; color: var(--md-sys-color-primary); }
+        .config-viewer-body { padding: 20px; overflow-y: auto; flex-grow: 1; }
+        .config-viewer-body h2 { font-size: 1.4rem; margin-bottom: 12px; }
+        .config-viewer-body h3 { font-size: 1.1rem; margin-top: 24px; margin-bottom: 12px; border-bottom: 2px solid var(--md-sys-color-primary); padding-bottom: 6px;}
+        .config-viewer-body p { margin-bottom: 12px; line-height: 1.6; }
+        .config-viewer-body table { width: 100%; border-collapse: collapse; margin-top: 16px; font-size: 0.9rem; }
+        .config-viewer-body th, .config-viewer-body td { border: 1px solid var(--md-sys-color-surface-variant); padding: 10px 12px; text-align: left; }
+        .config-viewer-body th { background-color: var(--md-sys-color-secondary-container); font-weight: 700; }
+        .config-viewer-body td:first-child, .config-viewer-body th:first-child { text-align: center; font-weight: bold; }
         .color-swatch { display: inline-block; width: 14px; height: 14px; border-radius: 50%; margin-right: 8px; vertical-align: middle; border: 1px solid rgba(0,0,0,0.2); }
         body.dark-theme .color-swatch { border-color: rgba(255,255,255,0.2); }
-        .config-docs-container { width: 100%; height: 100%; display: flex; flex-direction: column; position: relative; overflow: hidden;}
-        .config-docs-selection { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 20px; padding: 20px; height: 100%; transition: transform 0.4s ease-in-out, opacity 0.3s; }
-        .config-docs-selection.hidden { transform: translateX(-100%); opacity: 0; pointer-events: none; position: absolute; }
 
+        /* Report Modal */
+        #reportModal .modal-content {
+            flex-direction: column; text-align: center; padding: 24px;
+            max-width: 500px; width: 90vw; border-radius: 24px; height: auto;
+        }
+        #reportModal h2 { font-size: 1.3rem; margin-bottom: 16px; color: var(--md-sys-color-primary); }
+        #reportModal p { margin-bottom: 12px; line-height: 1.6; }
+        #reportModal a { color: var(--md-sys-color-primary); font-weight: 600; text-decoration: none; }
+        #reportModal a:hover { text-decoration: underline; }
+        
+        /* Floating Time Widget */
+        .floating-time-btn {
+            position: fixed; bottom: 24px; right: 24px;
+            background: var(--md-sys-color-primary); color: var(--md-sys-color-on-primary);
+            padding: 10px 18px; border-radius: 20px;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.25); z-index: 1500;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            text-decoration: none; cursor: pointer; transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .floating-time-btn:hover { transform: scale(1.05); }
+        .float-date-txt { font-size: 0.75rem; opacity: 0.9; font-weight: 600; line-height: 1.1; margin-bottom: 2px; }
+        .float-time-txt { font-size: 1.15rem; font-weight: bold; letter-spacing: 0.5px; line-height: 1.1; }
+
+        /* Shift Calendar Specific Styles */
+        .sc-cal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; width: 100%; }
+        .sc-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; width: 100%; }
+        .sc-day-header { text-align: center; font-weight: 600; font-size: 0.85rem; opacity: 0.7; padding-bottom: 8px; }
+        .sc-cell {
+            aspect-ratio: 1; border-radius: 12px; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; cursor: pointer; font-weight: bold; border: 2px solid transparent;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .sc-cell:hover:not(.sc-empty) { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .sc-cell.sc-today { border-color: var(--md-sys-color-primary); box-shadow: 0 4px 12px rgba(0,90,193,0.3); transform: scale(1.05); z-index: 2; }
+        .sc-cell.sc-holiday { background: var(--holiday-bg) !important; color: var(--holiday-text) !important; border: 1px dashed var(--holiday-text); }
+        .sc-empty { background: transparent; cursor: default; }
+        
+        .sc-shift-label { font-size: 0.7rem; padding: 2px 6px; border-radius: 4px; margin-top: 4px; font-weight: 700;}
+        .sc-shift-A { background: var(--shift-a-bg); color: var(--shift-a-text); }
+        .sc-shift-B { background: var(--shift-b-bg); color: var(--shift-b-text); }
+        .sc-shift-C { background: var(--shift-c-bg); color: var(--shift-c-text); }
+        .sc-shift-OFF { background: var(--shift-off-bg); color: var(--shift-off-text); }
+
+        .sc-holiday-list { margin-top: 16px; background: var(--md-sys-color-surface-variant); padding: 16px; border-radius: 16px; width: 100%; }
+        .sc-holiday-item { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid rgba(0,0,0,0.05); font-size: 0.95rem; align-items: center;}
+        .sc-holiday-item:last-child { border-bottom: none; padding-bottom: 0; }
+        body.dark-theme .sc-holiday-item { border-bottom: 1px solid rgba(255,255,255,0.05); }
 
         @media (min-width: 768px) {
             .lc-layout { flex-direction: row; align-items: flex-start; justify-content: center; gap: 64px; overflow: hidden; height: auto; max-height: 90vh; }
             .lc-left { flex: 1; max-width: 450px; justify-content: center; }
             .lc-right { flex: 1; max-width: 450px; margin-top: 0; justify-content: center; }
             .modal-close { display: none; } 
-            #historyModal .modal-content, #configDocsModal .modal-content, #orderTrackerModal .modal-content, #ocpModal .modal-content { max-width: 1000px; max-height: 90vh; border-radius: 24px; padding: 24px; }
+            #historyModal .modal-content, #lapHistoryModal .modal-content, #configDocsModal .modal-content, #shiftcalendarModal .modal-content, #ocpCountModal .modal-content { max-width: 1000px; max-height: 90vh; border-radius: 24px; padding: 24px; }
         }
 
         @media (max-width: 768px) {
@@ -339,6 +431,8 @@
             .nav-collapse .nav-btn, .nav-collapse select { width: 100%; margin-bottom: 8px; }
             .grid-container { grid-template-columns: 1fr; }
             .lc-right { width: 100%; }
+            .sc-cell { border-radius: 8px; }
+            .sc-shift-label { font-size: 0.65rem; padding: 2px 4px; }
         }
     </style>
 </head>
@@ -346,26 +440,11 @@
 
     <div id="loader">
         <div id="loader-content">
-            <h1 id="loaderTitle">Fiber Count<span class="odia-sub">ଫାଇବର ଗଣନା</span></h1>
+            <h1 id="loaderTitle" data-key="loaderTitle">Fiber Count<span class="odia-sub">ଫାଇବର ଗଣନା</span></h1>
             <h2 id="loaderSubtitle"><span class="odia-sub">Sandeep Biswal G Apps</span></h2>
         </div>
         <div class="loader-footer" data-key="footerCredit">by Sandeep Biswal G</div>
     </div>
-    
-    <script>
-        // Execute immediately to prevent flicker and show correct dynamic text
-        (function(){
-            const hash = window.location.hash;
-            let title = "Fiber Count";
-            if (hash === '#lengthcheck') title = "Fiber Length Check";
-            else if (hash === '#converter') title = "Length Converter";
-            else if (hash === '#badgeconverter') title = "Badge Converter";
-            else if (hash === '#config-docs') title = "Configurable Docs";
-            else if (hash === '#orderTracker') title = "Order Tracker";
-            else if (hash === '#ocpModal') title = "OCP Converter";
-            document.getElementById('loaderTitle').innerHTML = title + '<span class="odia-sub">ଫାଇବର ଗଣନା</span>';
-        })();
-    </script>
 
     <!-- Toast Notification -->
     <div id="toast">Data Stored Successfully!</div>
@@ -377,17 +456,19 @@
         </svg>
         <span>Attendance</span>
     </a>
-    <a href="#orderTracker" class="floating-action-btn" id="floatingOrderBtn">
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
-        <span data-key="orderTracker">Orders / Laps</span>
-    </a>
-    
     <a href="#config-docs" class="floating-action-btn" id="floatingDocsBtn">
         <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
             <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zM6 20V4h7v5h5v11H6z"/>
         </svg>
         <span>Docs</span>
     </a>
+
+    <!-- Floating Time Widget -->
+    <a href="#shiftcalendar" class="floating-time-btn" title="Tap for Shift Calendar & Holidays">
+        <div id="float-date-txt" class="float-date-txt">--/--/----</div>
+        <div id="float-time-txt" class="float-time-txt">--:--:--</div>
+    </a>
+
 
     <div id="floatingProgress">
         <div class="float-info">
@@ -406,12 +487,11 @@
             <div class="nav-brand" data-key="loaderTitle">Fiber Count</div>
             <button class="menu-toggle" onclick="toggleMenu()">☰</button>
             <div class="nav-collapse" id="navMenu">
-                <a href="https://imsbg.github.io/Shift-Calendar/" class="nav-btn" target="_blank"><span data-key="home">Shift Calendar</span></a>
-                <a href="https://imsbg.github.io/number-increment/calc" class="nav-btn"><span data-key="navLink1">Smart Calc</span></a>
+                <a href="#shiftcalendar" class="nav-btn"><span data-key="home">Shift Calendar</span></a>
+                <a href="#ocp-count" class="nav-btn"><span data-key="ocpCountBtn">OCP to Count</span></a>
                 <a href="#lengthcheck" class="nav-btn"><span data-key="lengthCheckBtn">Length Check</span></a>
                 <a href="#converter" class="nav-btn"><span data-key="converterBtn">Length Converter</span></a>
                 <a href="#badgeconverter" class="nav-btn"><span data-key="badgeConvBtn">Batch Converter</span></a>
-                <a href="#ocpModal" class="nav-btn"><span data-key="ocpBtn">OCP to Count</span></a>
 
                 <select id="langSwitch">
                     <option value="both">Eng &amp; Odia</option>
@@ -432,28 +512,13 @@
 
     <main id="appMain">
         <div class="top-actions">
-            <button class="btn-switch-mode" onclick="cycleZoom()">
+            <button class="btn-switch-mode" onclick="cycleZoom()" style="background: var(--md-sys-color-surface-variant); color: var(--md-sys-color-on-surface);">
                 <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
                     <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
                     <path d="M12 10h-2v2H9v-2H7V9h2V7h1v2h2v1z"/>
                 </svg>
                 <span id="zoomText" data-key="zoomText">Zoom: 100%</span>
             </button>
-            <button class="btn-switch-mode" onclick="window.location.hash='#infoModal'">
-                <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
-                </svg>
-                <span data-key="appInfoBtn">App Info</span>
-            </button>
-        </div>
-        
-        <div class="step-control">
-            <label data-key="stepLabel">Increment Step:</label>
-            <div class="stepper-group">
-                <button class="stepper-btn" onclick="adjustInput('stepInput', -1)">-</button>
-                <input type="text" id="stepInput" min="1" value="1">
-                <button class="stepper-btn" onclick="adjustInput('stepInput', 1)">+</button>
-            </div>
         </div>
 
         <div class="card target-card">
@@ -474,11 +539,6 @@
                     <span data-key="btnReset">Reset Data</span>
                 </button>
             </div>
-            
-            <div id="orderInfoDisplay" style="display:none; background: var(--md-sys-color-primary-container); color: var(--md-sys-color-on-primary-container); padding: 8px 12px; border-radius: 8px; margin-bottom: 12px; font-weight: bold; font-size: 0.9rem; text-align: left;">
-                Active Order
-            </div>
-
             <div id="progressContainer" style="display:none;">
                 <div class="target-progress-bg">
                     <div class="target-progress-fill" id="progressFill"></div>
@@ -491,35 +551,46 @@
         </div>
 
         <div class="grid-container">
-            <!-- Numbers Card -->
             <div class="card" id="card-number">
                 <h2 data-key="currentNum">Current Number</h2>
                 <div class="number-display" id="countDisplay">0</div>
-                <div class="controls">
-                    <button class="btn-dec control-btn" onclick="changeCount(-1, false)">-</button>
-                    <button class="btn-inc control-btn" onclick="changeCount(1, false)">+</button>
+                <div id="interaction-area">
+                    <div class="step-control">
+                        <label data-key="stepLabel">Increment Step:</label>
+                        <div class="stepper-group">
+                            <button class="stepper-btn" onclick="adjustInput('stepInput', -1)">-</button>
+                            <input type="text" id="stepInput" min="1" value="1">
+                            <button class="stepper-btn" onclick="adjustInput('stepInput', 1)">+</button>
+                        </div>
+                    </div>
+                    
+                    <div class="controls">
+                        <button class="btn-dec control-btn" onclick="changeCount(-1)">
+                            <span class="icon">-</span>
+                        </button>
+                         <button class="btn-lap control-btn" onclick="recordLap()">
+                            <span data-key="lapBtn">LAP</span>
+                        </button>
+                        <button class="btn-inc control-btn" onclick="changeCount(1)">
+                            <span class="icon">+</span>
+                        </button>
+                    </div>
+                </div>
+                <div id="recent-laps-container">
+                    <h4><span data-key="recentLapsTitle">Recent Laps</span> <a href="#lap-history" class="view-all-laps" data-key="viewAllLaps">View All</a></h4>
+                    <div id="recent-laps-display"></div>
                 </div>
             </div>
 
-            <!-- Batches Card -->
             <div class="card" id="card-badge">
                 <svg class="svg-badge" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path d="M12 2l2.4 7.4h7.6l-6.1 4.5 2.3 7.1-6.2-4.6-6.2 4.6 2.3-7.1-6.1-4.5h7.6z"/>
                 </svg>
                 <h2 data-key="badges">Total Batches</h2>
                 <div class="number-display" id="badgeDisplay">0</div>
+                <div id="smallTotalDisplay" data-key="smallTotalDisplay" style="font-size: 1.1rem; font-weight: 700; color: var(--md-sys-color-primary); opacity: 0.8; margin-top: -12px; margin-bottom: 8px;">(Total: 0)</div>
                 
-                <div class="controls">
-                    <button class="btn-dec control-btn" onclick="changeCount(-1, true)">-</button>
-                    <button class="btn-inc control-btn" onclick="changeCount(1, true)">+</button>
-                </div>
-                
-                <button class="btn-outline" style="margin-top: 16px; padding: 10px 24px; font-size: 0.95rem; width:100%; max-width:220px; display:flex; align-items:center; justify-content:center; gap:8px;" onclick="saveCurrentLap()">
-                    <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
-                    <span data-key="saveLap">Save Lap</span>
-                </button>
-
-                <div class="step-control" style="margin-top: 16px; margin-bottom: 0;">
+                <div class="step-control" style="margin-top: 8px; margin-bottom: 8px;">
                     <label data-key="badgeSizeSet">Set Batch Size:</label>
                     <div class="stepper-group">
                         <button class="stepper-btn" onclick="adjustInput('badgeSizeInput', -1)">-</button>
@@ -527,110 +598,44 @@
                         <button class="stepper-btn" onclick="adjustInput('badgeSizeInput', 1)">+</button>
                     </div>
                 </div>
-                <p style="opacity: 0.7; margin-top: 8px; font-size:0.9rem;" id="badgeDescText">1 Batch = 6 Increments</p>
-            </div>
-        </div>
-
-        <div class="card" style="margin-top: 16px; align-items: stretch; padding: 16px;">
-            <h3 style="margin-bottom:12px; color:var(--md-sys-color-primary);" data-key="recentLaps">Recent Laps</h3>
-            <div id="mainScreenLaps" class="history-wrapper" style="max-height: 200px; padding: 8px; border-radius: 8px;"></div>
-        </div>
-    </main>
-    
-    <!-- Confirm Action Modal -->
-    <div id="confirmModal" class="modal-overlay">
-        <div class="modal-content" style="max-width:400px; padding:24px; text-align:center; flex-direction:column; border-radius: 24px; height: auto;">
-            <h2 style="color:var(--md-sys-color-error); margin-bottom:16px;">⚠️ Warning</h2>
-            <p id="confirmMessage" style="margin-bottom:24px; font-weight:500;">Are you sure?</p>
-            <div style="display:flex; gap:12px; width:100%;">
-                <button class="btn-dec" style="flex:1; padding:12px; border-radius:100px; border:none; cursor:pointer; font-weight:bold;" onclick="closeConfirmModal()"><span data-key="noBtn">Cancel</span></button>
-                <button class="btn-inc" style="flex:1; background:var(--md-sys-color-error); color:var(--md-sys-color-on-error); padding:12px; border-radius:100px; border:none; cursor:pointer; font-weight:bold;" id="confirmYesBtn"><span data-key="yesBtn">Yes, Clear</span></button>
-            </div>
-        </div>
-    </div>
-
-    <!-- App Info Modal -->
-    <div id="infoModal" class="modal-overlay" onclick="closeModal(event)">
-        <div class="modal-content" style="max-width:500px; padding:24px; text-align:center; flex-direction:column; border-radius: 24px; height: auto;" onclick="event.stopPropagation()">
-             <button class="modal-close" onclick="window.location.hash=''">✕</button>
-             <h2 data-key="appInfoTitle" style="color: var(--md-sys-color-primary); margin-bottom:16px; margin-top:0;">About Fiber Count</h2>
-             <p data-key="appInfoDesc" style="line-height:1.6; margin-bottom:12px; font-size:1rem; opacity:0.9;">
-                 Fiber Count helps you track how many cable assemblies or batches you have prepared. Use the counter to increment units, save laps to track progress over time, set targets, check fiber lengths, and convert batch sizes accurately.
-             </p>
-             <button class="btn-inc" style="padding: 10px 30px; border-radius:100px; border:none; font-weight:bold; cursor:pointer; margin-top: 24px; width:100%;" onclick="window.location.hash=''">
-                 <span data-key="reportClose">Close</span>
-             </button>
-        </div>
-    </div>
-
-    <!-- Order Tracker Modal -->
-    <div id="orderTrackerModal" class="modal-overlay" onclick="closeModal(event)">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <button class="modal-close" onclick="window.location.hash=''">✕</button>
-            <div class="lc-layout">
-                <div class="lc-left">
-                    <h2 style="margin-bottom: 12px; margin-top: 0; color: var(--md-sys-color-primary); display: flex; align-items: center; gap: 8px; font-size:1.3rem;">
-                        <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
-                        <span data-key="orderTracker">Order Tracker</span>
-                    </h2>
-                    <p style="font-size:0.9rem; opacity:0.8; margin-bottom:12px;" data-key="newOrderInfo">Starting a new order resets the counter.</p>
-                    
-                    <div>
-                        <label data-key="selectOrder">Select Existing / New</label>
-                        <select id="saved_orders_select" class="styled-input" onchange="loadSavedOrder()">
-                            <option value="new" data-key="createNewOrder">-- Create New Order --</option>
-                        </select>
-                    </div>
-
-                    <div><label data-key="orderId">Order ID</label><input type="text" id="order_id" class="styled-input" placeholder="e.g. 6009001234"></div>
-                    <div><label data-key="partNum">Part Number</label><input type="text" id="order_part" class="styled-input" placeholder="e.g. FFWLCLC42-JXM010"></div>
-                    <div><label data-key="totalTarget">Total Qty</label><input type="number" id="order_target" class="styled-input" placeholder="e.g. 1000"></div>
-                    <div><label data-key="preparedQty">Already Prepared (Inline Qty)</label><input type="number" id="order_prepared" class="styled-input" placeholder="e.g. 150"></div>
-                    
-                    <div style="display: flex; gap: 12px; margin-top: 12px;">
-                        <button class="btn-dec" style="flex: 1; padding: 10px; border-radius: 100px; border: none; font-weight: bold; cursor: pointer;" onclick="openConfirmModal('confirmClear', clearOrderDataInputs)"><span data-key="lcClear">Clear</span></button>
-                        <button class="btn-inc" style="flex: 2; padding: 10px; border-radius: 100px; border: none; font-weight: bold; cursor: pointer;" onclick="startOrder()"><span data-key="startOrder">Set Active Order</span></button>
-                    </div>
-                </div>
-                <div class="lc-right">
-                    <div style="width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; border-bottom: 1px solid var(--md-sys-color-surface-variant); background: var(--md-sys-color-secondary-container); border-radius: 16px 16px 0 0;">
-                        <h3 style="font-size: 1.1rem; color: var(--md-sys-color-on-surface);" data-key="lapHistory">Lap History</h3>
-                        <button class="btn-inc" style="padding: 6px 16px; border-radius: 100px; border: none; font-size:0.8rem; cursor:pointer;" onclick="saveCurrentLap()"><span data-key="saveLap">Save Lap</span></button>
-                    </div>
-                    <div id="lap_history" class="history-wrapper" style="border-radius: 0 0 16px 16px; max-height: 250px;"></div>
-                    
-                    <button class="btn-dec" style="width: 100%; padding: 12px; margin-top: auto; font-size: 1rem; border:none; border-radius: 100px; font-weight: bold; cursor:pointer;" onclick="window.location.hash=''">
-                        <span data-key="lcBackBtn">Back to Tracker</span>
+                <p style="opacity: 0.7; margin-top: 4px; font-size:0.9rem;" id="badgeDescText">1 Batch = 6 Increments</p>
+                <div class="controls" style="margin-top: 16px;">
+                    <button class="btn-dec control-btn" onclick="changeBatchCount(-1)">
+                        <span class="icon">-</span>
+                    </button>
+                    <button class="btn-inc control-btn" onclick="changeBatchCount(1)">
+                        <span class="icon">+</span>
                     </button>
                 </div>
             </div>
         </div>
-    </div>
+    </main>
 
-    <!-- OCP Converter Modal -->
-    <div id="ocpModal" class="modal-overlay" onclick="closeModal(event)">
+    <!-- OCP to Count Modal -->
+    <div id="ocpCountModal" class="modal-overlay" onclick="closeModal(event)">
         <div class="modal-content" onclick="event.stopPropagation()">
             <button class="modal-close" onclick="window.location.hash=''">✕</button>
             <div class="lc-layout">
                 <div class="lc-left">
                     <h2 style="margin-bottom: 12px; margin-top: 0; color: var(--md-sys-color-primary); display: flex; align-items: center; gap: 8px; font-size:1.3rem;">
-                        <span data-key="ocpTitle">OCP Converter</span>
+                        <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M16 4h-2V2h-4v2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14h-8V6h8v12z"/></svg>
+                        <span data-key="ocpCountTitle">OCP to Count</span>
                     </h2>
-                    <div><label data-key="ocpInputLabel">Enter OCP Number</label><input type="number" id="ocp_input" class="styled-input" placeholder="e.g. 100" oninput="convertOcpLive()" value="0"></div>
+                    <div><label data-key="ocpNumberLabel">OCP Number</label><input type="number" id="ocp_number_input" class="styled-input" placeholder="e.g. 24" oninput="calculateOCP()"></div>
                     <div>
-                        <label data-key="ocpTypeLabel">Cable Type</label>
-                        <select id="ocp_type" class="styled-input" onchange="convertOcpLive()">
-                            <option value="2" data-key="twoEnd">Two End (/2)</option>
-                            <option value="4" data-key="fourEnd">Four End (/4)</option>
+                        <label data-key="ocpEndsLabel">Select Ends</label>
+                        <select id="ocp_ends_select" class="styled-input" onchange="calculateOCP()">
+                            <option value="2">2 Ends</option>
+                            <option value="4">4 Ends</option>
                         </select>
                     </div>
                 </div>
                 <div class="lc-right">
-                    <div style="width: 100%; font-size: 1.5rem; font-weight: bold; text-align: center; background: var(--md-sys-color-secondary-container); padding: 24px 16px; border-radius: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
-                        <span data-key="lcResultText" style="color: var(--md-sys-color-on-surface); display:block; font-size: 1.1rem; opacity:0.8; margin-bottom: 8px;">Result:</span>
-                        <span id="ocp_result" style="color: var(--md-sys-color-primary); font-size: 2.2rem; word-break: break-word;">0</span>
+                    <div style="width: 100%; text-align: center; background: var(--md-sys-color-secondary-container); padding: 20px 16px; border-radius: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+                        <span data-key="lcResultText" style="color: var(--md-sys-color-on-surface); display:block; font-size: 1.1rem; font-weight:bold; opacity:0.8; margin-bottom: 8px;">Count per End:</span> 
+                        <div id="ocp_result_display" style="font-size: 2.5rem; font-weight: bold; color: var(--md-sys-color-primary);">0</div>
                     </div>
-                    <button class="btn-dec" style="width: 100%; padding: 12px; margin-top: auto; font-size: 1rem; border:none; border-radius:100px; font-weight:bold; cursor:pointer;" onclick="window.location.hash=''">
+                    <button class="btn-dec" style="width: 100%; padding: 12px; margin-top: auto; font-size: 1rem; border:none; border-radius: 100px; font-weight: bold; cursor:pointer;" onclick="window.location.hash=''">
                         <span data-key="lcBackBtn">Back to Tracker</span>
                     </button>
                 </div>
@@ -653,7 +658,7 @@
                     <div><label data-key="lcEnd1">End 1 Prep (cm)</label><input type="number" id="lc_end1cm" class="styled-input" placeholder="e.g. 150" oninput="calculateLengthLive()"></div>
                     <div><label data-key="lcEnd2">End 2 Prep (cm)</label><input type="number" id="lc_end2cm" class="styled-input" placeholder="e.g. 150" oninput="calculateLengthLive()"></div>
                     <div style="display: flex; gap: 12px; margin-top: 12px;">
-                        <button class="btn-dec" style="flex: 1; padding: 10px; border-radius: 100px; border: none; font-weight: bold; cursor: pointer;" onclick="openConfirmModal('confirmClear', clearInputs)"><span data-key="lcClearInputs">Clear Inputs</span></button>
+                        <button class="btn-dec" style="flex: 1; padding: 10px; border-radius: 100px; border: none; font-weight: bold; cursor: pointer;" onclick="openConfirmModal('confirmClearInputs', clearInputs)"><span data-key="lcClearInputs">Clear Inputs</span></button>
                         <button class="btn-inc" style="flex: 1; padding: 10px; border-radius: 100px; border: none; font-weight: bold; cursor: pointer;" onclick="saveLengthToHistory()"><span data-key="lcSave">Save to History</span></button>
                     </div>
                 </div>
@@ -665,6 +670,7 @@
                         </div>
                     </div>
                     <button class="btn-outline" onclick="openHistoryModal()"><span data-key="lcViewHistory">View History</span></button>
+                    
                     <button class="btn-dec" style="width: 100%; padding: 12px; margin-top: auto; font-size: 1rem; border:none; border-radius: 100px; font-weight: bold; cursor:pointer;" onclick="window.location.hash=''">
                         <span data-key="lcBackBtn">Back to Tracker</span>
                     </button>
@@ -674,16 +680,30 @@
     </div>
 
     <!-- History Popup Modal -->
-    <div id="historyModal" class="modal-overlay" onclick="closeHistoryModal(event)">
+    <div id="historyModal" class="modal-overlay" onclick="closeModal(event)">
         <div class="modal-content" onclick="event.stopPropagation()" style="flex-direction: column; background: var(--md-sys-color-surface);">
             <div style="width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; border-bottom: 1px solid var(--md-sys-color-surface-variant); background: var(--md-sys-color-surface-variant);">
                 <h3 style="font-size: 1.2rem; color: var(--md-sys-color-on-surface);" data-key="lcHistTitle">History</h3>
                 <div style="display:flex; gap:12px; align-items: center;">
                     <button style="padding: 6px 16px; font-weight: bold; background: var(--md-sys-color-error); color: white; border-radius: 100px; cursor: pointer; border: none;" onclick="openConfirmModal('confirmClear', clearHistory)"><span data-key="lcClear">Clear</span></button>
-                    <button style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--md-sys-color-on-surface);" onclick="closeHistoryModal(event, true)">✕</button>
+                    <button style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--md-sys-color-on-surface);" onclick="window.location.hash='lengthcheck'">✕</button>
                 </div>
             </div>
             <div id="lc_history" class="history-wrapper" style="border-radius: 0; max-height: unset;"></div>
+        </div>
+    </div>
+
+    <!-- Lap History Modal -->
+    <div id="lapHistoryModal" class="modal-overlay" onclick="closeModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()" style="flex-direction: column; background: var(--md-sys-color-surface);">
+            <div style="width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; border-bottom: 1px solid var(--md-sys-color-surface-variant); background: var(--md-sys-color-surface-variant);">
+                <h3 style="font-size: 1.2rem; color: var(--md-sys-color-on-surface);" data-key="lapHistoryTitle">Lap History</h3>
+                <div style="display:flex; gap:12px; align-items: center;">
+                    <button style="padding: 6px 16px; font-weight: bold; background: var(--md-sys-color-error); color: white; border-radius: 100px; cursor: pointer; border: none;" onclick="openConfirmModal('confirmClearLaps', clearLaps)"><span data-key="lcClear">Clear</span></button>
+                    <button style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--md-sys-color-on-surface);" onclick="window.location.hash=''">✕</button>
+                </div>
+            </div>
+            <div id="lap-history-list" class="history-wrapper" style="border-radius: 0; max-height: unset;"></div>
         </div>
     </div>
 
@@ -708,13 +728,11 @@
                             <option value="ft">Feet (ft)</option>
                         </select>
                     </div>
-                    
                     <div style="display:flex; justify-content:center; margin: 4px 0;">
                         <button onclick="swapConvUnits()" style="background:var(--md-sys-color-surface-variant); color:var(--md-sys-color-on-surface); border:none; border-radius:50%; width:36px; height:36px; cursor:pointer; display:flex; align-items:center; justify-content:center; transition: background 0.3s;" title="Swap Units">
                             <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M16 17.01V10h-2v7.01h-3L15 21l4-3.99h-3zM9 3L5 6.99h3V14h2V6.99h3L9 3z"/></svg>
                         </button>
                     </div>
-
                     <div>
                         <label data-key="convTo">To Unit</label>
                         <select id="conv_to" class="styled-input" onchange="convertLengthLive()">
@@ -806,7 +824,9 @@
                         <button class="config-back-btn" onclick="showConfigSelection()">‹</button>
                         <h3 id="configViewerTitle">Document</h3>
                     </div>
-                    <div class="config-viewer-body" id="configViewerBody"></div>
+                    <div class="config-viewer-body" id="configViewerBody">
+                        <!-- Content will be injected here -->
+                    </div>
                 </div>
              </div>
         </div>
@@ -814,17 +834,88 @@
 
     <!-- Report Language Modal -->
     <div id="reportModal" class="modal-overlay">
-        <div class="modal-content" style="max-width:500px; padding:24px; text-align:center; flex-direction:column; border-radius: 24px;">
+        <div class="modal-content" style="max-width:500px; padding:24px; text-align:center; flex-direction:column; border-radius: 24px; height: auto;">
              <button class="modal-close" onclick="document.getElementById('reportModal').classList.remove('active')">✕</button>
              <div>
-                <h2 data-key="reportLang" style="color: var(--md-sys-color-primary); margin-bottom:16px;">Report a Translation</h2>
-                <p data-key="reportText" style="line-height:1.6; margin-bottom:12px;">Need to report a translation error or request a new language?</p>
-                <p data-key="reportEmail" style="line-height:1.6; margin-bottom:12px;">Send us an email and we'll get right on it!</p>
-                <p><a href="mailto:message.sbg@gmail.com" style="color:var(--md-sys-color-primary); font-weight:bold; text-decoration:none;">message.sbg@gmail.com</a></p>
-                <button class="btn-inc" style="padding: 10px 30px; border-radius:100px; border:none; font-weight:bold; cursor:pointer; margin-top: 24px;" onclick="document.getElementById('reportModal').classList.remove('active')">
+                <h2 data-key="reportLang">Report a Translation</h2>
+                <p data-key="reportText">Need to report a translation error or request a new language?</p>
+                <p data-key="reportEmail">Send us an email and we'll get right on it!</p>
+                <p><a href="mailto:message.sbg@gmail.com">message.sbg@gmail.com</a></p>
+                <button class="btn-inc" style="padding: 10px 30px; border-radius:100px; border:none; font-weight:bold; cursor:pointer; margin-top: 16px;" onclick="document.getElementById('reportModal').classList.remove('active')">
                     <span data-key="reportClose">Close</span>
                 </button>
              </div>
+        </div>
+    </div>
+    
+    <!-- SHIFT CALENDAR MODAL -->
+    <div id="shiftcalendarModal" class="modal-overlay" onclick="closeModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="window.location.hash=''">✕</button>
+            <div class="lc-layout">
+                <div class="lc-left">
+                    <h2 style="margin-bottom: 16px; margin-top: 0; color: var(--md-sys-color-primary); display: flex; align-items: center; gap: 8px; font-size:1.3rem;">
+                        <span style="font-size: 1.5rem;">📅</span>
+                        <span data-key="home">Shift Calendar</span>
+                    </h2>
+                    
+                    <div class="sc-cal-header">
+                        <button class="btn-dec" style="border-radius:50%; width:40px; height:40px; border:none; font-weight:bold; cursor:pointer; font-size: 1.2rem;" onclick="changeMonth(-1)">&lt;</button>
+                        <h3 id="sc-month-title" style="color: var(--md-sys-color-primary); margin: 0; font-size: 1.1rem;">Month Year</h3>
+                        <button class="btn-dec" style="border-radius:50%; width:40px; height:40px; border:none; font-weight:bold; cursor:pointer; font-size: 1.2rem;" onclick="changeMonth(1)">&gt;</button>
+                    </div>
+                    
+                    <div class="sc-grid" id="sc-weekdays" style="margin-bottom: 8px;"></div>
+                    <div class="sc-grid" id="sc-days"></div>
+
+                    <div style="margin-top: 20px; display:flex; flex-direction: column; gap: 8px; background: var(--md-sys-color-surface-variant); padding: 12px; border-radius: 16px;">
+                        <label style="font-size: 0.85rem; font-weight: 600; opacity: 0.8;" data-key="settingsTitle">Set Base Shift & Date</label>
+                        <div style="display:flex; gap:8px;">
+                            <select id="sc-setup-shift" class="styled-input" style="flex:1" onchange="saveShiftSettings()">
+                                <option value="A">Base: A Shift</option>
+                                <option value="B">Base: B Shift</option>
+                                <option value="C">Base: C Shift</option>
+                            </select>
+                            <input type="date" id="sc-setup-date" class="styled-input" style="flex:1" onchange="saveShiftSettings()">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="lc-right">
+                    <div style="width: 100%; border-bottom: 2px solid var(--md-sys-color-primary); padding-bottom: 8px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: baseline;">
+                        <h3 style="color: var(--md-sys-color-primary); font-size: 1.2rem; margin: 0;" data-key="pubHolidays">Public Holidays for 2026</h3>
+                        <span style="font-size: 0.75rem; opacity: 0.6;">Updated: 27-07-2026</span>
+                    </div>
+                    
+                    <div id="sc-holiday-today-box" style="display:none; width: 100%; background: var(--holiday-bg); color: var(--holiday-text); padding: 16px; border-radius: 16px; margin-bottom: 12px; font-weight: bold; text-align: center; border: 1px dashed var(--holiday-text); font-size: 1.1rem;"></div>
+
+                    <div class="sc-holiday-list">
+                        <h4 data-key="holidaysMonth" style="margin-bottom: 8px; font-size: 1rem; color: var(--md-sys-color-primary);">Holidays this Month</h4>
+                        <div id="sc-holiday-month-list"></div>
+                    </div>
+
+                    <div class="sc-holiday-list" style="margin-bottom: 20px;">
+                        <h4 data-key="holidaysUpcoming" style="margin-bottom: 8px; font-size: 1rem; color: var(--md-sys-color-primary);">Upcoming Holidays</h4>
+                        <div id="sc-holiday-upcoming-list"></div>
+                    </div>
+
+                    <button class="btn-dec" style="width: 100%; padding: 12px; margin-top: auto; font-size: 1rem; border:none; border-radius: 100px; font-weight: bold; cursor:pointer;" onclick="window.location.hash=''">
+                        <span data-key="lcBackBtn">Back to Tracker</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Confirm Action Modal -->
+    <div id="confirmModal" class="modal-overlay" style="z-index: 2500 !important;">
+        <div class="modal-content" style="max-width:400px; padding:24px; text-align:center; flex-direction:column; border-radius: 24px; height: auto;">
+            <h2 style="color:var(--md-sys-color-error); margin-bottom:16px;">⚠️ Warning</h2>
+            <p id="confirmMessage" style="margin-bottom:24px; font-weight:500;">Are you sure?</p>
+            <div style="display:flex; gap:12px; width:100%;">
+                <button class="btn-dec" style="flex:1; padding:12px; border-radius:100px; border:none; cursor:pointer; font-weight:bold;" onclick="closeConfirmModal()"><span data-key="noBtn">Cancel</span></button>
+                <button class="btn-inc" style="flex:1; background:var(--md-sys-color-error); color:var(--md-sys-color-on-error); padding:12px; border-radius:100px; border:none; cursor:pointer; font-weight:bold;" id="confirmYesBtn"><span data-key="yesBtn">Yes, Clear</span></button>
+            </div>
         </div>
     </div>
 
@@ -893,7 +984,8 @@
         const manifestBlob = new Blob([JSON.stringify(manifestJSON)], {type: 'application/json'});
         document.getElementById('dynamic-manifest').href = URL.createObjectURL(manifestBlob);
 
-        // --- CORE APP VARIABLES ---
+        // --- CORE APP ---
+        // Core Variables
         let count = parseInt(localStorage.getItem('sbg_count')) || 0;
         let step = parseInt(localStorage.getItem('sbg_step')) || 1;
         let badgeMultiplier = parseInt(localStorage.getItem('sbg_badge_mult')) || 6;
@@ -903,27 +995,6 @@
         let targetValue = parseInt(localStorage.getItem('sbg_target')) || 0;
         let currentLengthTotal = 0;
         let lastSavedHash = ""; 
-        
-        // Order Tracker System
-        let orderData = JSON.parse(localStorage.getItem('sbg_order_data')) || { active: false, orderId: '', partNum: '', target: 0, prepared: 0, laps: [], historyOrders: [] };
-        if (!orderData.historyOrders) orderData.historyOrders = [];
-
-        // Confirm Action Logic
-        let pendingConfirmAction = null;
-        function openConfirmModal(msgKey, actionCallback) {
-            pendingConfirmAction = actionCallback;
-            document.getElementById('confirmMessage').setAttribute('data-key', msgKey);
-            applyTranslations(); 
-            document.getElementById('confirmModal').classList.add('active');
-        }
-        function closeConfirmModal() {
-            document.getElementById('confirmModal').classList.remove('active');
-            pendingConfirmAction = null;
-        }
-        document.getElementById('confirmYesBtn').addEventListener('click', () => {
-            if (pendingConfirmAction) pendingConfirmAction();
-            closeConfirmModal();
-        });
 
         // Zoom Logic
         let zoomLevels = [1, 0.9, 0.8];
@@ -931,13 +1002,11 @@
         function cycleZoom() {
             currentZoomIndex = (currentZoomIndex + 1) % zoomLevels.length;
             let zoomVal = zoomLevels[currentZoomIndex];
-            
             document.getElementById('appMain').style.zoom = zoomVal;
             document.getElementById('appFooter').style.zoom = zoomVal;
-            
             updateUI();
         }
-
+        
         document.getElementById('stepInput').value = step;
         document.getElementById('badgeSizeInput').value = badgeMultiplier;
         document.getElementById('langSwitch').value = currentLang;
@@ -948,7 +1017,7 @@
             document.getElementById('customTargetInput').classList.add('show-custom');
             document.getElementById('customTargetInput').value = targetValue;
         }
-
+        
         const translations = {
             loaderTitle: { eng: "Fiber Count", odia: "ଫାଇବର ଗଣନା", hin: "फायबर गणना", kon: "फायबर गणना" },
             home: { eng: "Shift Calendar", odia: "ସିଫ୍ଟ କ୍ୟାଲେଣ୍ଡର", hin: "शिफ्ट कैलेंडर", kon: "शिफ्ट कॅलेंडर" },
@@ -965,66 +1034,91 @@
             footerCredit: { eng: "by Sandeep Biswal G", odia: "ସନ୍ଦୀପ୍ ବିଶ୍ୱାଳ ଜି ଙ୍କ ଦ୍ଵାରା", hin: "संदीप् बिस्वाल जी द्वारा", kon: "संदीप् बिस्वाल जी यांच्याद्वारे" },
             promoTitle: { eng: "Download Plyxo Games", odia: "ଡାଉନଲୋଡ୍ Plyxo Games", hin: "Plyxo गेम्स डाउनलोड करें", kon: "Plyxo गेम्स डाउनलोड करा" },
             promoSub: { eng: "Where Every Move Matters.", odia: "ଯେଉଁଠି ପ୍ରତିଟି ପଦକ୍ଷେପ ଗୁରୁତ୍ୱପୂର୍ଣ୍ଣ ।", hin: "जहाँ हर चाल मायने रखती है।", kon: "जिथे प्रत्येक हालचाल महत्त्वाची आहे." },
-            navLink1: { eng: "Smart Calc", odia: "କ୍ୟାଲକୁଲେଟର", hin: "स्मार्ट कैल्क", kon: "स्मार्ट कॅल्क" },
-            badgeConvBtn: { eng: "Batch Converter", odia: "ବ୍ୟାଚ୍ କନଭର୍ଟର", hin: "बैच कन्वर्टर", kon: "बॅच कन्वर्टर" },
-            badgeConvTitle: { eng: "Batch Converter", odia: "ବ୍ୟାଚ୍ କନଭର୍ଟର", hin: "बैच कन्वर्टर", kon: "बॅच कन्वर्टर" },
-            lengthCheckBtn: { eng: "Length Check", odia: "ଦୈର୍ଘ୍ୟ ଯାଞ୍ଚ", hin: "लंबाई जांच", kon: "लांबी तपासा" },
-            lengthCheckTitle: { eng: "Fiber Length Check", odia: "ଫାଇବର ଦୈର୍ଘ୍ୟ ଯାଞ୍ଚ", hin: "फाइबर लंबाई जांच", kon: "फायबर लांबी तपासा" },
+            badgeConvBtn: { eng: "Batch Converter", odia: "ବ୍ୟାଚ୍ କନଭର୍ଟର", hin: "बैच कन्वर्टर", kon: "बॅच कनवर्टर" },
+            badgeConvTitle: { eng: "Batch Converter", odia: "ବ୍ୟାଚ୍ କନଭର୍ଟର", hin: "बैच कन्वर्टर", kon: "बॅच कनवर्टर" },
+            lengthCheckBtn: { eng: "Length Check", odia: "ଦୈର୍ଘ୍ୟ ଯାଞ୍ଚ", hin: "लंबाई जांच", kon: "लांबी तपासणी" },
+            lengthCheckTitle: { eng: "Fiber Length Check", odia: "ଫାଇବର ଦୈର୍ଘ୍ୟ ଯାଞ୍ଚ", hin: "फाइबर लंबाई जांच", kon: "फायबर लांबी तपासणी" },
             lcRead1: { eng: "Reading End 1", odia: "ରିଡିଂ ଏଣ୍ଡ୍ ୧", hin: "रीडिंग सिरा 1", kon: "रीडिंग टोक 1" },
             lcRead2: { eng: "Reading End 2", odia: "ରିଡିଂ ଏଣ୍ଡ୍ ୨", hin: "रीडिंग सिरा 2", kon: "रीडिंग टोक 2" },
             lcEnd1: { eng: "End 1 Prep (cm)", odia: "ଏଣ୍ଡ୍ ୧ ପ୍ରସ୍ତୁତି (cm)", hin: "सिरा 1 तैयारी (cm)", kon: "टोक 1 तयारी (cm)" },
             lcEnd2: { eng: "End 2 Prep (cm)", odia: "ଏଣ୍ଡ୍ ୨ ପ୍ରସ୍ତୁତି (cm)", hin: "सिरा 2 तैयारी (cm)", kon: "टोक 2 तयारी (cm)" },
-            lcSave: { eng: "Save Configuration", odia: "ସେଭ୍ କରନ୍ତୁ", hin: "सेटिंग्स सहेजें", kon: "सेटिंग्ज सेव्ह करा" },
+            lcSave: { eng: "Save to History", odia: "ଇତିହାସରେ ସେଭ୍ କରନ୍ତୁ", hin: "इतिहास में सहेजें", kon: "इतिहासात सेव्ह करा" },
             lcClearInputs: { eng: "Clear Inputs", odia: "ଇନପୁଟ୍ ସଫା କରନ୍ତୁ", hin: "इनपुट साफ़ करें", kon: "इनपुट साफ करा" },
             lcHistTitle: { eng: "History", odia: "ଇତିହାସ", hin: "इतिहास", kon: "इतिहास" },
             lcClear: { eng: "Clear", odia: "ସଫା କରନ୍ତୁ", hin: "साफ़ करें", kon: "साफ करा" },
             lcResultText: { eng: "Result:", odia: "ପରିଣାମ:", hin: "परिणाम:", kon: "निकाल:" },
             lcViewHistory: { eng: "View History", odia: "ଇତିହାସ ଦେଖନ୍ତୁ", hin: "इतिहास देखें", kon: "इतिहास पहा" },
             lcBackBtn: { eng: "Back to Tracker", odia: "ମେନ୍ ମେନୁ କୁ ଫେରନ୍ତୁ", hin: "ट्रैकर पर वापस जाएं", kon: "ट्रॅकरवर परत जा" },
-            converterBtn: { eng: "Length Converter", odia: "ଦୈର୍ଘ୍ୟ କନଭର୍ଟର", hin: "लंबाई कन्वर्टर", kon: "लांबी कन्वर्टर" },
-            convTitle: { eng: "Length Converter", odia: "ଦୈର୍ଘ୍ୟ କନଭର୍ଟର", hin: "लंबाई कन्वर्टर", kon: "लांबी कन्वर्टर" },
+            converterBtn: { eng: "Length Converter", odia: "ଦୈର୍ଘ୍ୟ କନଭର୍ଟର", hin: "लंबाई कन्वर्टर", kon: "लांबी कनवर्टर" },
+            convTitle: { eng: "Length Converter", odia: "ଦୈର୍ଘ୍ୟ କନଭର୍ଟର", hin: "लंबाई कन्वर्टर", kon: "लांबी कनवर्टर" },
             convInput: { eng: "Enter Value", odia: "ମୂଲ୍ୟ ଲେଖନ୍ତୁ", hin: "मान दर्ज करें", kon: "मूल्य प्रविष्ट करा" },
             convFrom: { eng: "From Unit", odia: "ରୁ (ୟୁନିଟ୍)", hin: "से इकाई", kon: "पासून युनिट" },
             convTo: { eng: "To Unit", odia: "କୁ (ୟୁନିଟ୍)", hin: "में इकाई", kon: "पर्यंत युनिट" },
             dataStored: { eng: "Data Stored Successfully!", odia: "ଡାଟା ସଫଳତାର ସହ ସେଭ୍ ହେଲା!", hin: "डेटा सफलतापूर्वक संग्रहीत हुआ!", kon: "डेटा यशस्वीरित्या सेव्ह झाला!" },
             dataExists: { eng: "Already Saved!", odia: "ପୂର୍ବରୁ ସେଭ୍ ହୋଇଛି!", hin: "पहले से सहेजा गया!", kon: "आधीच सेव्ह केले आहे!" },
             zoomText: { eng: "Zoom ", odia: "ଜୁମ୍ ", hin: "ज़ूम ", kon: "ज़ूम" },
+            smallTotalDisplay: { eng: "(Total: ", odia: "(ମୋଟ: ", hin: "(कुल: ", kon: "(एकूण: " },
             reportLang: { eng: "Report/Add Language", odia: "ରିପୋର୍ଟ/ଭାଷା ଯୋଡ଼ନ୍ତୁ", hin: "अनुवाद रिपोर्ट/भाषा जोड़ें", kon: "अनुवाद तक्रार/भाषा जोडा" },
             reportText: { eng: "Need to report a translation error or request a new language?", odia: "ଅନୁବାଦ ତ୍ରୁଟି ରିପୋର୍ଟ କରିବାକୁ କିମ୍ବା ନୂଆ ଭାଷା ଅନୁରୋଧ କରିବାକୁ ଚାହୁଁଛନ୍ତି କି?", hin: "अनुवाद में कोई त्रुटि रिपोर्ट करनी है या एक नई भाषा का अनुरोध करना है?", kon: "भाषांतरात त्रुटी आढळल्यास किंवा नवीन भाषेची विनंती करायची आहे का?" },
             reportEmail: { eng: "Send us an email and we'll get right on it!", odia: "ଆମକୁ ଏକ ଇମେଲ୍ ପଠାନ୍ତୁ ଏବଂ ଆମେ ଏହା ଉପରେ କାର୍ଯ୍ୟ କରିବୁ!", hin: "हमें एक ईमेल भेजें और हम इसे तुरंत ठीक कर देंगे!", kon: "आम्हाला ईमेल पाठवा आणि आम्ही त्यावर लगेच काम करू!" },
             reportClose: { eng: "Close", odia: "ବନ୍ଦ କରନ୍ତୁ", hin: "बंद करें", kon: "बंद करा" },
-            orderTracker: { eng: "Orders / Laps", odia: "ଅର୍ଡର / ଲ୍ୟାପ୍", hin: "ऑर्डर / लैप", kon: "ऑर्डर / लॅप" },
-            startOrder: { eng: "Set Active Order", odia: "ସକ୍ରିୟ ଅର୍ଡର ସେଟ୍ କରନ୍ତୁ", hin: "सक्रिय ऑर्डर सेट करें", kon: "सक्रिय ऑर्डर सेट करा" },
-            orderId: { eng: "Order ID", odia: "ଅର୍ଡର ID", hin: "ऑर्डर ID", kon: "ऑर्डर ID" },
-            partNum: { eng: "Part Number", odia: "ପାର୍ଟ ନମ୍ବର", hin: "पार्ट नंबर", kon: "पार्ट नंबर" },
-            totalTarget: { eng: "Total Qty", odia: "ମୋଟ ପରିମାଣ", hin: "कुल परिमाण", kon: "एकूण माप" },
-            preparedQty: { eng: "Already Prepared (Inline Qty)", odia: "ପୂର୍ବରୁ ପ୍ରସ୍ତୁତ", hin: "पहले से तैयार", kon: "आधीच तयार" },
-            saveLap: { eng: "Save Lap", odia: "ଲ୍ୟାପ୍ ସେଭ୍ କରନ୍ତୁ", hin: "लैप सहेजें", kon: "लॅप सेव्ह करा" },
-            lapSaved: { eng: "Lap Saved!", odia: "ଲ୍ୟାପ୍ ସେଭ୍ ହେଲା!", hin: "लैप सहेजा गया!", kon: "लॅप सेव्ह झाले!" },
-            lapHistory: { eng: "Lap History", odia: "ଲ୍ୟାପ୍ ଇତିହାସ", hin: "लैप इतिहास", kon: "लॅप इतिहास" },
-            newOrderInfo: { eng: "Starting a new order resets the counter.", odia: "ନୂଆ ଅର୍ଡର କାଉଣ୍ଟର ରିସେଟ୍ କରିଥାଏ।", hin: "नया ऑर्डर काउंटर रीसेट करता है।", kon: "नवीन ऑर्डर काउंटर रीसेट करते." },
             confirmReset: { eng: "Are you sure you want to reset the main counter?", odia: "ଆପଣ ନିଶ୍ଚିତ କି ମେନ୍ କାଉଣ୍ଟର ରିସେଟ୍ କରିବେ?", hin: "क्या आप वाकई मुख्य काउंटर को रीसेट करना चाहते हैं?", kon: "मुख्य काउंटर रीसेट करू इच्छिता का?" },
+            confirmClearInputs: { eng: "Are you sure you want to clear inputs?", odia: "ଆପଣ ନିଶ୍ଚିତ କି ଇନପୁଟ୍ ସଫା କରିବେ?", hin: "क्या आप वाकई इनपुट साफ़ करना चाहते हैं?", kon: "तुम्ही नक्की इनपुट साफ करू इच्छिता का?" },
             confirmClear: { eng: "Are you sure you want to clear data?", odia: "ଆପଣ ନିଶ୍ଚିତ କି ଡାଟା ସଫା କରିବାକୁ ଚାହୁଁଛନ୍ତି?", hin: "क्या आप वाकई डेटा साफ़ करना चाहते हैं?", kon: "तुम्ही नक्की डेटा साफ करू इच्छिता का?" },
             yesBtn: { eng: "Yes, Clear", odia: "ହଁ, ସଫା କରନ୍ତୁ", hin: "हाँ, साफ़ करें", kon: "होय, साफ करा" },
             noBtn: { eng: "Cancel", odia: "ବାତିଲ୍ କରନ୍ତୁ", hin: "रद्द करें", kon: "रद्द करा" },
-            appInfoBtn: { eng: "App Info", odia: "ଆପ୍ ସୂଚନା", hin: "ऐप की जानकारी", kon: "अॅप माहिती" },
-            appInfoTitle: { eng: "About Fiber Count", odia: "ଫାଇବର ଗଣନା ବିଷୟରେ", hin: "फाइबर गणना के बारे में", kon: "फायबर गणना बद्दल" },
-            appInfoDesc: {
-                eng: "Fiber Count helps you track how many cable assemblies or batches you have prepared. Use the counter to increment units, save laps to track progress over time, set targets, check fiber lengths, and convert batch sizes accurately.",
-                odia: "ଆପଣ କେତେ କେବୁଲ୍ କିମ୍ବା ବ୍ୟାଚ୍ ପ୍ରସ୍ତୁତ କରିଛନ୍ତି ତାହା ଟ୍ରାକ୍ କରିବାରେ ଫାଇବର କାଉଣ୍ଟ ସାହାଯ୍ୟ କରେ । ୟୁନିଟ୍ ଗଣିବା, ପ୍ରଗତି ଦେଖିବା ପାଇଁ ଲ୍ୟାପ୍ ସେଭ୍ କରିବା, ଲକ୍ଷ୍ୟ ସ୍ଥିର କରିବା ଏବଂ ଦୈର୍ଘ୍ୟ ଯାଞ୍ଚ ପାଇଁ ଏହାକୁ ବ୍ୟବହାର କରନ୍ତୁ ।",
-                hin: "फाइबर काउंट आपको यह ट्रैक करने में मदद करता है कि आपने कितने केबल या बैच तैयार किए हैं। यूनिट्स गिनने, प्रगति देखने के लिए लैप सहेजने, लक्ष्य निर्धारित करने और लंबाई जांचने के लिए इसका उपयोग करें।",
-                kon: "फायबर काउंट तुम्हाला तुम्ही किती केबल किंवा बॅच तयार केले आहेत हे ट्रॅक करण्यात मदत करते. युनिट्स मोजण्यासाठी, प्रगती पाहण्यासाठी लॅप सेव्ह करा, लक्ष्य सेट करा आणि लांबी तपासा."
-            },
-            ocpBtn: { eng: "OCP to Count", odia: "OCP ରୁ କାଉଣ୍ଟ୍", hin: "OCP से काउंट", kon: "OCP ते काउंट" },
-            ocpTitle: { eng: "OCP Converter", odia: "OCP କନଭର୍ଟର", hin: "OCP कनवर्टर", kon: "OCP कनवर्टर" },
-            ocpInputLabel: { eng: "Enter OCP Number", odia: "OCP ନମ୍ବର ଲେଖନ୍ତୁ", hin: "OCP नंबर दर्ज करें", kon: "OCP नंबर प्रविष्ट करा" },
-            ocpTypeLabel: { eng: "Cable Type", odia: "କେବୁଲ୍ ପ୍ରକାର", hin: "केबल प्रकार", kon: "केबल प्रकार" },
-            twoEnd: { eng: "Two End (/2)", odia: "ଦୁଇ ଏଣ୍ଡ୍ (/2)", hin: "दो एंड (/2)", kon: "दोन एंड (/2)" },
-            fourEnd: { eng: "Four End (/4)", odia: "ଚାରି ଏଣ୍ଡ୍ (/4)", hin: "चार एंड (/4)", kon: "चार एंड (/4)" },
-            recentLaps: { eng: "Recent Laps", odia: "ସମ୍ପ୍ରତି ଲ୍ୟାପ୍", hin: "हाल के लैप", kon: "अलीकडील लॅप" },
-            selectOrder: { eng: "Select Existing / New", odia: "ଚୟନ କରନ୍ତୁ / ନୂଆ", hin: "चुनें / नया", kon: "निवडा / नवीन" },
-            createNewOrder: { eng: "-- Create New Order --", odia: "-- ନୂଆ ଅର୍ଡର ସୃଷ୍ଟି କରନ୍ତୁ --", hin: "-- नया ऑर्डर बनाएं --", kon: "-- नवीन ऑर्डर तयार करा --" }
+            // OCP to Count
+            ocpCountBtn: { eng: "OCP to Count", odia: "OCP ରୁ ଗଣନା", hin: "OCP से गणना", kon: "OCP ते गणना" },
+            ocpCountTitle: { eng: "OCP to Count", odia: "OCP ରୁ ଗଣନା", hin: "OCP से गणना", kon: "OCP ते गणना" },
+            ocpNumberLabel: { eng: "OCP Number", odia: "OCP ନମ୍ବର", hin: "OCP नंबर", kon: "OCP नंबर" },
+            ocpEndsLabel: { eng: "Select Ends", odia: "ଏଣ୍ଡ୍ସ ଚୟନ କରନ୍ତୁ", hin: "एंड्स चुनें", kon: "एंड्स निवडा" },
+            // Lap Feature
+            lapBtn: { eng: "LAP", odia: "ଲ୍ୟାପ୍", hin: "लैप", kon: "लॅप" },
+            recentLapsTitle: { eng: "Recent Laps", odia: "ନିକଟତମ ଲ୍ୟାପ୍", hin: "हाल के लैप्स", kon: "अलीकडील लॅप्स" },
+            viewAllLaps: { eng: "View All", odia: "ସବୁ ଦେଖନ୍ତୁ", hin: "सभी देखें", kon: "सर्व पहा" },
+            lapHistoryTitle: { eng: "Lap History", odia: "ଲ୍ୟାପ୍ ଇତିହାସ", hin: "लैप इतिहास", kon: "लॅप इतिहास" },
+            lapRecorded: { eng: "Lap recorded!", odia: "ଲ୍ୟାପ୍ ରେକର୍ଡ ହେଲା!", hin: "लैप रिकॉर्ड किया गया!", kon: "लॅप रेकॉर्ड झाला!" },
+            confirmClearLaps: { eng: "Are you sure you want to clear all lap data?", odia: "ଆପଣ ନିଶ୍ଚିତ କି ସମସ୍ତ ଲ୍ୟାପ୍ ଡାଟା ସଫା କରିବେ?", hin: "क्या आप वाकई सभी लैप डेटा साफ़ करना चाहते हैं?", kon: "तुम्ही नक्की सर्व लॅप डेटा साफ करू इच्छिता का?" },
+            // Shift Calendar
+            pubHolidays: { eng: "Public Holidays for 2026", odia: "୨୦୨୬ ପାଇଁ ସରକାରୀ ଛୁଟି", hin: "2026 के लिए सार्वजनिक छुट्टियां", kon: "2026 साठी सार्वजनिक सुट्ट्या" },
+            holidaysMonth: { eng: "Holidays this Month", odia: "ଏହି ମାସର ଛୁଟିଦିନ", hin: "इस महीने की छुट्टियां", kon: "या महिन्यातील सुट्ट्या" },
+            holidaysUpcoming: { eng: "Upcoming Holidays", odia: "ଆଗାମୀ ଛୁଟିଦିନ", hin: "आगामी छुट्टियां", kon: "आगामी सुट्ट्या" },
+            todayHoliday: { eng: "Today is a Holiday!", odia: "ଆଜି ଛୁଟି ଦିନ!", hin: "आज छुट्टी है!", kon: "आज सुट्टी आहे!" },
+            settingsTitle: { eng: "Set Base Shift & Date", odia: "ବେସ୍ ସିଫ୍ଟ ଏବଂ ତାରିଖ ସେଟ୍ କରନ୍ତୁ", hin: "बेस शिफ्ट और तारीख सेट करें", kon: "बेस शिफ्ट आणि तारीख सेट करा" }
         };
+        
+        const calTranslations = {
+            months: {
+                eng: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+                odia: ["ଜାନୁଆରୀ", "ଫେବୃଆରୀ", "ମାର୍ଚ୍ଚ", "ଏପ୍ରିଲ୍", "ମଇ", "ଜୁନ୍", "ଜୁଲାଇ", "ଅଗଷ୍ଟ", "ସେପ୍ଟେମ୍ବର", "ଅକ୍ଟୋବର", "ନଭେମ୍ବର", "ଡିସେମ୍ବର"],
+                hindi: ["जनवरी", "फरवरी", "मार्च", "अप्रैल", "मई", "जून", "जुलाई", "अगस्त", "सितंबर", "अक्टूबर", "नवंबर", "दिसंबर"],
+                konkani: ["जानेवारी", "फेब्रुवारी", "मार्च", "एप्रिल", "मे", "जून", "जुलै", "ऑगस्ट", "सप्टेंबर", "ऑक्टोबर", "नोव्हेंबर", "डिसेंबर"]
+            },
+            days: {
+                eng: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+                odia: ["ରବି", "ସୋମ", "ମଙ୍ଗଳ", "ବୁଧ", "ଗୁରୁ", "ଶୁକ୍ର", "ଶନି"],
+                hindi: ["रवि", "सोम", "मंगल", "बुध", "गुरु", "शुक्र", "शनि"],
+                konkani: ["रवि", "सोम", "मंगळ", "बुध", "गुरु", "शुक्र", "शनि"]
+            }
+        };
+
+        const holidays2026 = {
+            "2026-01-01": { eng: "New Year Day", odia: "ନବ ବର୍ଷ", hindi: "नव वर्ष", konkani: "नव वर्ष" },
+            "2026-01-26": { eng: "Republic Day", odia: "ସାଧାରଣତନ୍ତ୍ର ଦିବସ", hindi: "गणतंत्र दिवस", konkani: "प्रजासत्ताक दिन" },
+            "2026-04-03": { eng: "Good Friday", odia: "ଗୁଡ୍ ଫ୍ରାଇଡେ", hindi: "गुड फ्राइडे", konkani: "गुड फ्रायडे" },
+            "2026-04-14": { eng: "Dr. Babasaheb Ambedkar Jayanti", odia: "ଆମ୍ବେଦକର ଜୟନ୍ତୀ", hindi: "आंबेडकर जयंती", konkani: "आंबेडकर जयंती" },
+            "2026-05-01": { eng: "May Day", odia: "ମଇ ଦିବସ", hindi: "मई दिवस", konkani: "कामगार दिन" },
+            "2026-08-15": { eng: "Independence Day", odia: "ସ୍ୱାଧୀନତା ଦିବସ", hindi: "स्वतंत्रता दिवस", konkani: "स्वातंत्र्य दिन" },
+            "2026-09-14": { eng: "Ganesh Chaturthi (1st Day)", odia: "ଗଣେଶ ଚତୁର୍ଥୀ (୧ମ ଦିନ)", hindi: "गणेश चतुर्थी (पहला दिन)", konkani: "चवथ (पयलो दीस)" },
+            "2026-09-15": { eng: "Ganesh Chaturthi (2nd Day)", odia: "ଗଣେଶ ଚତୁର୍ଥୀ (୨ୟ ଦିନ)", hindi: "गणेश चतुर्थी (दूसरा दिन)", konkani: "चवथ (दुसरो दीस)" },
+            "2026-10-02": { eng: "Gandhi Jayanti", odia: "ଗାନ୍ଧୀ ଜୟନ୍ତୀ", hindi: "गांधी जयंती", konkani: "गांधी जयंती" },
+            "2026-10-20": { eng: "Dussehra (Vijaya Dashami)", odia: "ଦଶହରା (ବିଜୟା ଦଶମୀ)", hindi: "दशहरा (विजयादशमी)", konkani: "दसरा" },
+            "2026-12-19": { eng: "Goa Liberation Day", odia: "ଗୋଆ ମୁକ୍ତି ଦିବସ", hindi: "गोवा मुक्ति दिवस", konkani: "गोंय मुक्ती दीस" },
+            "2026-12-25": { eng: "Christmas Day", odia: "ବଡ଼ଦିନ", hindi: "क्रिसमस", konkani: "नाताळ" }
+        };
+        
+        function getLangKey() { return currentLang === 'both' ? 'eng' : (currentLang === 'odia' ? 'odia' : (currentLang === 'hindi' ? 'hin' : (currentLang === 'konkani' ? 'kon' : 'eng'))); }
+        function getCalLangKey() { return currentLang === 'both' ? 'eng' : (currentLang === 'odia' ? 'odia' : (currentLang === 'hindi' ? 'hindi' : (currentLang === 'konkani' ? 'konkani' : 'eng'))); }
 
         function toOdiaNumeral(num) {
             const odiaDigits = ['୦', '୧', '୨', '୩', '୪', '୫', '୬', '୭', '୮', '୯'];
@@ -1034,6 +1128,12 @@
         function toDevanagariNumeral(num) {
             const devanagariDigits = ['०', '१', '२', '३', '४', '५', '६', '७', '८', '९'];
             return String(num).split('').map(char => (char >= '0' && char <= '9') ? devanagariDigits[parseInt(char)] : char).join('');
+        }
+        
+        function formatNumber(num) {
+            if (currentLang === 'odia') return toOdiaNumeral(num);
+            if (currentLang === 'hindi' || currentLang === 'konkani') return toDevanagariNumeral(num);
+            return num;
         }
 
         function parseRegionalInput(val, fallback) {
@@ -1070,7 +1170,7 @@
                 menu.classList.remove('active'); overlay.classList.remove('active');
             }
         }
-
+        
         function applyTranslations() {
             document.querySelectorAll('[data-key]').forEach(el => {
                 const key = el.getAttribute('data-key');
@@ -1081,7 +1181,7 @@
                 if (currentLang === 'both') {
                     el.innerHTML = `${translations[key].eng}<span class="odia-sub${extraClass}">${translations[key].odia}</span>`;
                 } else {
-                    let langKey = (currentLang === 'odia') ? 'odia' : ((currentLang === 'hindi') ? 'hin' : ((currentLang === 'konkani') ? 'kon' : 'eng'));
+                    let langKey = getLangKey();
                     el.innerHTML = translations[key][langKey] || translations[key]['eng'];
                 }
             });
@@ -1094,23 +1194,26 @@
             localStorage.setItem('sbg_target', targetValue);
             localStorage.setItem('sbg_badge_mult', badgeMultiplier);
 
-            let numConverter = (num) => num;
-            if (currentLang === 'odia') numConverter = toOdiaNumeral;
-            else if (currentLang === 'hindi' || currentLang === 'konkani') numConverter = toDevanagariNumeral;
-
             let badges = Math.floor(count / badgeMultiplier);
             if (badges < 0) badges = 0; 
 
-            document.getElementById('countDisplay').innerText = numConverter(count);
-            document.getElementById('badgeDisplay').innerText = numConverter(badges);
+            document.getElementById('countDisplay').innerText = formatNumber(count);
+            document.getElementById('badgeDisplay').innerText = formatNumber(badges);
             
-            applyTranslations(); 
+            applyTranslations(); // Apply text first
+            
+            // Then update elements with dynamic numbers
+            document.getElementById('smallTotalDisplay').innerHTML = `${translations['smallTotalDisplay'][getLangKey()] || '(Total: '}${formatNumber(count)})`;
+            if(currentLang === 'both') {
+                document.getElementById('smallTotalDisplay').innerHTML += `<span class="odia-sub">${translations.smallTotalDisplay.odia}${toOdiaNumeral(count)})</span>`;
+            }
 
             let zoomVal = zoomLevels[currentZoomIndex];
-            document.getElementById('zoomText').innerText = `${translations['zoomText'][currentLang === 'both' ? 'eng' : (currentLang === 'odia' ? 'odia' : (currentLang === 'hindi' ? 'hin' : (currentLang === 'konkani' ? 'kon' : 'eng')))] || 'Zoom: '}${Math.round(zoomVal * 100)}%`;
+            document.getElementById('zoomText').innerText = `${translations['zoomText'][getLangKey()] || 'Zoom: '}${Math.round(zoomVal * 100)}%`;
 
-            document.getElementById('stepInput').value = numConverter(step);
-            document.getElementById('badgeSizeInput').value = numConverter(badgeMultiplier);
+
+            document.getElementById('stepInput').value = formatNumber(step);
+            document.getElementById('badgeSizeInput').value = formatNumber(badgeMultiplier);
 
             let bDescEng = `1 Batch = ${badgeMultiplier} Increments`;
             let bDescOdia = `୧ ବ୍ୟାଚ୍ = ${toOdiaNumeral(badgeMultiplier)} ସଂଖ୍ୟା`;
@@ -1124,25 +1227,12 @@
             else document.getElementById('badgeDescText').innerHTML = bDescEng;
 
 
-            // Target Calculation (Includes Active Order Check)
-            let effectiveTarget = targetValue;
-            let effectiveCount = count;
-            
-            if (orderData.active && orderData.target > 0) {
-                effectiveTarget = orderData.target;
-                effectiveCount = count + orderData.prepared;
-                document.getElementById('orderInfoDisplay').style.display = 'block';
-                document.getElementById('orderInfoDisplay').innerText = `Order: ${orderData.orderId || 'N/A'} | Part: ${orderData.partNum || 'N/A'} | Started: ${orderData.prepared} prepared`;
-            } else {
-                document.getElementById('orderInfoDisplay').style.display = 'none';
-            }
-
             const progressContainer = document.getElementById('progressContainer');
-            if (effectiveTarget > 0) {
+            if (targetValue > 0) {
                 document.body.classList.add('target-active');
                 progressContainer.style.display = 'block';
-                let remaining = effectiveTarget - effectiveCount;
-                let percentage = (effectiveCount / effectiveTarget) * 100;
+                let remaining = targetValue - count;
+                let percentage = (count / targetValue) * 100;
                 if (percentage > 100) percentage = 100;
                 if (percentage < 0) percentage = 0;
 
@@ -1157,14 +1247,14 @@
                     document.body.classList.add('target-reached-bg');
                 } else {
                     statusEl.setAttribute('data-key', 'remainingText'); floatStatusEl.setAttribute('data-key', 'remainingText');
-                    document.body.classList.remove('target-reached-bg'); 
+                    document.body.classList.remove('target-reached-bg');
                     translations.remainingText.eng = `Remaining Count: <span style="color:var(--md-sys-color-primary)">${remaining}</span>`;
                     translations.remainingText.odia = `ବାକି ସଂଖ୍ୟା: <span style="color:var(--md-sys-color-primary)">${toOdiaNumeral(remaining)}</span>`;
                     translations.remainingText.hin = `शेष संख्या: <span style="color:var(--md-sys-color-primary)">${toDevanagariNumeral(remaining)}</span>`;
                     translations.remainingText.kon = `उर्वरित संख्या: <span style="color:var(--md-sys-color-primary)">${toDevanagariNumeral(remaining)}</span>`;
                 }
                 
-                let finalTargetText = `${numConverter(effectiveCount)} / ${numConverter(effectiveTarget)}`;
+                let finalTargetText = `${formatNumber(count)} / ${formatNumber(targetValue)}`;
                 document.getElementById('targetDisplay').innerText = finalTargetText;
                 document.getElementById('floatTargetDisplay').innerText = finalTargetText;
             } else {
@@ -1172,148 +1262,27 @@
                 progressContainer.style.display = 'none';
                 document.body.classList.remove('target-reached-bg');
             }
-
+            renderLaps();
             updateLengthResultUI(); 
             convertLengthLive(); 
             convertBadgeLive();
-            convertOcpLive();
-            applyTranslations(); 
-            renderLapHistory(); // Update main UI list
+            applyTranslations(); // Re-apply for any elements changed by progress logic
         }
 
-        function changeCount(direction, isBadge) {
-            let multiplier = isBadge ? badgeMultiplier : 1;
-            count += (step * multiplier * direction);
+        function changeCount(direction) {
+            count += (step * direction);
             if(count < 0) count = 0; 
+            updateUI();
+        }
+
+        function changeBatchCount(direction) {
+            count += (badgeMultiplier * direction);
+            if (count < 0) count = 0;
             updateUI();
         }
 
         function resetData() { count = 0; step = 1; updateUI(); }
 
-        function showToast(msgKey) {
-            const toast = document.getElementById("toast");
-            let langKey = (currentLang === 'odia') ? 'odia' : ((currentLang === 'hindi') ? 'hin' : ((currentLang === 'konkani') ? 'kon' : 'eng'));
-            
-            if (currentLang === 'both') {
-                toast.innerHTML = `${translations[msgKey].eng} <br><span style="font-size:0.85em">${translations[msgKey].odia}</span>`;
-            } else {
-                toast.innerHTML = translations[msgKey][langKey];
-            }
-            toast.className = "toast show";
-            setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 3000);
-        }
-
-        // --- ORDER / LAP TRACKER LOGIC ---
-        function clearOrderDataInputs() {
-            document.getElementById('order_id').value = '';
-            document.getElementById('order_part').value = '';
-            document.getElementById('order_target').value = '';
-            document.getElementById('order_prepared').value = '';
-            document.getElementById('saved_orders_select').value = 'new';
-            orderData.active = false;
-            localStorage.setItem('sbg_order_data', JSON.stringify(orderData));
-            updateUI();
-        }
-
-        function populateSavedOrdersDropdown() {
-            const sel = document.getElementById('saved_orders_select');
-            sel.innerHTML = `<option value="new" data-key="createNewOrder">-- Create New Order --</option>`;
-            orderData.historyOrders.forEach((o, i) => {
-                sel.innerHTML += `<option value="${i}">Order: ${o.orderId} (${o.partNum})</option>`;
-            });
-            applyTranslations();
-        }
-
-        function loadSavedOrder() {
-            const idx = document.getElementById('saved_orders_select').value;
-            if (idx === 'new') {
-                document.getElementById('order_id').value = '';
-                document.getElementById('order_part').value = '';
-                document.getElementById('order_target').value = '';
-                document.getElementById('order_prepared').value = '';
-            } else {
-                const o = orderData.historyOrders[idx];
-                document.getElementById('order_id').value = o.orderId;
-                document.getElementById('order_part').value = o.partNum;
-                document.getElementById('order_target').value = o.target;
-                document.getElementById('order_prepared').value = o.prepared;
-            }
-        }
-
-        function startOrder() {
-            let oid = document.getElementById('order_id').value;
-            let pnum = document.getElementById('order_part').value;
-            let oTarget = parseInt(document.getElementById('order_target').value) || 0;
-            let oPrep = parseInt(document.getElementById('order_prepared').value) || 0;
-            
-            let existing = orderData.historyOrders.find(x => x.orderId === oid);
-            if (existing) {
-                existing.partNum = pnum; existing.target = oTarget; existing.prepared = oPrep;
-            } else if (oid.trim() !== '') {
-                orderData.historyOrders.push({orderId: oid, partNum: pnum, target: oTarget, prepared: oPrep});
-            }
-
-            orderData.active = true;
-            orderData.orderId = oid;
-            orderData.partNum = pnum;
-            orderData.target = oTarget;
-            orderData.prepared = oPrep;
-            
-            count = 0;
-            
-            localStorage.setItem('sbg_order_data', JSON.stringify(orderData));
-            window.location.hash = ''; // close modal
-            updateUI();
-            showToast('dataStored');
-        }
-
-        function saveCurrentLap() {
-            let timeStr = new Date().toLocaleString();
-            let c_order = orderData.active ? orderData.orderId : 'General';
-            orderData.laps.unshift({ time: timeStr, count: count, orderId: c_order });
-            if (orderData.laps.length > 50) orderData.laps.pop();
-            localStorage.setItem('sbg_order_data', JSON.stringify(orderData));
-            renderLapHistory();
-            showToast('lapSaved');
-        }
-
-        function renderLapHistory() {
-            const container = document.getElementById('lap_history');
-            const mainContainer = document.getElementById('mainScreenLaps');
-            
-            if(orderData.laps.length === 0) {
-                const emptyHTML = '<div style="padding: 24px; opacity: 0.6; text-align:center; font-style: italic;">No laps saved.</div>';
-                if(container) container.innerHTML = emptyHTML;
-                if(mainContainer) mainContainer.innerHTML = emptyHTML;
-                return;
-            }
-            
-            const htmlContent = orderData.laps.map(l => 
-                `<div class="history-item">
-                    <div style="font-size:0.75rem; opacity:0.7; margin-bottom: 4px;">${l.time}</div>
-                    <div style="display:flex; justify-content:space-between; font-weight:bold;">
-                        <span>Order: ${l.orderId}</span>
-                        <span style="color:var(--md-sys-color-primary)">Count: ${l.count}</span>
-                    </div>
-                </div>`
-            ).join('');
-            
-            if(container) container.innerHTML = htmlContent;
-            if(mainContainer) mainContainer.innerHTML = htmlContent;
-        }
-
-        function populateOrderModal() {
-            populateSavedOrdersDropdown();
-            if (orderData.active) {
-                document.getElementById('order_id').value = orderData.orderId;
-                document.getElementById('order_part').value = orderData.partNum;
-                document.getElementById('order_target').value = orderData.target;
-                document.getElementById('order_prepared').value = orderData.prepared;
-            }
-            renderLapHistory();
-        }
-
-        // --- LENGTH CHECK & CALCULATORS LOGIC ---
         function calculateLengthLive() {
             let r1 = parseFloat(document.getElementById('lc_read1').value) || 0;
             let r2 = parseFloat(document.getElementById('lc_read2').value) || 0;
@@ -1323,6 +1292,19 @@
             let baseMeters = diff / 3.28;
             currentLengthTotal = baseMeters + (e1 / 100) + (e2 / 100);
             updateLengthResultUI();
+        }
+
+        function showToast(msgKey) {
+            const toast = document.getElementById("toast");
+            let langKey = getLangKey();
+            
+            if (currentLang === 'both') {
+                toast.innerHTML = `${translations[msgKey].eng} <br><span style="font-size:0.85em">${translations[msgKey].odia}</span>`;
+            } else {
+                toast.innerHTML = translations[msgKey][langKey];
+            }
+            toast.className = "show";
+            setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 3000);
         }
 
         function saveLengthToHistory() {
@@ -1353,45 +1335,25 @@
         }
 
         function updateLengthResultUI() {
-            let numConverter = (num) => num;
-            if (currentLang === 'odia') numConverter = toOdiaNumeral;
-            else if (currentLang === 'hindi' || currentLang === 'konkani') numConverter = toDevanagariNumeral;
-
-            if(currentLengthTotal === 0) {
-                document.getElementById('lc_result').innerHTML = `<div style="font-size: 2.2rem; font-weight: bold; color: var(--md-sys-color-primary);">0.00 m</div>`;
-                return;
+            if(document.getElementById('lc_result') && currentLengthTotal === 0) { 
+                document.getElementById('lc_result').innerHTML = `<div style="font-size: 2.2rem; font-weight: bold; color: var(--md-sys-color-primary);">0.00 m</div>`; 
+                return; 
             }
-
-            let exactStr = Number(currentLengthTotal.toFixed(5)).toString();
-            let roundedStr = currentLengthTotal.toFixed(2);
-            let cmStr = (currentLengthTotal * 100).toFixed(2);
-            let feetStr = (currentLengthTotal * 3.280839895).toFixed(2);
-            let inStr = (currentLengthTotal * 39.3700787).toFixed(2);
-            
-            let mainDisplay = `<div style="font-size: 2.5rem; font-weight: bold; color: var(--md-sys-color-primary);">${numConverter(roundedStr)} m</div>`;
-            
-            const getLabel = (eng, odi, hin, kon) => {
-                if (currentLang === 'odia') return odi;
-                if (currentLang === 'hindi') return hin;
-                if (currentLang === 'konkani') return kon;
-                if (currentLang === 'both') return `${eng} <span style="opacity:0.75; font-size:0.85em">(${odi})</span>`;
-                return eng;
-            };
-
-            let detailsDisplay = `
-                <div class="result-details">
-                    <div class="detail-row"><span>${getLabel("Exact Val", "ସଠିକ୍ ମୂଲ୍ୟ", "सटीक मान", "अचूक मूल्य")}</span> <span class="detail-val">${numConverter(exactStr)} m</span></div>
-                    <div class="detail-row"><span>${getLabel("Total CM", "ମୋଟ ସେମି", "कुल सेमी", "एकूण सेमी")}</span> <span class="detail-val">${numConverter(cmStr)} cm</span></div>
-                    <div class="detail-row"><span>${getLabel("Total Feet", "ମୋଟ ଫୁଟ୍", "कुल फीट", "एकूण फूट")}</span> <span class="detail-val">${numConverter(feetStr)} ft</span></div>
-                    <div class="detail-row"><span>${getLabel("Total Inch", "ମୋଟ ଇଞ୍ଚ", "कुल इंच", "एकूण इंच")}</span> <span class="detail-val">${numConverter(inStr)} in</span></div>
-                </div>
-            `;
-
-            document.getElementById('lc_result').innerHTML = mainDisplay + detailsDisplay;
+            if(document.getElementById('lc_result')) {
+                let exactStr = Number(currentLengthTotal.toFixed(5)).toString();
+                let roundedStr = currentLengthTotal.toFixed(2);
+                let cmStr = (currentLengthTotal * 100).toFixed(2);
+                let feetStr = (currentLengthTotal * 3.280839895).toFixed(2);
+                let inStr = (currentLengthTotal * 39.3700787).toFixed(2);
+                let mainDisplay = `<div style="font-size: 2.5rem; font-weight: bold; color: var(--md-sys-color-primary);">${formatNumber(roundedStr)} m</div>`;
+                let detailsDisplay = `<div class="result-details"><div class="detail-row"><span>Exact Val</span> <span class="detail-val">${formatNumber(exactStr)} m</span></div><div class="detail-row"><span>Total CM</span> <span class="detail-val">${formatNumber(cmStr)} cm</span></div><div class="detail-row"><span>Total Feet</span> <span class="detail-val">${formatNumber(feetStr)} ft</span></div><div class="detail-row"><span>Total Inch</span> <span class="detail-val">${formatNumber(inStr)} in</span></div></div>`;
+                document.getElementById('lc_result').innerHTML = mainDisplay + detailsDisplay;
+            }
         }
 
         const conversionRatesToMeters = { 'mm': 0.001, 'cm': 0.01, 'm': 1, 'in': 0.0254, 'ft': 0.3048 };
         function convertLengthLive() {
+            if(!document.getElementById('conv_input')) return;
             let val = parseFloat(document.getElementById('conv_input').value);
             if (isNaN(val)) val = 0;
             let fromUnit = document.getElementById('conv_from').value;
@@ -1400,25 +1362,20 @@
             let result = (val * conversionRatesToMeters[fromUnit]) / conversionRatesToMeters[toUnit];
             let resultStr = parseFloat(result.toFixed(4)).toString();
             
-            let numConverter = (num) => num;
-            if (currentLang === 'odia') numConverter = toOdiaNumeral;
-            else if (currentLang === 'hindi' || currentLang === 'konkani') numConverter = toDevanagariNumeral;
-
             let resultEng = `${resultStr} ${toUnit}`;
-            let resultReg = `${numConverter(resultStr)} ${toUnit}`;
+            let resultReg = `${formatNumber(resultStr)} ${toUnit}`;
             document.getElementById('conv_result').innerHTML = (currentLang === 'eng' || currentLang === 'both') ? `${resultEng} <span style="font-size: 0.5em; opacity: 0.8; display: block; margin-top: 4px;">(${resultReg})</span>` : resultReg;
         }
 
         function swapConvUnits() {
-            let from = document.getElementById('conv_from');
-            let to = document.getElementById('conv_to');
-            let temp = from.value;
-            from.value = to.value;
-            to.value = temp;
+            let f = document.getElementById('conv_from');
+            let t = document.getElementById('conv_to');
+            let temp = f.value; f.value = t.value; t.value = temp;
             convertLengthLive();
         }
 
         function convertBadgeLive() {
+            if(!document.getElementById('bc_input')) return;
             let val = parseFloat(document.getElementById('bc_input').value);
             if (isNaN(val)) val = 0;
             let customSize = parseFloat(document.getElementById('bc_size').value) || badgeMultiplier;
@@ -1426,20 +1383,11 @@
             let fromUnit = document.getElementById('bc_from').value;
             let toUnit = document.getElementById('bc_to').value;
             
-            let numConverter = (num) => num;
             let toUnitText;
-            if (currentLang === 'odia') {
-                numConverter = toOdiaNumeral;
-                toUnitText = toUnit === 'badge' ? 'ବ୍ୟାଚ୍' : 'ସଂଖ୍ୟା';
-            } else if (currentLang === 'hindi') {
-                numConverter = toDevanagariNumeral;
-                toUnitText = toUnit === 'badge' ? 'बैच' : 'संख्या';
-            } else if (currentLang === 'konkani') {
-                numConverter = toDevanagariNumeral;
-                toUnitText = toUnit === 'badge' ? 'बॅच' : 'संख्या';
-            } else {
-                toUnitText = toUnit === 'badge' ? 'Batches' : 'Numbers';
-            }
+            if (currentLang === 'odia') toUnitText = toUnit === 'badge' ? 'ବ୍ୟାଚ୍' : 'ସଂଖ୍ୟା';
+            else if (currentLang === 'hindi') toUnitText = toUnit === 'badge' ? 'बैच' : 'संख्या';
+            else if (currentLang === 'konkani') toUnitText = toUnit === 'badge' ? 'बॅच' : 'संख्या';
+            else toUnitText = toUnit === 'badge' ? 'Batches' : 'Numbers';
 
             let result = 0;
             if (fromUnit === toUnit) result = val;
@@ -1449,32 +1397,17 @@
             let resultStr = parseFloat(result.toFixed(2)).toString();
             
             let resultEng = `${resultStr} ${toUnit === 'badge' ? 'Batches' : 'Numbers'}`;
-            let resultReg = `${numConverter(resultStr)} ${toUnitText}`;
+            let resultReg = `${formatNumber(resultStr)} ${toUnitText}`;
             
             document.getElementById('bc_result').innerHTML = (currentLang === 'eng' || currentLang === 'both') ? `${resultEng} <span style="font-size: 0.5em; opacity: 0.8; display: block; margin-top: 4px;">(${resultReg})</span>` : resultReg;
         }
 
-        function convertOcpLive() {
-            let val = parseFloat(document.getElementById('ocp_input').value);
-            if (isNaN(val)) val = 0;
-            let type = parseInt(document.getElementById('ocp_type').value) || 2;
-            
-            let result = val / type;
-            let resultStr = Number(result.toFixed(2)).toString();
-            
-            let numConverter = (currentLang === 'odia') ? toOdiaNumeral : ((currentLang === 'hindi' || currentLang === 'konkani') ? toDevanagariNumeral : (num) => num);
-            
-            document.getElementById('ocp_result').innerText = numConverter(resultStr);
-        }
-
         function openHistoryModal() {
-            document.getElementById('historyModal').classList.add('active');
-            renderHistory();
-        }
-        function closeHistoryModal(e, force=false) {
-            if (force || e.target.classList.contains('modal-overlay')) {
-                document.getElementById('historyModal').classList.remove('active');
-            }
+            window.location.hash = '#lengthcheck';
+            setTimeout(() => {
+                document.getElementById('historyModal').classList.add('active');
+                renderHistory();
+            }, 50);
         }
 
         function saveHistory(entry) {
@@ -1504,33 +1437,65 @@
 
         function clearHistory() { localStorage.removeItem('sbg_lc_history'); renderHistory(); }
 
-        // --- CONFIG DOCS LOGIC ---
+        // --- NEW: LAP FEATURE ---
+        function recordLap() {
+            let laps = JSON.parse(localStorage.getItem('sbg_laps')) || [];
+            let timeStr = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+            let dateStr = new Date().toLocaleDateString('en-GB'); // dd/mm/yyyy
+            laps.unshift({ time: `${dateStr} ${timeStr}`, count: count });
+            if(laps.length > 100) laps.pop();
+            localStorage.setItem('sbg_laps', JSON.stringify(laps));
+            renderLaps();
+            showToast('lapRecorded');
+        }
+        function renderLaps() {
+            let laps = JSON.parse(localStorage.getItem('sbg_laps')) || [];
+            const recentContainer = document.getElementById('recent-laps-display');
+            const modalContainer = document.getElementById('lap-history-list');
+
+            if (laps.length === 0) {
+                recentContainer.innerHTML = `<div style="opacity: 0.6; font-size: 0.8rem; padding: 8px 4px;">No laps recorded yet.</div>`;
+                if(modalContainer) modalContainer.innerHTML = `<div style="padding: 24px; opacity: 0.6; text-align:center; font-style: italic;">No laps recorded yet.</div>`;
+                return;
+            }
+
+            // Render Recent Laps (Top 3)
+            recentContainer.innerHTML = laps.slice(0, 3).map(lap => `
+                <div class="lap-item">
+                    <span class="lap-item-time">${lap.time}</span>
+                    <span class="lap-item-count">${formatNumber(lap.count)}</span>
+                </div>
+            `).join('');
+
+            // Render Full Lap History in Modal
+            if(modalContainer) {
+                modalContainer.innerHTML = laps.map(lap => `
+                    <div class="history-item">
+                        <div style="font-size:0.75rem; opacity:0.7; margin-bottom: 4px;">${lap.time}</div>
+                        <div>Count: <strong>${formatNumber(lap.count)}</strong></div>
+                    </div>
+                `).join('');
+            }
+        }
+        function clearLaps() { localStorage.removeItem('sbg_laps'); renderLaps(); }
+
+        // --- NEW: OCP TO COUNT ---
+        function calculateOCP() {
+            let ocpNum = parseFloat(document.getElementById('ocp_number_input').value) || 0;
+            let ends = parseInt(document.getElementById('ocp_ends_select').value) || 2;
+            let result = (ocpNum === 0 || ends === 0) ? 0 : ocpNum / ends;
+            document.getElementById('ocp_result_display').innerText = formatNumber(result.toFixed(0));
+        }
+
+        // --- NEW: CONFIG DOCS ---
         const configDocsData = {
             doc1: {
                 title: "CABLE ASSEMBLY, JUMPER, CONFIGURABLE",
-                content: `<h3>General Document Information</h3>
-                    <p><strong>Drawing Number:</strong> A100H3247<br><strong>Revision:</strong> BH</p>
-                    <table>
-                        <thead><tr><th>Code</th><th>Category</th><th>Options / Values</th></tr></thead>
-                        <tbody>
-                            <tr><td><strong>f</strong></td><td>FIBER COUNT</td><td>1 = 1 FIBER<br>2 = 2 FIBER</td></tr>
-                            <tr><td><strong>g</strong></td><td>COLOR</td><td>A = BLUE<br>B = ORANGE<br>C = GREEN<br>D = BROWN<br>E = SLATE<br>F = WHITE<br>G = RED<br>H = BLACK<br>J = YELLOW<br>K = VIOLET<br>L = ROSE<br>M = AQUA<br>N = LIME GREEN</td></tr>
-                            <tr><td><strong>kkk</strong></td><td>LENGTH</td><td>FEET: 001 - 999<br>METERS: 001 - 500<br>DECIMETERS: 005 - 990</td></tr>
-                        </tbody>
-                    </table>`
+                content: `<h3>General Document Information</h3><p><strong>Title:</strong> CABLE ASSEMBLY, JUMPER, CONFIGURABLE<br><strong>Drawing Number:</strong> A100H3247<br><strong>Revision:</strong> BH</p><h3>Configuration Breakdown</h3><table><thead><tr><th>Code</th><th>Category</th><th>Options / Values</th></tr></thead><tbody><tr><td><strong>X</strong></td><td>(VERSION)</td><td>F = FIBER LOW LOSS<br>C = ECONOMIC VERSION</td></tr><tr><td><strong>a</strong></td><td>FAMILY</td><td>D = JUMPER PLENUM<br>E = JUMPER RISER<br>F = JUMPER LSZH (DUAL RATED)</td></tr><tr><td><strong>b</strong></td><td>FIBER TYPE</td><td>Z = LAZRSPEED 300 MULTIMODE<br>X = LAZRSPEED 550 MULTIMODE<br>V = LAZRSPEED WB 550<br>W = TERASPEED SM G657.A1 OR A2<br>G = SINGLEMODE G657.A2</td></tr><tr><td><strong>cc</strong></td><td>TERMINATION END A</td><td>K* = LC LOCKING[18]<br>LC = LC UPC<br>LA = LC APC<br>L# = KEYED LC<br>SC = SC UPC<br>SA = SC APC</td></tr><tr><td><strong>dd</strong></td><td>TERMINATION END B</td><td>K* = LC LOCKING[18]<br>LC = LC UPC<br>LA = LC APC<br>L# = KEYED LC<br>SC = SC UPC<br>SA = SC APC<br>UC = UNCONNECTORIZED</td></tr><tr><td><strong>e</strong></td><td>CONSTRUCTION</td><td>2 = 1.6mm SIMPLEX<br>4 = 1.6mm ZIP CORD</td></tr><tr><td><strong>f</strong></td><td>FIBER COUNT</td><td>1 = 1 FIBER<br>2 = 2 FIBER</td></tr><tr><td><strong>g</strong></td><td>COLOR</td><td>A = BLUE<br>B = ORANGE<br>C = GREEN<br>D = BROWN<br>E = SLATE<br>F = WHITE<br>G = RED<br>H = BLACK<br>J = YELLOW<br>K = VIOLET<br>L = ROSE<br>M = AQUA<br>N = LIME GREEN</td></tr><tr><td><strong>h</strong></td><td>OPTIONS</td><td>X = NO BREAKOUT<br>8 = WITH PORT BLOCKER[20]<br>9 = NO BREAKOUT NO REEL<br>G = GOOGLE, NO BREAKOUT</td></tr><tr><td><strong>j</strong></td><td>UNIT OF MEASURE</td><td>F = FEET<br>M = METER<br>D = DECIMETER</td></tr><tr><td><strong>kkk</strong></td><td>LENGTH</td><td>FEET: 001 - 999<br>METERS: 001 - 500<br>DECIMETERS: 005 - 990</td></tr></tbody></table><h3>Table 2: Length Tolerances</h3><table><thead><tr><th>CABLE LENGTH FT (M)</th><th>LENGTH TOLERANCE FT (M)</th></tr></thead><tbody><tr><td><strong>1 - 1.9 (0.305 - 0.579)</strong></td><td>+0.25/-0.0 (+0.08-0.0)</td></tr><tr><td><strong>2 - 14 (1 - 4)</strong></td><td>+0.5/-0.0 (+0.15-0.000)</td></tr><tr><td><strong>15 - 100 (5 - 30)</strong></td><td>+1.0/-0.0 (+0.30-0.00)</td></tr><tr><td><strong>101 - 200 (31 - 60)</strong></td><td>+1.0/-0.0 (+0.30-0.00)</td></tr><tr><td><strong>201 - 500 (61 - 152)</strong></td><td>+1.0/-0.0 (+0.30-0.00)</td></tr><tr><td><strong>501 - 3277 (153 - 999)</strong></td><td>+1.0/-0.0 (+0.30-0.00)</td></tr></tbody></table>`
             },
             doc2: {
                 title: "LC UNI-BOOT JUMPER, CONFIGURABLE",
-                content: `<h3>General Document Information</h3>
-                     <p><strong>Drawing Number:</strong> A110H3439<br><strong>Revision:</strong> AL</p>
-                    <table>
-                        <thead><tr><th>Code</th><th>Category</th><th>Options / Values</th></tr></thead>
-                        <tbody>
-                            <tr><td><strong>g</strong></td><td>FIBER COUNT</td><td>2 = 2 FIBER</td></tr>
-                            <tr><td><strong>h</strong></td><td>COLOR</td><td>A = BLUE<br>C = GREEN<br>J = YELLOW<br>M = AQUA<br>N = LIME GREEN<br>K = VIOLET<br>G = RED</td></tr>
-                            <tr><td><strong>xxx</strong></td><td>LENGTH</td><td>FEET: 001-999<br>METERS: 001-999<br>DECIMETERS: 001-999</td></tr>
-                        </tbody>
-                    </table>`
+                content: `<h3>General Document Information</h3><p><strong>Title:</strong> LC UNI-BOOT JUMPER, CONFIGURABLE<br><strong>Drawing Number:</strong> A110H3439<br><strong>Revision:</strong> AL</p><h3>Configuration Breakdown</h3><table><thead><tr><th>Code</th><th>Category</th><th>Options / Values</th></tr></thead><tbody><tr><td><strong>a</strong></td><td>PRODUCT TYPE</td><td>U = ULTRA LOW LOSS<br>T = ULL FIM LABELING</td></tr><tr><td><strong>b</strong></td><td>FAMILY</td><td>D = JUMPER PLENUM<br>F = JUMPER RISER / LSZH</td></tr><tr><td><strong>c</strong></td><td>FIBER TYPE</td><td>X = LAZRSPEED 550 MULTIMODE<br>V = LAZRSPEED WB 550<br>G = TERASPEED SM G.657.A2<br>W = CORNING SMF-28 ULTRA<br>0 = PRYSMIAN SM G.657.A2</td></tr><tr><td><strong>dd</strong></td><td>TERMINATION END A</td><td>LU = LC UNI-BOOT<br>SN = SN SENKO NANO (50T)</td></tr><tr><td><strong>ee</strong></td><td>TERMINATION END B</td><td>LU = LC UNI-BOOT<br>SN = SN SENKO NANO (50T)<br>UC = UNCONNECTED</td></tr><tr><td><strong>f</strong></td><td>CONSTRUCTION</td><td>0 = 2.0mm MP IC<br>K = 1.5mm MP IC</td></tr><tr><td><strong>g</strong></td><td>FIBER COUNT</td><td>2 = 2 FIBER</td></tr><tr><td><strong>h</strong></td><td>COLOR</td><td>A = BLUE<br>C = GREEN<br>J = YELLOW<br>M = AQUA<br>N = LIME GREEN<br>K = VIOLET<br>G = RED</td></tr><tr><td><strong>j</strong></td><td>OPTIONS</td><td>X = NO BREAKOUT<br>G = GOOGLE</td></tr><tr><td><strong>k</strong></td><td>UNIT OF MEASURE</td><td>F = FEET<br>M = METER<br>D = DECIMETERS</td></tr><tr><td><strong>xxx</strong></td><td>LENGTH</td><td>FEET: 001-999<br>METERS: 001-999<br>DECIMETERS: 001-999</td></tr></tbody></table><h3>Table 2: Length Tolerances</h3><table><thead><tr><th>CABLE LENGTH FT (M)</th><th>LENGTH TOLERANCE FT (M)</th></tr></thead><tbody><tr><td><strong>1.0 (0.305)</strong></td><td>+0.25/-0.0 (+0.08/-0.00)</td></tr><tr><td><strong>2.0 - 14. (1 - 4)</strong></td><td>+0.5/-0.00 (+0.15/-0.00)</td></tr><tr><td><strong>15 - 100 (5 - 30)</strong></td><td>+1.0/-0.0 (+.30/-0.00)</td></tr><tr><td><strong>101 - 200 (31 - 60)</strong></td><td>+1.0/-0.0 (+.30/-0.00)</td></tr><tr><td><strong>201 - 500 (61 - 152)</strong></td><td>+1.0/-0.0 (+.30/-0.00)</td></tr><tr><td><strong>501 - 3277 (153 - 999)</strong></td><td>+1.0/-0.0 (+.30/-0.00)</td></tr></tbody></table>`
             }
         };
         const colorMap = { "BLUE": "#007bff", "ORANGE": "#fd7e14", "GREEN": "#28a745", "BROWN": "#a52a2a", "SLATE": "#708090", "WHITE": "#f8f9fa", "RED": "#dc3545", "BLACK": "#343a40", "YELLOW": "#ffc107", "VIOLET": "#8f00ff", "ROSE": "#ff007f", "AQUA": "#00ffff", "LIME GREEN": "#32cd32" };
@@ -1538,16 +1503,6 @@
         function formatConfigContent(htmlContent) {
             const tempDiv = document.createElement('div');
             tempDiv.innerHTML = htmlContent;
-            
-            // Wrap tables for responsiveness
-            const tables = tempDiv.querySelectorAll('table');
-            tables.forEach(table => {
-                const wrapper = document.createElement('div');
-                wrapper.className = 'table-responsive';
-                table.parentNode.insertBefore(wrapper, table);
-                wrapper.appendChild(table);
-            });
-
             const cells = tempDiv.querySelectorAll('td:last-child');
             cells.forEach(cell => {
                 let cellHtml = cell.innerHTML;
@@ -1575,6 +1530,86 @@
             document.getElementById('configDocsViewer').classList.remove('visible');
         }
 
+        // --- SHIFT CALENDAR LOGIC ---
+        let shiftSettings = JSON.parse(localStorage.getItem('shiftSettings')) || { baseDate: '2026-01-01', baseShift: 'A' };
+        let calCurrentDate = getLogicalDate();
+
+        const SHIFT_SEQ = ['A', 'C', 'B'];
+        function getLogicalDate() { let d = new Date(); if (d.getHours() < 8) d.setDate(d.getDate() - 1); return d; }
+        function getMonday(d) { const date = new Date(d); date.setHours(0,0,0,0); const day = date.getDay(); const diff = date.getDate() - day + (day === 0 ? -6 : 1); return new Date(date.setDate(diff)); }
+        function getShiftForDate(dateObj) {
+            if (dateObj.getDay() === 0) return 'OFF';
+            const tMon = getMonday(dateObj);
+            const bMon = getMonday(new Date(shiftSettings.baseDate));
+            const diffWeeks = Math.floor(Math.round((tMon - bMon) / (1000 * 60 * 60 * 24)) / 7);
+            let bIdx = SHIFT_SEQ.indexOf(shiftSettings.baseShift);
+            let curIdx = (bIdx + diffWeeks) % 3; if (curIdx < 0) curIdx += 3;
+            return SHIFT_SEQ[curIdx];
+        }
+        function formatISODate(d) { return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2, '0') + "-" + String(d.getDate()).padStart(2, '0'); }
+
+        function renderCalendar() {
+            const k = getCalLangKey();
+            const y = calCurrentDate.getFullYear(); const m = calCurrentDate.getMonth();
+            document.getElementById('sc-month-title').innerText = `${calTranslations.months[k][m]} ${formatNumber(y)}`;
+            document.getElementById('sc-weekdays').innerHTML = calTranslations.days[k].map(d => `<div class="sc-day-header">${d}</div>`).join('');
+            const grid = document.getElementById('sc-days'); grid.innerHTML = '';
+            const firstDay = new Date(y, m, 1).getDay();
+            const daysInMonth = new Date(y, m + 1, 0).getDate();
+            const logicalToday = getLogicalDate();
+
+            for (let i = 0; i < firstDay; i++) grid.innerHTML += `<div class="sc-cell sc-empty"></div>`;
+            for (let d = 1; d <= daysInMonth; d++) {
+                const cDate = new Date(y, m, d);
+                const isoDate = formatISODate(cDate);
+                const sCode = getShiftForDate(cDate);
+                const isHol = holidays2026[isoDate];
+                let cls = `sc-cell sc-shift-${sCode}`;
+                if (d === logicalToday.getDate() && m === logicalToday.getMonth() && y === logicalToday.getFullYear()) cls += ' sc-today';
+                if (isHol) cls += ' sc-holiday';
+                let label = sCode === 'OFF' ? (currentLang==='odia'?'ଛୁଟି':(currentLang==='hindi'||currentLang==='konkani'?'छुट्टी':'OFF')) : sCode;
+                grid.innerHTML += `<div class="${cls}"><div>${formatNumber(d)}</div><div class="sc-shift-label">${label}</div></div>`;
+            }
+            renderHolidayLists(y, m, logicalToday, k);
+        }
+        function renderHolidayLists(y, m, logicalToday, k) {
+            const logicalIso = formatISODate(logicalToday);
+            const todayHolBox = document.getElementById('sc-holiday-today-box');
+            if (holidays2026[logicalIso]) {
+                todayHolBox.style.display = 'block';
+                todayHolBox.innerHTML = `🎉 ${translations.todayHoliday[k]} - ${holidays2026[logicalIso][k]}`;
+            } else { todayHolBox.style.display = 'none'; }
+
+            let monthHtml = ''; Object.keys(holidays2026).forEach(dateStr => { let d = new Date(dateStr); if (d.getFullYear() === y && d.getMonth() === m) { monthHtml += `<div class="sc-holiday-item"><span>${formatNumber(d.getDate())} ${calTranslations.months[k][m]}</span> <strong>${holidays2026[dateStr][k]}</strong></div>`; }});
+            document.getElementById('sc-holiday-month-list').innerHTML = monthHtml || `<div style="opacity:0.6; font-size:0.85rem; padding: 8px 0;">No holidays this month.</div>`;
+
+            let upcHtml = ''; let count = 0;
+            Object.keys(holidays2026).sort().forEach(dateStr => { if (dateStr > logicalIso && count < 4) { let d = new Date(dateStr); upcHtml += `<div class="sc-holiday-item"><span>${formatNumber(d.getDate())} ${calTranslations.months[k][d.getMonth()]}</span> <strong>${holidays2026[dateStr][k]}</strong></div>`; count++; }});
+            document.getElementById('sc-holiday-upcoming-list').innerHTML = upcHtml || `<div style="opacity:0.6; font-size:0.85rem; padding: 8px 0;">No upcoming holidays.</div>`;
+        }
+        function changeMonth(dir) { calCurrentDate.setMonth(calCurrentDate.getMonth() + dir); renderCalendar(); }
+        function saveShiftSettings() {
+            shiftSettings.baseShift = document.getElementById('sc-setup-shift').value;
+            shiftSettings.baseDate = document.getElementById('sc-setup-date').value || shiftSettings.baseDate;
+            localStorage.setItem('shiftSettings', JSON.stringify(shiftSettings)); renderCalendar();
+        }
+
+        // Confirmation Modal Logic
+        let pendingConfirmAction = null;
+        function openConfirmModal(msgKey, actionCallback) {
+            pendingConfirmAction = actionCallback;
+            document.getElementById('confirmMessage').setAttribute('data-key', msgKey);
+            applyTranslations(); 
+            document.getElementById('confirmModal').classList.add('active');
+        }
+        function closeConfirmModal() {
+            document.getElementById('confirmModal').classList.remove('active');
+            pendingConfirmAction = null;
+        }
+        document.getElementById('confirmYesBtn').addEventListener('click', () => {
+            if (pendingConfirmAction) pendingConfirmAction();
+            closeConfirmModal();
+        });
 
         // --- ROUTING & EVENTS ---
         function handleHashChange() {
@@ -1588,14 +1623,20 @@
             else if (hash === '#converter') modalToShow = 'converterModal';
             else if (hash === '#badgeconverter') modalToShow = 'badgeConverterModal';
             else if (hash === '#config-docs') modalToShow = 'configDocsModal';
-            else if (hash === '#orderTracker') modalToShow = 'orderTrackerModal';
-            else if (hash === '#ocpModal') modalToShow = 'ocpModal';
-            else if (hash === '#infoModal') modalToShow = 'infoModal';
+            else if (hash === '#shiftcalendar') modalToShow = 'shiftcalendarModal';
+            else if (hash === '#ocp-count') modalToShow = 'ocpCountModal';
+            else if (hash === '#lap-history') modalToShow = 'lapHistoryModal';
 
             if (modalToShow) {
-                document.getElementById(modalToShow).classList.add('active');
+                if(modalToShow === 'shiftcalendarModal') {
+                    document.getElementById('sc-setup-shift').value = shiftSettings.baseShift;
+                    document.getElementById('sc-setup-date').value = shiftSettings.baseDate;
+                    calCurrentDate = getLogicalDate();
+                    renderCalendar();
+                }
+                if (modalToShow === 'lapHistoryModal') renderLaps();
                 if (modalToShow === 'configDocsModal') showConfigSelection();
-                if (modalToShow === 'orderTrackerModal') populateOrderModal();
+                document.getElementById(modalToShow).classList.add('active');
                 updateUI();
                 closeMobileMenu();
             }
@@ -1608,30 +1649,16 @@
         window.addEventListener('scroll', () => {
             const currentScrollY = window.scrollY;
             const mainNav = document.getElementById('mainNav');
-            
             if (window.innerWidth >= 768) {
-                if (currentScrollY > lastScrollY && currentScrollY > 100) {
-                    mainNav.classList.add('nav-hidden');
-                } else {
-                    mainNav.classList.remove('nav-hidden');
-                }
+                if (currentScrollY > lastScrollY && currentScrollY > 100) { mainNav.classList.add('nav-hidden'); } 
+                else { mainNav.classList.remove('nav-hidden'); }
             }
             lastScrollY = currentScrollY;
         });
 
-        document.getElementById('stepInput').addEventListener('input', function(e) {
-            step = parseRegionalInput(e.target.value, 1);
-            localStorage.setItem('sbg_step', step);
-        });
+        document.getElementById('stepInput').addEventListener('input', function(e) { step = parseRegionalInput(e.target.value, 1); localStorage.setItem('sbg_step', step); });
         document.getElementById('stepInput').addEventListener('blur', updateUI);
-
-        document.getElementById('badgeSizeInput').addEventListener('input', function(e) {
-            let parsedSize = parseRegionalInput(e.target.value, 6);
-            if (parsedSize > 0) {
-                badgeMultiplier = parsedSize;
-                localStorage.setItem('sbg_badge_mult', badgeMultiplier);
-            }
-        });
+        document.getElementById('badgeSizeInput').addEventListener('input', function(e) { let parsedSize = parseRegionalInput(e.target.value, 6); if (parsedSize > 0) { badgeMultiplier = parsedSize; localStorage.setItem('sbg_badge_mult', badgeMultiplier); } });
         document.getElementById('badgeSizeInput').addEventListener('blur', updateUI);
 
         document.getElementById('langSwitch').addEventListener('change', function(e) {
@@ -1640,9 +1667,8 @@
                 e.target.value = lastValidLang;
                 return;
             }
-            currentLang = e.target.value; 
-            lastValidLang = currentLang;
-            updateUI();
+            currentLang = e.target.value; lastValidLang = currentLang;
+            updateUI(); renderCalendar();
         });
 
         document.getElementById('targetSelect').addEventListener('change', function(e) {
@@ -1655,31 +1681,45 @@
                 customInput.classList.remove('show-custom');
                 targetValue = parseInt(val) || 0;
             }
-            // Clear order active flag if manual target selected here
-            if (orderData.active) {
-                orderData.active = false;
-                localStorage.setItem('sbg_order_data', JSON.stringify(orderData));
-                showToast('dataStored');
-            }
+            localStorage.setItem('sbg_target', targetValue);
             updateUI();
         });
 
         document.getElementById('customTargetInput').addEventListener('input', function(e) {
             targetValue = parseInt(e.target.value) || 0; 
-            // Also override order data
-            if(orderData.active) { orderData.active = false; localStorage.setItem('sbg_order_data', JSON.stringify(orderData)); }
+            localStorage.setItem('sbg_target', targetValue);
             updateUI();
         });
+        
+        // --- FLOATING CLOCK WIDGET ---
+        setInterval(() => {
+            let logicalNow = getLogicalDate();
+            let realNow = new Date();
+            let dd = String(logicalNow.getDate()).padStart(2, '0');
+            let mm = String(logicalNow.getMonth() + 1).padStart(2, '0');
+            let yyyy = logicalNow.getFullYear();
+            let hr = realNow.getHours();
+            let min = String(realNow.getMinutes()).padStart(2, '0');
+            let sec = String(realNow.getSeconds()).padStart(2, '0');
+            let ampm = hr >= 12 ? 'PM' : 'AM';
+            hr = hr % 12 || 12;
+            let hrStr = String(hr).padStart(2, '0');
+            let dateStr = `${dd}-${mm}-${yyyy}`;
+            let timeStr = `${hrStr}:${min}:${sec} ${ampm}`;
+            
+            if(currentLang === 'odia') { dateStr = formatNumber(dateStr); timeStr = formatNumber(timeStr).replace('AM','am').replace('PM','pm'); }
+            if(currentLang === 'hindi' || currentLang === 'konkani') { dateStr = formatNumber(dateStr); timeStr = formatNumber(timeStr); }
+            
+            document.getElementById('float-date-txt').innerText = dateStr;
+            document.getElementById('float-time-txt').innerText = timeStr;
+        }, 1000);
 
         window.addEventListener('load', () => {
             updateUI();
             handleHashChange();
-
-            setTimeout(() => {
-                const loader = document.getElementById('loader');
-                loader.style.opacity = '0';
-                setTimeout(() => loader.style.display = 'none', 500);
-            }, 1000);
+            let loader = document.getElementById('loader');
+            loader.style.opacity = '0';
+            setTimeout(() => loader.style.display = 'none', 500);
         });
     </script>
 </body>
