@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -133,7 +132,7 @@
         }
         body.target-active #floatingProgress { top: 0; }
         .float-info { display: flex; justify-content: space-between; width: 100%; max-width: 600px; margin-bottom: 6px; font-weight: 600; font-size: 0.9rem;}
-        .float-bar-bg { width: 100%; max-width: 600px; height: 8px; background: var(--md-sys-color-surface-variant); border-radius: 20px; overflow: hidden; }
+        .float-bar-bg { width: 100%; max-width: 600px; height: 8px; background: var(--md-sys-color-surface-variant); border-radius: 20px; overflow: hidden; position: relative; }
         .float-bar-fill { height: 100%; background: linear-gradient(90deg, var(--md-sys-color-primary), #001a41); border-radius: 20px; transition: width 0.3s ease; }
 
         /* Navigation */
@@ -232,6 +231,16 @@
         .target-info { display: flex; justify-content: space-between; margin-top: 6px; font-weight: 600; font-size: 0.9rem;}
         .custom-target-input { display: none; margin-left: 8px; width: 90px; }
         .show-custom { display: inline-block !important; }
+
+        /* Lap Marker styles for progress bars */
+        .lap-marker {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background-color: #ffeb3b; /* Bright yellow marker */
+            z-index: 10;
+        }
 
         /* Lap Feature Styles */
         #recent-laps-container { margin-top: 20px; width: 100%; text-align: left; }
@@ -475,8 +484,9 @@
             <span id="floatRemainingText" data-key="remainingText">Remaining: 0</span>
             <span id="floatTargetDisplay">0 / 0</span>
         </div>
-        <div class="float-bar-bg">
+        <div class="float-bar-bg" id="floatProgressBg">
             <div class="float-bar-fill" id="floatProgressFill"></div>
+            <div id="floatLapMarkers" style="position: absolute; top:0; left:0; width:100%; height:100%; pointer-events:none;"></div>
         </div>
     </div>
 
@@ -491,7 +501,6 @@
                 <a href="#ocp-count" class="nav-btn"><span data-key="ocpCountBtn">OCP to Count</span></a>
                 <a href="#lengthcheck" class="nav-btn"><span data-key="lengthCheckBtn">Length Check</span></a>
                 <a href="#converter" class="nav-btn"><span data-key="converterBtn">Length Converter</span></a>
-                <a href="#badgeconverter" class="nav-btn"><span data-key="badgeConvBtn">Batch Converter</span></a>
 
                 <select id="langSwitch">
                     <option value="both">Eng &amp; Odia</option>
@@ -540,8 +549,9 @@
                 </button>
             </div>
             <div id="progressContainer" style="display:none;">
-                <div class="target-progress-bg">
+                <div class="target-progress-bg" id="mainProgressBg">
                     <div class="target-progress-fill" id="progressFill"></div>
+                    <div id="mainLapMarkers" style="position: absolute; top:0; left:0; width:100%; height:100%; pointer-events:none;"></div>
                 </div>
                 <div class="target-info">
                     <span id="progressStatus" data-key="remainingText">Remaining: 0</span>
@@ -552,7 +562,7 @@
 
         <div class="grid-container">
             <div class="card" id="card-number">
-                <h2 data-key="currentNum">Current Number</h2>
+                <h2 data-key="currentNum">Total Cords Prepared</h2>
                 <div class="number-display" id="countDisplay">0</div>
                 <div id="interaction-area">
                     <div class="step-control">
@@ -588,7 +598,7 @@
                 </svg>
                 <h2 data-key="badges">Total Batches</h2>
                 <div class="number-display" id="badgeDisplay">0</div>
-                <div id="smallTotalDisplay" data-key="smallTotalDisplay" style="font-size: 1.1rem; font-weight: 700; color: var(--md-sys-color-primary); opacity: 0.8; margin-top: -12px; margin-bottom: 8px;">(Total: 0)</div>
+                <div id="smallTotalDisplay" style="font-size: 1.1rem; font-weight: 700; color: var(--md-sys-color-primary); opacity: 0.8; margin-top: -12px; margin-bottom: 8px;">(0)</div>
                 
                 <div class="step-control" style="margin-top: 8px; margin-bottom: 8px;">
                     <label data-key="badgeSizeSet">Set Batch Size:</label>
@@ -598,10 +608,13 @@
                         <button class="stepper-btn" onclick="adjustInput('badgeSizeInput', 1)">+</button>
                     </div>
                 </div>
-                <p style="opacity: 0.7; margin-top: 4px; font-size:0.9rem;" id="badgeDescText">1 Batch = 6 Increments</p>
+                <p style="opacity: 0.7; margin-top: 4px; font-size:0.9rem;" id="badgeDescText">1 Batch = 6 Cords</p>
                 <div class="controls" style="margin-top: 16px;">
                     <button class="btn-dec control-btn" onclick="changeBatchCount(-1)">
                         <span class="icon">-</span>
+                    </button>
+                    <button class="btn-lap control-btn" onclick="recordLap()">
+                        <span data-key="lapBtn">LAP</span>
                     </button>
                     <button class="btn-inc control-btn" onclick="changeBatchCount(1)">
                         <span class="icon">+</span>
@@ -756,49 +769,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Badge Converter Modal -->
-    <div id="badgeConverterModal" class="modal-overlay" onclick="closeModal(event)">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <button class="modal-close" onclick="window.location.hash=''">✕</button>
-            <div class="lc-layout">
-                <div class="lc-left">
-                    <h2 style="margin-bottom: 12px; margin-top: 0; color: var(--md-sys-color-primary); display: flex; align-items: center; gap: 8px; font-size:1.3rem;">
-                        <svg class="svg-badge" viewBox="0 0 24 24" style="width: 24px; height: 24px; margin: 0;"><path d="M12 2l2.4 7.4h7.6l-6.1 4.5 2.3 7.1-6.2-4.6-6.2 4.6 2.3-7.1-6.1-4.5h7.6z"/></svg>
-                        <span data-key="badgeConvTitle">Batch Converter</span>
-                    </h2>
-                    <div><label data-key="convInput">Enter Value</label><input type="number" id="bc_input" class="styled-input" placeholder="e.g. 10" oninput="convertBadgeLive()" value="1"></div>
-                    <div>
-                        <label data-key="badgeSizeSet">Custom Batch Size</label>
-                        <input type="number" id="bc_size" class="styled-input" placeholder="e.g. 6" oninput="convertBadgeLive()" value="6">
-                    </div>
-                    <div>
-                        <label data-key="convFrom">From</label>
-                        <select id="bc_from" class="styled-input" onchange="convertBadgeLive()">
-                            <option value="badge">Batch</option>
-                            <option value="number">Number</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label data-key="convTo">To</label>
-                        <select id="bc_to" class="styled-input" onchange="convertBadgeLive()">
-                            <option value="number">Number</option>
-                            <option value="badge">Batch</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="lc-right">
-                    <div style="width: 100%; font-size: 1.5rem; font-weight: bold; text-align: center; background: var(--md-sys-color-secondary-container); padding: 24px 16px; border-radius: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
-                        <span data-key="lcResultText" style="color: var(--md-sys-color-on-surface); display:block; font-size: 1.1rem; opacity:0.8; margin-bottom: 8px;">Result:</span> 
-                        <span id="bc_result" style="color: var(--md-sys-color-primary); font-size: 2.2rem; word-break: break-word;">6 Numbers</span>
-                    </div>
-                    <button class="btn-dec" style="width: 100%; padding: 12px; margin-top: auto; font-size: 1rem; border:none; border-radius:100px; font-weight:bold; cursor:pointer;" onclick="window.location.hash=''">
-                        <span data-key="lcBackBtn">Back to Tracker</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
     
     <!-- Config Docs Modal -->
     <div id="configDocsModal" class="modal-overlay" onclick="closeModal(event)">
@@ -869,14 +839,18 @@
                     <div class="sc-grid" id="sc-days"></div>
 
                     <div style="margin-top: 20px; display:flex; flex-direction: column; gap: 8px; background: var(--md-sys-color-surface-variant); padding: 12px; border-radius: 16px;">
-                        <label style="font-size: 0.85rem; font-weight: 600; opacity: 0.8;" data-key="settingsTitle">Set Base Shift & Date</label>
-                        <div style="display:flex; gap:8px;">
-                            <select id="sc-setup-shift" class="styled-input" style="flex:1" onchange="saveShiftSettings()">
-                                <option value="A">Base: A Shift</option>
-                                <option value="B">Base: B Shift</option>
-                                <option value="C">Base: C Shift</option>
+                        <label style="font-size: 0.85rem; font-weight: 600; opacity: 0.8;" data-key="settingsTitle">Set Shift Pattern & Date</label>
+                        <div style="display:flex; flex-direction: column; gap: 8px;">
+                            <select id="sc-setup-pattern" class="styled-input" onchange="onPatternChange()">
+                                <option value="ACB">3 Shifts (A - C - B)</option>
+                                <option value="BC">2 Shifts (B & C)</option>
                             </select>
-                            <input type="date" id="sc-setup-date" class="styled-input" style="flex:1" onchange="saveShiftSettings()">
+                            <div style="display:flex; gap:8px;">
+                                <select id="sc-setup-shift" class="styled-input" style="flex:1" onchange="saveShiftSettings()">
+                                    <!-- Populated dynamically -->
+                                </select>
+                                <input type="date" id="sc-setup-date" class="styled-input" style="flex:1" onchange="saveShiftSettings()">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1021,7 +995,7 @@
         const translations = {
             loaderTitle: { eng: "Fiber Count", odia: "ଫାଇବର ଗଣନା", hin: "फायबर गणना", kon: "फायबर गणना" },
             home: { eng: "Shift Calendar", odia: "ସିଫ୍ଟ କ୍ୟାଲେଣ୍ଡର", hin: "शिफ्ट कैलेंडर", kon: "शिफ्ट कॅलेंडर" },
-            currentNum: { eng: "Current Number", odia: "ବର୍ତ୍ତମାନର ସଂଖ୍ୟା", hin: "वर्तमान संख्या", kon: "सध्याची संख्या" },
+            currentNum: { eng: "Total Cords Prepared", odia: "ମୋଟ ପ୍ରସ୍ତୁତ କର୍ଡ", hin: "कुल कॉर्ड तैयार", kon: "एकूण कॉर्ड तयार" },
             stepLabel: { eng: "Increment Step:", odia: "ବୃଦ୍ଧି ମାତ୍ରା:", hin: "वृद्धि चरण:", kon: "वाढीचे प्रमाण:" },
             btnReset: { eng: "Reset Data", odia: "ରିସେଟ୍ ଡାଟା", hin: "डेटा रीसेट करें", kon: "डेटा रीसेट करा" },
             badges: { eng: "Total Batches", odia: "ମୋଟ ବ୍ୟାଚ୍", hin: "कुल बैच", kon: "एकूण बॅच" },
@@ -1034,8 +1008,6 @@
             footerCredit: { eng: "by Sandeep Biswal G", odia: "ସନ୍ଦୀପ୍ ବିଶ୍ୱାଳ ଜି ଙ୍କ ଦ୍ଵାରା", hin: "संदीप् बिस्वाल जी द्वारा", kon: "संदीप् बिस्वाल जी यांच्याद्वारे" },
             promoTitle: { eng: "Download Plyxo Games", odia: "ଡାଉନଲୋଡ୍ Plyxo Games", hin: "Plyxo गेम्स डाउनलोड करें", kon: "Plyxo गेम्स डाउनलोड करा" },
             promoSub: { eng: "Where Every Move Matters.", odia: "ଯେଉଁଠି ପ୍ରତିଟି ପଦକ୍ଷେପ ଗୁରୁତ୍ୱପୂର୍ଣ୍ଣ ।", hin: "जहाँ हर चाल मायने रखती है।", kon: "जिथे प्रत्येक हालचाल महत्त्वाची आहे." },
-            badgeConvBtn: { eng: "Batch Converter", odia: "ବ୍ୟାଚ୍ କନଭର୍ଟର", hin: "बैच कन्वर्टर", kon: "बॅच कनवर्टर" },
-            badgeConvTitle: { eng: "Batch Converter", odia: "ବ୍ୟାଚ୍ କନଭର୍ଟର", hin: "बैच कन्वर्टर", kon: "बॅच कनवर्टर" },
             lengthCheckBtn: { eng: "Length Check", odia: "ଦୈର୍ଘ୍ୟ ଯାଞ୍ଚ", hin: "लंबाई जांच", kon: "लांबी तपासणी" },
             lengthCheckTitle: { eng: "Fiber Length Check", odia: "ଫାଇବର ଦୈର୍ଘ୍ୟ ଯାଞ୍ଚ", hin: "फाइबर लंबाई जांच", kon: "फायबर लांबी तपासणी" },
             lcRead1: { eng: "Reading End 1", odia: "ରିଡିଂ ଏଣ୍ଡ୍ ୧", hin: "रीडिंग सिरा 1", kon: "रीडिंग टोक 1" },
@@ -1057,7 +1029,6 @@
             dataStored: { eng: "Data Stored Successfully!", odia: "ଡାଟା ସଫଳତାର ସହ ସେଭ୍ ହେଲା!", hin: "डेटा सफलतापूर्वक संग्रहीत हुआ!", kon: "डेटा यशस्वीरित्या सेव्ह झाला!" },
             dataExists: { eng: "Already Saved!", odia: "ପୂର୍ବରୁ ସେଭ୍ ହୋଇଛି!", hin: "पहले से सहेजा गया!", kon: "आधीच सेव्ह केले आहे!" },
             zoomText: { eng: "Zoom ", odia: "ଜୁମ୍ ", hin: "ज़ूम ", kon: "ज़ूम" },
-            smallTotalDisplay: { eng: "(Total: ", odia: "(ମୋଟ: ", hin: "(कुल: ", kon: "(एकूण: " },
             reportLang: { eng: "Report/Add Language", odia: "ରିପୋର୍ଟ/ଭାଷା ଯୋଡ଼ନ୍ତୁ", hin: "अनुवाद रिपोर्ट/भाषा जोड़ें", kon: "अनुवाद तक्रार/भाषा जोडा" },
             reportText: { eng: "Need to report a translation error or request a new language?", odia: "ଅନୁବାଦ ତ୍ରୁଟି ରିପୋର୍ଟ କରିବାକୁ କିମ୍ବା ନୂଆ ଭାଷା ଅନୁରୋଧ କରିବାକୁ ଚାହୁଁଛନ୍ତି କି?", hin: "अनुवाद में कोई त्रुटि रिपोर्ट करनी है या एक नई भाषा का अनुरोध करना है?", kon: "भाषांतरात त्रुटी आढळल्यास किंवा नवीन भाषेची विनंती करायची आहे का?" },
             reportEmail: { eng: "Send us an email and we'll get right on it!", odia: "ଆମକୁ ଏକ ଇମେଲ୍ ପଠାନ୍ତୁ ଏବଂ ଆମେ ଏହା ଉପରେ କାର୍ଯ୍ୟ କରିବୁ!", hin: "हमें एक ईमेल भेजें और हम इसे तुरंत ठीक कर देंगे!", kon: "आम्हाला ईमेल पाठवा आणि आम्ही त्यावर लगेच काम करू!" },
@@ -1084,7 +1055,7 @@
             holidaysMonth: { eng: "Holidays this Month", odia: "ଏହି ମାସର ଛୁଟିଦିନ", hin: "इस महीने की छुट्टियां", kon: "या महिन्यातील सुट्ट्या" },
             holidaysUpcoming: { eng: "Upcoming Holidays", odia: "ଆଗାମୀ ଛୁଟିଦିନ", hin: "आगामी छुट्टियां", kon: "आगामी सुट्ट्या" },
             todayHoliday: { eng: "Today is a Holiday!", odia: "ଆଜି ଛୁଟି ଦିନ!", hin: "आज छुट्टी है!", kon: "आज सुट्टी आहे!" },
-            settingsTitle: { eng: "Set Base Shift & Date", odia: "ବେସ୍ ସିଫ୍ଟ ଏବଂ ତାରିଖ ସେଟ୍ କରନ୍ତୁ", hin: "बेस शिफ्ट और तारीख सेट करें", kon: "बेस शिफ्ट आणि तारीख सेट करा" }
+            settingsTitle: { eng: "Set Shift Pattern & Date", odia: "ବେସ୍ ସିଫ୍ଟ ଏବଂ ତାରିଖ ସେଟ୍ କରନ୍ତୁ", hin: "बेस शिफ्ट और तारीख सेट करें", kon: "बेस शिफ्ट आणि तारीख सेट करा" }
         };
         
         const calTranslations = {
@@ -1203,10 +1174,11 @@
             applyTranslations(); // Apply text first
             
             // Then update elements with dynamic numbers
-            document.getElementById('smallTotalDisplay').innerHTML = `${translations['smallTotalDisplay'][getLangKey()] || '(Total: '}${formatNumber(count)})`;
+            let displayTotalStr = `(${formatNumber(count)})`;
             if(currentLang === 'both') {
-                document.getElementById('smallTotalDisplay').innerHTML += `<span class="odia-sub">${translations.smallTotalDisplay.odia}${toOdiaNumeral(count)})</span>`;
+                displayTotalStr += ` <span class="odia-sub">(${toOdiaNumeral(count)})</span>`;
             }
+            document.getElementById('smallTotalDisplay').innerHTML = displayTotalStr;
 
             let zoomVal = zoomLevels[currentZoomIndex];
             document.getElementById('zoomText').innerText = `${translations['zoomText'][getLangKey()] || 'Zoom: '}${Math.round(zoomVal * 100)}%`;
@@ -1215,10 +1187,10 @@
             document.getElementById('stepInput').value = formatNumber(step);
             document.getElementById('badgeSizeInput').value = formatNumber(badgeMultiplier);
 
-            let bDescEng = `1 Batch = ${badgeMultiplier} Increments`;
-            let bDescOdia = `୧ ବ୍ୟାଚ୍ = ${toOdiaNumeral(badgeMultiplier)} ସଂଖ୍ୟା`;
-            let bDescHin = `१ बैच = ${toDevanagariNumeral(badgeMultiplier)} संख्या`;
-            let bDescKon = `१ बॅच = ${toDevanagariNumeral(badgeMultiplier)} संख्या`;
+            let bDescEng = `1 Batch = ${badgeMultiplier} Cords`;
+            let bDescOdia = `୧ ବ୍ୟାଚ୍ = ${toOdiaNumeral(badgeMultiplier)} କର୍ଡ`;
+            let bDescHin = `१ बैच = ${toDevanagariNumeral(badgeMultiplier)} कॉर्ड`;
+            let bDescKon = `१ बॅच = ${toDevanagariNumeral(badgeMultiplier)} कॉर्ड`;
 
             if (currentLang === 'both') document.getElementById('badgeDescText').innerHTML = `${bDescEng}<span class="odia-sub">${bDescOdia}</span>`;
             else if (currentLang === 'odia') document.getElementById('badgeDescText').innerHTML = bDescOdia;
@@ -1239,6 +1211,18 @@
                 document.getElementById('progressFill').style.width = percentage + '%';
                 document.getElementById('floatProgressFill').style.width = percentage + '%';
                 
+                // Add Lap markers inside progress bars
+                let laps = JSON.parse(localStorage.getItem('sbg_laps')) || [];
+                let markersHtml = laps.map(lap => {
+                    if (lap.count > 0 && lap.count <= targetValue) {
+                        let pct = (lap.count / targetValue) * 100;
+                        return `<div class="lap-marker" style="left: ${pct}%;"></div>`;
+                    }
+                    return '';
+                }).join('');
+                document.getElementById('mainLapMarkers').innerHTML = markersHtml;
+                document.getElementById('floatLapMarkers').innerHTML = markersHtml;
+
                 const statusEl = document.getElementById('progressStatus');
                 const floatStatusEl = document.getElementById('floatRemainingText');
                 
@@ -1261,11 +1245,12 @@
                 document.body.classList.remove('target-active');
                 progressContainer.style.display = 'none';
                 document.body.classList.remove('target-reached-bg');
+                document.getElementById('mainLapMarkers').innerHTML = '';
+                document.getElementById('floatLapMarkers').innerHTML = '';
             }
             renderLaps();
             updateLengthResultUI(); 
             convertLengthLive(); 
-            convertBadgeLive();
             applyTranslations(); // Re-apply for any elements changed by progress logic
         }
 
@@ -1374,34 +1359,6 @@
             convertLengthLive();
         }
 
-        function convertBadgeLive() {
-            if(!document.getElementById('bc_input')) return;
-            let val = parseFloat(document.getElementById('bc_input').value);
-            if (isNaN(val)) val = 0;
-            let customSize = parseFloat(document.getElementById('bc_size').value) || badgeMultiplier;
-            
-            let fromUnit = document.getElementById('bc_from').value;
-            let toUnit = document.getElementById('bc_to').value;
-            
-            let toUnitText;
-            if (currentLang === 'odia') toUnitText = toUnit === 'badge' ? 'ବ୍ୟାଚ୍' : 'ସଂଖ୍ୟା';
-            else if (currentLang === 'hindi') toUnitText = toUnit === 'badge' ? 'बैच' : 'संख्या';
-            else if (currentLang === 'konkani') toUnitText = toUnit === 'badge' ? 'बॅच' : 'संख्या';
-            else toUnitText = toUnit === 'badge' ? 'Batches' : 'Numbers';
-
-            let result = 0;
-            if (fromUnit === toUnit) result = val;
-            else if (fromUnit === 'badge' && toUnit === 'number') result = val * customSize;
-            else if (fromUnit === 'number' && toUnit === 'badge') result = val / customSize;
-            
-            let resultStr = parseFloat(result.toFixed(2)).toString();
-            
-            let resultEng = `${resultStr} ${toUnit === 'badge' ? 'Batches' : 'Numbers'}`;
-            let resultReg = `${formatNumber(resultStr)} ${toUnitText}`;
-            
-            document.getElementById('bc_result').innerHTML = (currentLang === 'eng' || currentLang === 'both') ? `${resultEng} <span style="font-size: 0.5em; opacity: 0.8; display: block; margin-top: 4px;">(${resultReg})</span>` : resultReg;
-        }
-
         function openHistoryModal() {
             window.location.hash = '#lengthcheck';
             setTimeout(() => {
@@ -1442,11 +1399,13 @@
             let laps = JSON.parse(localStorage.getItem('sbg_laps')) || [];
             let timeStr = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
             let dateStr = new Date().toLocaleDateString('en-GB'); // dd/mm/yyyy
-            laps.unshift({ time: `${dateStr} ${timeStr}`, count: count });
+            let currentBatches = Math.floor(count / badgeMultiplier);
+            laps.unshift({ time: `${dateStr} ${timeStr}`, count: count, batches: currentBatches });
             if(laps.length > 100) laps.pop();
             localStorage.setItem('sbg_laps', JSON.stringify(laps));
             renderLaps();
             showToast('lapRecorded');
+            updateUI(); // Redraws markers on progress bar
         }
         function renderLaps() {
             let laps = JSON.parse(localStorage.getItem('sbg_laps')) || [];
@@ -1463,7 +1422,7 @@
             recentContainer.innerHTML = laps.slice(0, 3).map(lap => `
                 <div class="lap-item">
                     <span class="lap-item-time">${lap.time}</span>
-                    <span class="lap-item-count">${formatNumber(lap.count)}</span>
+                    <span class="lap-item-count">${formatNumber(lap.count)} Cords | ${formatNumber(lap.batches !== undefined ? lap.batches : Math.floor(lap.count/badgeMultiplier))} Batches</span>
                 </div>
             `).join('');
 
@@ -1472,12 +1431,12 @@
                 modalContainer.innerHTML = laps.map(lap => `
                     <div class="history-item">
                         <div style="font-size:0.75rem; opacity:0.7; margin-bottom: 4px;">${lap.time}</div>
-                        <div>Count: <strong>${formatNumber(lap.count)}</strong></div>
+                        <div>Count: <strong>${formatNumber(lap.count)}</strong> | Batches: <strong>${formatNumber(lap.batches !== undefined ? lap.batches : Math.floor(lap.count/badgeMultiplier))}</strong></div>
                     </div>
                 `).join('');
             }
         }
-        function clearLaps() { localStorage.removeItem('sbg_laps'); renderLaps(); }
+        function clearLaps() { localStorage.removeItem('sbg_laps'); renderLaps(); updateUI(); }
 
         // --- NEW: OCP TO COUNT ---
         function calculateOCP() {
@@ -1531,21 +1490,57 @@
         }
 
         // --- SHIFT CALENDAR LOGIC ---
-        let shiftSettings = JSON.parse(localStorage.getItem('shiftSettings')) || { baseDate: '2026-01-01', baseShift: 'A' };
+        let shiftSettings = JSON.parse(localStorage.getItem('shiftSettings')) || { pattern: 'ACB', baseDate: '2026-01-01', baseShift: 'A' };
+        if(!shiftSettings.pattern) shiftSettings.pattern = 'ACB'; // upgrade legacy users
+        
         let calCurrentDate = getLogicalDate();
 
-        const SHIFT_SEQ = ['A', 'C', 'B'];
+        const SEQUENCES = {
+            'ACB': ['A', 'C', 'B'],
+            'BC': ['B', 'C']
+        };
+
         function getLogicalDate() { let d = new Date(); if (d.getHours() < 8) d.setDate(d.getDate() - 1); return d; }
         function getMonday(d) { const date = new Date(d); date.setHours(0,0,0,0); const day = date.getDay(); const diff = date.getDate() - day + (day === 0 ? -6 : 1); return new Date(date.setDate(diff)); }
+        
+        function updateShiftDropdown() {
+            const shiftSelect = document.getElementById('sc-setup-shift');
+            const pattern = shiftSettings.pattern;
+            shiftSelect.innerHTML = '';
+            
+            if (pattern === 'ACB') {
+                shiftSelect.innerHTML = '<option value="A">Base: A Shift</option><option value="B">Base: B Shift</option><option value="C">Base: C Shift</option>';
+            } else if (pattern === 'BC') {
+                shiftSelect.innerHTML = '<option value="B">Base: B Shift</option><option value="C">Base: C Shift</option>';
+                if (shiftSettings.baseShift === 'A') shiftSettings.baseShift = 'B';
+            }
+            
+            shiftSelect.value = shiftSettings.baseShift;
+        }
+
+        function onPatternChange() {
+            shiftSettings.pattern = document.getElementById('sc-setup-pattern').value;
+            updateShiftDropdown();
+            saveShiftSettings();
+        }
+
         function getShiftForDate(dateObj) {
             if (dateObj.getDay() === 0) return 'OFF';
+            
             const tMon = getMonday(dateObj);
             const bMon = getMonday(new Date(shiftSettings.baseDate));
             const diffWeeks = Math.floor(Math.round((tMon - bMon) / (1000 * 60 * 60 * 24)) / 7);
-            let bIdx = SHIFT_SEQ.indexOf(shiftSettings.baseShift);
-            let curIdx = (bIdx + diffWeeks) % 3; if (curIdx < 0) curIdx += 3;
-            return SHIFT_SEQ[curIdx];
+            
+            const activeSeq = SEQUENCES[shiftSettings.pattern] || SEQUENCES['ACB'];
+            let bIdx = activeSeq.indexOf(shiftSettings.baseShift);
+            if (bIdx === -1) bIdx = 0; 
+            
+            let curIdx = (bIdx + diffWeeks) % activeSeq.length; 
+            if (curIdx < 0) curIdx += activeSeq.length;
+            
+            return activeSeq[curIdx];
         }
+        
         function formatISODate(d) { return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2, '0') + "-" + String(d.getDate()).padStart(2, '0'); }
 
         function renderCalendar() {
@@ -1589,6 +1584,7 @@
         }
         function changeMonth(dir) { calCurrentDate.setMonth(calCurrentDate.getMonth() + dir); renderCalendar(); }
         function saveShiftSettings() {
+            shiftSettings.pattern = document.getElementById('sc-setup-pattern').value;
             shiftSettings.baseShift = document.getElementById('sc-setup-shift').value;
             shiftSettings.baseDate = document.getElementById('sc-setup-date').value || shiftSettings.baseDate;
             localStorage.setItem('shiftSettings', JSON.stringify(shiftSettings)); renderCalendar();
@@ -1621,7 +1617,6 @@
 
             if (hash === '#lengthcheck') modalToShow = 'lengthCheckModal';
             else if (hash === '#converter') modalToShow = 'converterModal';
-            else if (hash === '#badgeconverter') modalToShow = 'badgeConverterModal';
             else if (hash === '#config-docs') modalToShow = 'configDocsModal';
             else if (hash === '#shiftcalendar') modalToShow = 'shiftcalendarModal';
             else if (hash === '#ocp-count') modalToShow = 'ocpCountModal';
@@ -1629,7 +1624,8 @@
 
             if (modalToShow) {
                 if(modalToShow === 'shiftcalendarModal') {
-                    document.getElementById('sc-setup-shift').value = shiftSettings.baseShift;
+                    document.getElementById('sc-setup-pattern').value = shiftSettings.pattern;
+                    updateShiftDropdown();
                     document.getElementById('sc-setup-date').value = shiftSettings.baseDate;
                     calCurrentDate = getLogicalDate();
                     renderCalendar();
@@ -1704,7 +1700,13 @@
             let ampm = hr >= 12 ? 'PM' : 'AM';
             hr = hr % 12 || 12;
             let hrStr = String(hr).padStart(2, '0');
-            let dateStr = `${dd}-${mm}-${yyyy}`;
+            
+            // Add Day name
+            let dayIdx = logicalNow.getDay();
+            let calLangKey = getCalLangKey();
+            let dayName = calTranslations.days[calLangKey][dayIdx];
+            
+            let dateStr = `${dayName}, ${dd}-${mm}-${yyyy}`;
             let timeStr = `${hrStr}:${min}:${sec} ${ampm}`;
             
             if(currentLang === 'odia') { dateStr = formatNumber(dateStr); timeStr = formatNumber(timeStr).replace('AM','am').replace('PM','pm'); }
@@ -1715,6 +1717,13 @@
         }, 1000);
 
         window.addEventListener('load', () => {
+            // Hide Ad based on URL param
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('ad') === 'no' || urlParams.get('ad') === 'hide' || urlParams.get('hide_ad') === 'yes') {
+                const promos = document.querySelectorAll('.promo-card');
+                promos.forEach(p => p.style.display = 'none');
+            }
+
             updateUI();
             handleHashChange();
             let loader = document.getElementById('loader');
