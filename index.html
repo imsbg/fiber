@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -265,7 +266,8 @@
         }
 
         #floatingAttendance { left: 0; top: 60%; transform: translateY(-50%); border-radius: 0 24px 24px 0; }
-        #floatingDocsBtn { right: 0; top: 60%; transform: translateY(-50%); border-radius: 24px 0 0 24px; }
+        #floatingDocsBtn { right: 0; top: 52%; transform: translateY(-50%); border-radius: 24px 0 0 24px; }
+        #floatingMoreInfoBtn { right: 0; top: 66%; transform: translateY(-50%); border-radius: 24px 0 0 24px; }
         
         /* Promo Card Fixes */
         .promo-card {
@@ -341,8 +343,8 @@
         }
         #toast.show { visibility: visible; opacity: 1; bottom: 100px; }
 
-        /* Config Docs Modal Styles */
-        #configDocsModal .modal-content { overflow: hidden; }
+        /* Config Docs Modal Styles (Shared for Docs and More Info) */
+        .config-docs-modal .modal-content { overflow: hidden; }
         .config-docs-container { width: 100%; height: 100%; display: flex; flex-direction: column; position: relative; overflow: hidden;}
         .config-docs-selection { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 20px; padding: 20px; height: 100%; transition: transform 0.4s ease-in-out, opacity 0.3s; }
         .config-docs-selection.hidden { transform: translateX(-100%); opacity: 0; pointer-events: none; position: absolute; }
@@ -366,10 +368,11 @@
         .config-viewer-body h2 { font-size: 1.4rem; margin-bottom: 12px; }
         .config-viewer-body h3 { font-size: 1.1rem; margin-top: 24px; margin-bottom: 12px; border-bottom: 2px solid var(--md-sys-color-primary); padding-bottom: 6px;}
         .config-viewer-body p { margin-bottom: 12px; line-height: 1.6; }
-        .config-viewer-body table { width: 100%; border-collapse: collapse; margin-top: 16px; font-size: 0.9rem; }
-        .config-viewer-body th, .config-viewer-body td { border: 1px solid var(--md-sys-color-surface-variant); padding: 10px 12px; text-align: left; }
-        .config-viewer-body th { background-color: var(--md-sys-color-secondary-container); font-weight: 700; }
-        .config-viewer-body td:first-child, .config-viewer-body th:first-child { text-align: center; font-weight: bold; }
+        .config-viewer-body table { width: 100%; border-collapse: collapse; font-size: 0.95rem; margin: 0; }
+        .table-wrapper { border-radius: 12px; overflow-x: auto; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 24px; border: 1px solid var(--md-sys-color-surface-variant); }
+        .config-viewer-body th, .config-viewer-body td { border: 1px solid var(--md-sys-color-surface-variant); padding: 10px 14px; text-align: left; }
+        .config-viewer-body th { background-color: var(--md-sys-color-secondary-container); font-weight: 700; white-space: nowrap; }
+        .config-viewer-body td:first-child, .config-viewer-body th:first-child { font-weight: bold; }
         .color-swatch { display: inline-block; width: 14px; height: 14px; border-radius: 50%; margin-right: 8px; vertical-align: middle; border: 1px solid rgba(0,0,0,0.2); }
         body.dark-theme .color-swatch { border-color: rgba(255,255,255,0.2); }
 
@@ -391,6 +394,8 @@
             box-shadow: 0 6px 16px rgba(0,0,0,0.25); z-index: 1500;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
             text-decoration: none; cursor: pointer; transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            min-width: 155px; /* Added fixing size */
+            font-variant-numeric: tabular-nums; /* Prevents jitter */
         }
         .floating-time-btn:hover { transform: scale(1.05); }
         .float-date-txt { font-size: 0.75rem; opacity: 0.9; font-weight: 600; line-height: 1.1; margin-bottom: 2px; }
@@ -427,6 +432,9 @@
             .lc-right { flex: 1; max-width: 450px; margin-top: 0; justify-content: center; }
             .modal-close { display: none; } 
             #historyModal .modal-content, #lapHistoryModal .modal-content, #configDocsModal .modal-content, #shiftcalendarModal .modal-content, #ocpCountModal .modal-content { max-width: 1000px; max-height: 90vh; border-radius: 24px; padding: 24px; }
+            
+            /* Enhanced size specific to More Info modal to handle wide tables */
+            #moreInfoModal .modal-content { max-width: 1200px !important; width: 95vw; height: 95vh; max-height: 95vh; border-radius: 24px; }
         }
 
         @media (max-width: 768px) {
@@ -470,6 +478,12 @@
             <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zM6 20V4h7v5h5v11H6z"/>
         </svg>
         <span>Docs</span>
+    </a>
+    <a href="#more-info" class="floating-action-btn" id="floatingMoreInfoBtn">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+            <path d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
+        </svg>
+        <span>More Info</span>
     </a>
 
     <!-- Floating Time Widget -->
@@ -699,7 +713,8 @@
                 <h3 style="font-size: 1.2rem; color: var(--md-sys-color-on-surface);" data-key="lcHistTitle">History</h3>
                 <div style="display:flex; gap:12px; align-items: center;">
                     <button style="padding: 6px 16px; font-weight: bold; background: var(--md-sys-color-error); color: white; border-radius: 100px; cursor: pointer; border: none;" onclick="openConfirmModal('confirmClear', clearHistory)"><span data-key="lcClear">Clear</span></button>
-                    <button style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--md-sys-color-on-surface);" onclick="window.location.hash='lengthcheck'">✕</button>
+                    <!-- Fixed close button to properly close the modal without overriding hashes -->
+                    <button style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--md-sys-color-on-surface);" onclick="document.getElementById('historyModal').classList.remove('active')">✕</button>
                 </div>
             </div>
             <div id="lc_history" class="history-wrapper" style="border-radius: 0; max-height: unset;"></div>
@@ -733,8 +748,9 @@
                     <div><label data-key="convInput">Enter Value</label><input type="number" id="conv_input" class="styled-input" placeholder="e.g. 100" oninput="convertLengthLive()" value="1"></div>
                     <div>
                         <label data-key="convFrom">From Unit</label>
-                        <select id="conv_from" class="styled-input" onchange="convertLengthLive()">
+                        <select id="conv_from" class="styled-input" onchange="handleUnitChange('from')">
                             <option value="m">Meter (m)</option>
+                            <option value="dm">Decimeter (dm)</option>
                             <option value="cm">Centimeter (cm)</option>
                             <option value="mm">Millimeter (mm)</option>
                             <option value="in">Inch (in)</option>
@@ -748,9 +764,10 @@
                     </div>
                     <div>
                         <label data-key="convTo">To Unit</label>
-                        <select id="conv_to" class="styled-input" onchange="convertLengthLive()">
+                        <select id="conv_to" class="styled-input" onchange="handleUnitChange('to')">
                             <option value="cm">Centimeter (cm)</option>
                             <option value="m">Meter (m)</option>
+                            <option value="dm">Decimeter (dm)</option>
                             <option value="mm">Millimeter (mm)</option>
                             <option value="in">Inch (in)</option>
                             <option value="ft">Feet (ft)</option>
@@ -771,7 +788,7 @@
     </div>
     
     <!-- Config Docs Modal -->
-    <div id="configDocsModal" class="modal-overlay" onclick="closeModal(event)">
+    <div id="configDocsModal" class="modal-overlay config-docs-modal" onclick="closeModal(event)">
         <div class="modal-content" onclick="event.stopPropagation()">
              <button class="modal-close" onclick="window.location.hash=''">✕</button>
              <div class="config-docs-container">
@@ -795,6 +812,38 @@
                         <h3 id="configViewerTitle">Document</h3>
                     </div>
                     <div class="config-viewer-body" id="configViewerBody">
+                        <!-- Content will be injected here -->
+                    </div>
+                </div>
+             </div>
+        </div>
+    </div>
+
+    <!-- More Info Modal -->
+    <div id="moreInfoModal" class="modal-overlay config-docs-modal" onclick="closeModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+             <button class="modal-close" onclick="window.location.hash=''">✕</button>
+             <div class="config-docs-container">
+                <div id="moreInfoSelection" class="config-docs-selection">
+                    <button class="config-btn" onclick="showMoreInfoDoc('partNumbers')">
+                        PART NUMBERS
+                        <small>Connectors, Boots, Eyelets, etc.</small>
+                    </button>
+                    <button class="config-btn" onclick="showMoreInfoDoc('extraIssue')">
+                        EXTRA ISSUE
+                        <small>Blocked Connector (Z9#)</small>
+                    </button>
+                    <button class="btn-dec" style="width: 90%; max-width: 450px; padding: 12px; margin-top: 20px; font-size: 1rem; border:none; border-radius:100px; font-weight:bold; cursor:pointer;" onclick="window.location.hash=''">
+                        <span data-key="lcBackBtn">Back to Tracker</span>
+                    </button>
+                </div>
+
+                <div id="moreInfoViewer" class="config-docs-viewer">
+                    <div class="config-viewer-header">
+                        <button class="config-back-btn" onclick="showMoreInfoSelection()">‹</button>
+                        <h3 id="moreInfoViewerTitle">Information</h3>
+                    </div>
+                    <div class="config-viewer-body" id="moreInfoViewerBody">
                         <!-- Content will be injected here -->
                     </div>
                 </div>
@@ -907,6 +956,9 @@
     </footer>
 
     <script>
+        // --- CONFIGURATION ---
+        const SHOW_PROMO_AD = false; // Set to false to remotely hide the promo cards
+
         // --- THEME ---
         function applyTimeBasedTheme() {
             if (localStorage.getItem('sbg_theme_override')) return; 
@@ -1003,7 +1055,7 @@
             targetLabel: { eng: "Set Target:", odia: "ଲକ୍ଷ୍ୟ ସେଟ୍ କରନ୍ତୁ:", hin: "लक्ष्य निर्धारित करें:", kon: "लक्ष्य सेट करा:" },
             noTarget: { eng: "No Target", odia: "କୌଣସି ଲକ୍ଷ୍ୟ ନାହିଁ", hin: "कोई लक्ष्य नहीं", kon: "लक्ष्य नाही" },
             custom: { eng: "Custom", odia: "କଷ୍ଟମ୍", hin: "कस्टम", kon: "कस्टम" },
-            remainingText: { eng: "Remaining Count:", odia: "ବାକି ସଂଖ୍ୟା:", hin: "शेष संख्या:", kon: "उर्वरित संख्या:" },
+            remainingText: { eng: "Remaining:", odia: "ବାକି:", hin: "शेष:", kon: "उर्वरित:" },
             targetReached: { eng: "Target Reached! 🎉", odia: "ଲକ୍ଷ୍ୟ ପୂରଣ ହେଲା! 🎉", hin: "लक्ष्य पूरा हुआ! 🎉", kon: "लक्ष्य गाठले! 🎉" },
             footerCredit: { eng: "by Sandeep Biswal G", odia: "ସନ୍ଦୀପ୍ ବିଶ୍ୱାଳ ଜି ଙ୍କ ଦ୍ଵାରା", hin: "संदीप् बिस्वाल जी द्वारा", kon: "संदीप् बिस्वाल जी यांच्याद्वारे" },
             promoTitle: { eng: "Download Plyxo Games", odia: "ଡାଉନଲୋଡ୍ Plyxo Games", hin: "Plyxo गेम्स डाउनलोड करें", kon: "Plyxo गेम्स डाउनलोड करा" },
@@ -1033,7 +1085,7 @@
             reportText: { eng: "Need to report a translation error or request a new language?", odia: "ଅନୁବାଦ ତ୍ରୁଟି ରିପୋର୍ଟ କରିବାକୁ କିମ୍ବା ନୂଆ ଭାଷା ଅନୁରୋଧ କରିବାକୁ ଚାହୁଁଛନ୍ତି କି?", hin: "अनुवाद में कोई त्रुटि रिपोर्ट करनी है या एक नई भाषा का अनुरोध करना है?", kon: "भाषांतरात त्रुटी आढळल्यास किंवा नवीन भाषेची विनंती करायची आहे का?" },
             reportEmail: { eng: "Send us an email and we'll get right on it!", odia: "ଆମକୁ ଏକ ଇମେଲ୍ ପଠାନ୍ତୁ ଏବଂ ଆମେ ଏହା ଉପରେ କାର୍ଯ୍ୟ କରିବୁ!", hin: "हमें एक ईमेल भेजें और हम इसे तुरंत ठीक कर देंगे!", kon: "आम्हाला ईमेल पाठवा आणि आम्ही त्यावर लगेच काम करू!" },
             reportClose: { eng: "Close", odia: "ବନ୍ଦ କରନ୍ତୁ", hin: "बंद करें", kon: "बंद करा" },
-            confirmReset: { eng: "Are you sure you want to reset the main counter?", odia: "ଆପଣ ନିଶ୍ଚିତ କି ମେନ୍ କାଉଣ୍ଟର ରିସେଟ୍ କରିବେ?", hin: "क्या आप वाकई मुख्य काउंटर को रीसेट करना चाहते हैं?", kon: "मुख्य काउंटर रीसेट करू इच्छिता का?" },
+            confirmReset: { eng: "Are you sure you want to reset all data and laps?", odia: "ଆପଣ ନିଶ୍ଚିତ କି ମେନ୍ କାଉଣ୍ଟର ଏବଂ ଲ୍ୟାପ୍ସ ରିସେଟ୍ କରିବେ?", hin: "क्या आप वाकई मुख्य काउंटर और लैप्स को रीसेट करना चाहते हैं?", kon: "मुख्य काउंटर आणि लॅप्स रीसेट करू इच्छिता का?" },
             confirmClearInputs: { eng: "Are you sure you want to clear inputs?", odia: "ଆପଣ ନିଶ୍ଚିତ କି ଇନପୁଟ୍ ସଫା କରିବେ?", hin: "क्या आप वाकई इनपुट साफ़ करना चाहते हैं?", kon: "तुम्ही नक्की इनपुट साफ करू इच्छिता का?" },
             confirmClear: { eng: "Are you sure you want to clear data?", odia: "ଆପଣ ନିଶ୍ଚିତ କି ଡାଟା ସଫା କରିବାକୁ ଚାହୁଁଛନ୍ତି?", hin: "क्या आप वाकई डेटा साफ़ करना चाहते हैं?", kon: "तुम्ही नक्की डेटा साफ करू इच्छिता का?" },
             yesBtn: { eng: "Yes, Clear", odia: "ହଁ, ସଫା କରନ୍ତୁ", hin: "हाँ, साफ़ करें", kon: "होय, साफ करा" },
@@ -1208,6 +1260,9 @@
                 if (percentage > 100) percentage = 100;
                 if (percentage < 0) percentage = 0;
 
+                let remBatches = Math.ceil(remaining / badgeMultiplier);
+                if (remBatches < 0) remBatches = 0;
+
                 document.getElementById('progressFill').style.width = percentage + '%';
                 document.getElementById('floatProgressFill').style.width = percentage + '%';
                 
@@ -1232,10 +1287,10 @@
                 } else {
                     statusEl.setAttribute('data-key', 'remainingText'); floatStatusEl.setAttribute('data-key', 'remainingText');
                     document.body.classList.remove('target-reached-bg');
-                    translations.remainingText.eng = `Remaining Count: <span style="color:var(--md-sys-color-primary)">${remaining}</span>`;
-                    translations.remainingText.odia = `ବାକି ସଂଖ୍ୟା: <span style="color:var(--md-sys-color-primary)">${toOdiaNumeral(remaining)}</span>`;
-                    translations.remainingText.hin = `शेष संख्या: <span style="color:var(--md-sys-color-primary)">${toDevanagariNumeral(remaining)}</span>`;
-                    translations.remainingText.kon = `उर्वरित संख्या: <span style="color:var(--md-sys-color-primary)">${toDevanagariNumeral(remaining)}</span>`;
+                    translations.remainingText.eng = `Remaining: <span style="color:var(--md-sys-color-primary)">${remaining} | ${remBatches}</span>`;
+                    translations.remainingText.odia = `ବାକି: <span style="color:var(--md-sys-color-primary)">${toOdiaNumeral(remaining)} | ${toOdiaNumeral(remBatches)}</span>`;
+                    translations.remainingText.hin = `शेष: <span style="color:var(--md-sys-color-primary)">${toDevanagariNumeral(remaining)} | ${toDevanagariNumeral(remBatches)}</span>`;
+                    translations.remainingText.kon = `उर्वरित: <span style="color:var(--md-sys-color-primary)">${toDevanagariNumeral(remaining)} | ${toDevanagariNumeral(remBatches)}</span>`;
                 }
                 
                 let finalTargetText = `${formatNumber(count)} / ${formatNumber(targetValue)}`;
@@ -1266,7 +1321,13 @@
             updateUI();
         }
 
-        function resetData() { count = 0; step = 1; updateUI(); }
+        function resetData() { 
+            count = 0; 
+            step = 1; 
+            localStorage.removeItem('sbg_laps');
+            renderLaps();
+            updateUI(); 
+        }
 
         function calculateLengthLive() {
             let r1 = parseFloat(document.getElementById('lc_read1').value) || 0;
@@ -1327,16 +1388,31 @@
             if(document.getElementById('lc_result')) {
                 let exactStr = Number(currentLengthTotal.toFixed(5)).toString();
                 let roundedStr = currentLengthTotal.toFixed(2);
+                let dmStr = (currentLengthTotal * 10).toFixed(2);
                 let cmStr = (currentLengthTotal * 100).toFixed(2);
                 let feetStr = (currentLengthTotal * 3.280839895).toFixed(2);
                 let inStr = (currentLengthTotal * 39.3700787).toFixed(2);
                 let mainDisplay = `<div style="font-size: 2.5rem; font-weight: bold; color: var(--md-sys-color-primary);">${formatNumber(roundedStr)} m</div>`;
-                let detailsDisplay = `<div class="result-details"><div class="detail-row"><span>Exact Val</span> <span class="detail-val">${formatNumber(exactStr)} m</span></div><div class="detail-row"><span>Total CM</span> <span class="detail-val">${formatNumber(cmStr)} cm</span></div><div class="detail-row"><span>Total Feet</span> <span class="detail-val">${formatNumber(feetStr)} ft</span></div><div class="detail-row"><span>Total Inch</span> <span class="detail-val">${formatNumber(inStr)} in</span></div></div>`;
+                let detailsDisplay = `<div class="result-details"><div class="detail-row"><span>Exact Val</span> <span class="detail-val">${formatNumber(exactStr)} m</span></div><div class="detail-row"><span>Total Decimeter</span> <span class="detail-val">${formatNumber(dmStr)} dm</span></div><div class="detail-row"><span>Total CM</span> <span class="detail-val">${formatNumber(cmStr)} cm</span></div><div class="detail-row"><span>Total Feet</span> <span class="detail-val">${formatNumber(feetStr)} ft</span></div><div class="detail-row"><span>Total Inch</span> <span class="detail-val">${formatNumber(inStr)} in</span></div></div>`;
                 document.getElementById('lc_result').innerHTML = mainDisplay + detailsDisplay;
             }
         }
 
-        const conversionRatesToMeters = { 'mm': 0.001, 'cm': 0.01, 'm': 1, 'in': 0.0254, 'ft': 0.3048 };
+        const conversionRatesToMeters = { 'mm': 0.001, 'cm': 0.01, 'dm': 0.1, 'm': 1, 'in': 0.0254, 'ft': 0.3048 };
+        
+        function handleUnitChange(changedSelect) {
+            let f = document.getElementById('conv_from');
+            let t = document.getElementById('conv_to');
+            if (f.value === t.value) {
+                // Find next available unit and swap to prevent having the same unit on both sides
+                let options = Array.from(changedSelect === 'from' ? t.options : f.options).map(o => o.value);
+                let fallback = options.find(val => val !== (changedSelect === 'from' ? f.value : t.value));
+                if (changedSelect === 'from') t.value = fallback;
+                else f.value = fallback;
+            }
+            convertLengthLive();
+        }
+
         function convertLengthLive() {
             if(!document.getElementById('conv_input')) return;
             let val = parseFloat(document.getElementById('conv_input').value);
@@ -1450,13 +1526,111 @@
         const configDocsData = {
             doc1: {
                 title: "CABLE ASSEMBLY, JUMPER, CONFIGURABLE",
-                content: `<h3>General Document Information</h3><p><strong>Title:</strong> CABLE ASSEMBLY, JUMPER, CONFIGURABLE<br><strong>Drawing Number:</strong> A100H3247<br><strong>Revision:</strong> BH</p><h3>Configuration Breakdown</h3><table><thead><tr><th>Code</th><th>Category</th><th>Options / Values</th></tr></thead><tbody><tr><td><strong>X</strong></td><td>(VERSION)</td><td>F = FIBER LOW LOSS<br>C = ECONOMIC VERSION</td></tr><tr><td><strong>a</strong></td><td>FAMILY</td><td>D = JUMPER PLENUM<br>E = JUMPER RISER<br>F = JUMPER LSZH (DUAL RATED)</td></tr><tr><td><strong>b</strong></td><td>FIBER TYPE</td><td>Z = LAZRSPEED 300 MULTIMODE<br>X = LAZRSPEED 550 MULTIMODE<br>V = LAZRSPEED WB 550<br>W = TERASPEED SM G657.A1 OR A2<br>G = SINGLEMODE G657.A2</td></tr><tr><td><strong>cc</strong></td><td>TERMINATION END A</td><td>K* = LC LOCKING[18]<br>LC = LC UPC<br>LA = LC APC<br>L# = KEYED LC<br>SC = SC UPC<br>SA = SC APC</td></tr><tr><td><strong>dd</strong></td><td>TERMINATION END B</td><td>K* = LC LOCKING[18]<br>LC = LC UPC<br>LA = LC APC<br>L# = KEYED LC<br>SC = SC UPC<br>SA = SC APC<br>UC = UNCONNECTORIZED</td></tr><tr><td><strong>e</strong></td><td>CONSTRUCTION</td><td>2 = 1.6mm SIMPLEX<br>4 = 1.6mm ZIP CORD</td></tr><tr><td><strong>f</strong></td><td>FIBER COUNT</td><td>1 = 1 FIBER<br>2 = 2 FIBER</td></tr><tr><td><strong>g</strong></td><td>COLOR</td><td>A = BLUE<br>B = ORANGE<br>C = GREEN<br>D = BROWN<br>E = SLATE<br>F = WHITE<br>G = RED<br>H = BLACK<br>J = YELLOW<br>K = VIOLET<br>L = ROSE<br>M = AQUA<br>N = LIME GREEN</td></tr><tr><td><strong>h</strong></td><td>OPTIONS</td><td>X = NO BREAKOUT<br>8 = WITH PORT BLOCKER[20]<br>9 = NO BREAKOUT NO REEL<br>G = GOOGLE, NO BREAKOUT</td></tr><tr><td><strong>j</strong></td><td>UNIT OF MEASURE</td><td>F = FEET<br>M = METER<br>D = DECIMETER</td></tr><tr><td><strong>kkk</strong></td><td>LENGTH</td><td>FEET: 001 - 999<br>METERS: 001 - 500<br>DECIMETERS: 005 - 990</td></tr></tbody></table><h3>Table 2: Length Tolerances</h3><table><thead><tr><th>CABLE LENGTH FT (M)</th><th>LENGTH TOLERANCE FT (M)</th></tr></thead><tbody><tr><td><strong>1 - 1.9 (0.305 - 0.579)</strong></td><td>+0.25/-0.0 (+0.08-0.0)</td></tr><tr><td><strong>2 - 14 (1 - 4)</strong></td><td>+0.5/-0.0 (+0.15-0.000)</td></tr><tr><td><strong>15 - 100 (5 - 30)</strong></td><td>+1.0/-0.0 (+0.30-0.00)</td></tr><tr><td><strong>101 - 200 (31 - 60)</strong></td><td>+1.0/-0.0 (+0.30-0.00)</td></tr><tr><td><strong>201 - 500 (61 - 152)</strong></td><td>+1.0/-0.0 (+0.30-0.00)</td></tr><tr><td><strong>501 - 3277 (153 - 999)</strong></td><td>+1.0/-0.0 (+0.30-0.00)</td></tr></tbody></table>`
+                content: `<h3>General Document Information</h3><p><strong>Title:</strong> CABLE ASSEMBLY, JUMPER, CONFIGURABLE<br><strong>Drawing Number:</strong> A100H3247<br><strong>Revision:</strong> BH</p><div class="table-wrapper"><table><thead><tr><th>Code</th><th>Category</th><th>Options / Values</th></tr></thead><tbody><tr><td><strong>X</strong></td><td>(VERSION)</td><td>F = FIBER LOW LOSS<br>C = ECONOMIC VERSION</td></tr><tr><td><strong>a</strong></td><td>FAMILY</td><td>D = JUMPER PLENUM<br>E = JUMPER RISER<br>F = JUMPER LSZH (DUAL RATED)</td></tr><tr><td><strong>b</strong></td><td>FIBER TYPE</td><td>Z = LAZRSPEED 300 MULTIMODE<br>X = LAZRSPEED 550 MULTIMODE<br>V = LAZRSPEED WB 550<br>W = TERASPEED SM G657.A1 OR A2<br>G = SINGLEMODE G657.A2</td></tr><tr><td><strong>cc</strong></td><td>TERMINATION END A</td><td>K* = LC LOCKING[18]<br>LC = LC UPC<br>LA = LC APC<br>L# = KEYED LC<br>SC = SC UPC<br>SA = SC APC</td></tr><tr><td><strong>dd</strong></td><td>TERMINATION END B</td><td>K* = LC LOCKING[18]<br>LC = LC UPC<br>LA = LC APC<br>L# = KEYED LC<br>SC = SC UPC<br>SA = SC APC<br>UC = UNCONNECTORIZED</td></tr><tr><td><strong>e</strong></td><td>CONSTRUCTION</td><td>2 = 1.6mm SIMPLEX<br>4 = 1.6mm ZIP CORD</td></tr><tr><td><strong>f</strong></td><td>FIBER COUNT</td><td>1 = 1 FIBER<br>2 = 2 FIBER</td></tr><tr><td><strong>g</strong></td><td>COLOR</td><td>A = BLUE<br>B = ORANGE<br>C = GREEN<br>D = BROWN<br>E = SLATE<br>F = WHITE<br>G = RED<br>H = BLACK<br>J = YELLOW<br>K = VIOLET<br>L = ROSE<br>M = AQUA<br>N = LIME GREEN</td></tr><tr><td><strong>h</strong></td><td>OPTIONS</td><td>X = NO BREAKOUT<br>8 = WITH PORT BLOCKER[20]<br>9 = NO BREAKOUT NO REEL<br>G = GOOGLE, NO BREAKOUT</td></tr><tr><td><strong>j</strong></td><td>UNIT OF MEASURE</td><td>F = FEET<br>M = METER<br>D = DECIMETER</td></tr><tr><td><strong>kkk</strong></td><td>LENGTH</td><td>FEET: 001 - 999<br>METERS: 001 - 500<br>DECIMETERS: 005 - 990</td></tr></tbody></table></div><h3>Table 2: Length Tolerances</h3><div class="table-wrapper"><table><thead><tr><th>CABLE LENGTH FT (M)</th><th>LENGTH TOLERANCE FT (M)</th></tr></thead><tbody><tr><td><strong>1 - 1.9 (0.305 - 0.579)</strong></td><td>+0.25/-0.0 (+0.08-0.0)</td></tr><tr><td><strong>2 - 14 (1 - 4)</strong></td><td>+0.5/-0.0 (+0.15-0.000)</td></tr><tr><td><strong>15 - 100 (5 - 30)</strong></td><td>+1.0/-0.0 (+0.30-0.00)</td></tr><tr><td><strong>101 - 200 (31 - 60)</strong></td><td>+1.0/-0.0 (+0.30-0.00)</td></tr><tr><td><strong>201 - 500 (61 - 152)</strong></td><td>+1.0/-0.0 (+0.30-0.00)</td></tr><tr><td><strong>501 - 3277 (153 - 999)</strong></td><td>+1.0/-0.0 (+0.30-0.00)</td></tr></tbody></table></div>`
             },
             doc2: {
                 title: "LC UNI-BOOT JUMPER, CONFIGURABLE",
-                content: `<h3>General Document Information</h3><p><strong>Title:</strong> LC UNI-BOOT JUMPER, CONFIGURABLE<br><strong>Drawing Number:</strong> A110H3439<br><strong>Revision:</strong> AL</p><h3>Configuration Breakdown</h3><table><thead><tr><th>Code</th><th>Category</th><th>Options / Values</th></tr></thead><tbody><tr><td><strong>a</strong></td><td>PRODUCT TYPE</td><td>U = ULTRA LOW LOSS<br>T = ULL FIM LABELING</td></tr><tr><td><strong>b</strong></td><td>FAMILY</td><td>D = JUMPER PLENUM<br>F = JUMPER RISER / LSZH</td></tr><tr><td><strong>c</strong></td><td>FIBER TYPE</td><td>X = LAZRSPEED 550 MULTIMODE<br>V = LAZRSPEED WB 550<br>G = TERASPEED SM G.657.A2<br>W = CORNING SMF-28 ULTRA<br>0 = PRYSMIAN SM G.657.A2</td></tr><tr><td><strong>dd</strong></td><td>TERMINATION END A</td><td>LU = LC UNI-BOOT<br>SN = SN SENKO NANO (50T)</td></tr><tr><td><strong>ee</strong></td><td>TERMINATION END B</td><td>LU = LC UNI-BOOT<br>SN = SN SENKO NANO (50T)<br>UC = UNCONNECTED</td></tr><tr><td><strong>f</strong></td><td>CONSTRUCTION</td><td>0 = 2.0mm MP IC<br>K = 1.5mm MP IC</td></tr><tr><td><strong>g</strong></td><td>FIBER COUNT</td><td>2 = 2 FIBER</td></tr><tr><td><strong>h</strong></td><td>COLOR</td><td>A = BLUE<br>C = GREEN<br>J = YELLOW<br>M = AQUA<br>N = LIME GREEN<br>K = VIOLET<br>G = RED</td></tr><tr><td><strong>j</strong></td><td>OPTIONS</td><td>X = NO BREAKOUT<br>G = GOOGLE</td></tr><tr><td><strong>k</strong></td><td>UNIT OF MEASURE</td><td>F = FEET<br>M = METER<br>D = DECIMETERS</td></tr><tr><td><strong>xxx</strong></td><td>LENGTH</td><td>FEET: 001-999<br>METERS: 001-999<br>DECIMETERS: 001-999</td></tr></tbody></table><h3>Table 2: Length Tolerances</h3><table><thead><tr><th>CABLE LENGTH FT (M)</th><th>LENGTH TOLERANCE FT (M)</th></tr></thead><tbody><tr><td><strong>1.0 (0.305)</strong></td><td>+0.25/-0.0 (+0.08/-0.00)</td></tr><tr><td><strong>2.0 - 14. (1 - 4)</strong></td><td>+0.5/-0.00 (+0.15/-0.00)</td></tr><tr><td><strong>15 - 100 (5 - 30)</strong></td><td>+1.0/-0.0 (+.30/-0.00)</td></tr><tr><td><strong>101 - 200 (31 - 60)</strong></td><td>+1.0/-0.0 (+.30/-0.00)</td></tr><tr><td><strong>201 - 500 (61 - 152)</strong></td><td>+1.0/-0.0 (+.30/-0.00)</td></tr><tr><td><strong>501 - 3277 (153 - 999)</strong></td><td>+1.0/-0.0 (+.30/-0.00)</td></tr></tbody></table>`
+                content: `<h3>General Document Information</h3><p><strong>Title:</strong> LC UNI-BOOT JUMPER, CONFIGURABLE<br><strong>Drawing Number:</strong> A110H3439<br><strong>Revision:</strong> AL</p><div class="table-wrapper"><table><thead><tr><th>Code</th><th>Category</th><th>Options / Values</th></tr></thead><tbody><tr><td><strong>a</strong></td><td>PRODUCT TYPE</td><td>U = ULTRA LOW LOSS<br>T = ULL FIM LABELING</td></tr><tr><td><strong>b</strong></td><td>FAMILY</td><td>D = JUMPER PLENUM<br>F = JUMPER RISER / LSZH</td></tr><tr><td><strong>c</strong></td><td>FIBER TYPE</td><td>X = LAZRSPEED 550 MULTIMODE<br>V = LAZRSPEED WB 550<br>G = TERASPEED SM G.657.A2<br>W = CORNING SMF-28 ULTRA<br>0 = PRYSMIAN SM G.657.A2</td></tr><tr><td><strong>dd</strong></td><td>TERMINATION END A</td><td>LU = LC UNI-BOOT<br>SN = SN SENKO NANO (50T)</td></tr><tr><td><strong>ee</strong></td><td>TERMINATION END B</td><td>LU = LC UNI-BOOT<br>SN = SN SENKO NANO (50T)<br>UC = UNCONNECTED</td></tr><tr><td><strong>f</strong></td><td>CONSTRUCTION</td><td>0 = 2.0mm MP IC<br>K = 1.5mm MP IC</td></tr><tr><td><strong>g</strong></td><td>FIBER COUNT</td><td>2 = 2 FIBER</td></tr><tr><td><strong>h</strong></td><td>COLOR</td><td>A = BLUE<br>C = GREEN<br>J = YELLOW<br>M = AQUA<br>N = LIME GREEN<br>K = VIOLET<br>G = RED</td></tr><tr><td><strong>j</strong></td><td>OPTIONS</td><td>X = NO BREAKOUT<br>G = GOOGLE</td></tr><tr><td><strong>k</strong></td><td>UNIT OF MEASURE</td><td>F = FEET<br>M = METER<br>D = DECIMETERS</td></tr><tr><td><strong>xxx</strong></td><td>LENGTH</td><td>FEET: 001-999<br>METERS: 001-999<br>DECIMETERS: 001-999</td></tr></tbody></table></div><h3>Table 2: Length Tolerances</h3><div class="table-wrapper"><table><thead><tr><th>CABLE LENGTH FT (M)</th><th>LENGTH TOLERANCE FT (M)</th></tr></thead><tbody><tr><td><strong>1.0 (0.305)</strong></td><td>+0.25/-0.0 (+0.08/-0.00)</td></tr><tr><td><strong>2.0 - 14. (1 - 4)</strong></td><td>+0.5/-0.00 (+0.15/-0.00)</td></tr><tr><td><strong>15 - 100 (5 - 30)</strong></td><td>+1.0/-0.0 (+.30/-0.00)</td></tr><tr><td><strong>101 - 200 (31 - 60)</strong></td><td>+1.0/-0.0 (+.30/-0.00)</td></tr><tr><td><strong>201 - 500 (61 - 152)</strong></td><td>+1.0/-0.0 (+.30/-0.00)</td></tr><tr><td><strong>501 - 3277 (153 - 999)</strong></td><td>+1.0/-0.0 (+.30/-0.00)</td></tr></tbody></table></div>`
             }
         };
+
+        const moreInfoData = {
+            partNumbers: {
+                title: "Part Numbers",
+                content: `
+                    <h3>1. Connector Part Numbers</h3>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead><tr><th>Product</th><th>Code</th><th>Part Number</th></tr></thead>
+                            <tbody>
+                                <tr><td>Jumper Single Mode Connector</td><td>JSM</td><td>860645935</td></tr>
+                                <tr><td>Jumper Multi Mode Connector</td><td>JMM</td><td>860645931</td></tr>
+                                <tr><td>Uniboot Single Mode Connector</td><td>USM</td><td>860666846</td></tr>
+                                <tr><td>Uniboot Multi Mode Connector</td><td>UMM</td><td>860657967</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3>2. Boots Part Numbers</h3>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead><tr><th>Product</th><th>Part Number</th></tr></thead>
+                            <tbody>
+                                <tr><td>Uniboot Gen 1.5</td><td>860656121</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3>3. Eyelet Part Numbers</h3>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead><tr><th>Product</th><th>Part Number</th></tr></thead>
+                            <tbody>
+                                <tr><td>Meta Uniboot (-2)</td><td>2160926-2</td></tr>
+                                <tr><td>K2 (-1)</td><td>2160926-1</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3>4. Connector Attachment Part Numbers</h3>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead><tr><th>Product</th><th>Part Number</th></tr></thead>
+                            <tbody>
+                                <tr><td>Meta Uniboot</td><td>860656119</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3>5. Fiber Optic Cable Reel Part Numbers</h3>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead><tr><th>Product</th><th>Part Number</th></tr></thead>
+                            <tbody>
+                                <tr><td>Meta India</td><td>860686848</td></tr>
+                                <tr><td>Meta USA</td><td>760251108</td></tr>
+                                <tr><td>K2</td><td>760251280</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                `
+            },
+            extraIssue: {
+                title: "Extra Issue",
+                content: `
+                    <h3>1. Blocked Connector (Z9#)</h3>
+                    <div class="table-wrapper">
+                        <table style="min-width: 900px; white-space: nowrap;">
+                            <thead>
+                                <tr>
+                                    <th>Product Category</th>
+                                    <th>Team leader</th>
+                                    <th>Line</th>
+                                    <th>Product Code</th>
+                                    <th>Product stage</th>
+                                    <th>Defect Sr. Number</th>
+                                    <th>Shift</th>
+                                    <th>Reason Code</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Z9#</td>
+                                    <td>90</td>
+                                    <td>000</td>
+                                    <td>162</td>
+                                    <td>73</td>
+                                    <td>18</td>
+                                    <td>Shift</td>
+                                    <td>2135</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                `
+            }
+        };
+
         const colorMap = { "BLUE": "#007bff", "ORANGE": "#fd7e14", "GREEN": "#28a745", "BROWN": "#a52a2a", "SLATE": "#708090", "WHITE": "#f8f9fa", "RED": "#dc3545", "BLACK": "#343a40", "YELLOW": "#ffc107", "VIOLET": "#8f00ff", "ROSE": "#ff007f", "AQUA": "#00ffff", "LIME GREEN": "#32cd32" };
         
         function formatConfigContent(htmlContent) {
@@ -1487,6 +1661,21 @@
         function showConfigSelection() {
             document.getElementById('configDocsSelection').classList.remove('hidden');
             document.getElementById('configDocsViewer').classList.remove('visible');
+        }
+
+        function showMoreInfoDoc(docId) {
+            const data = moreInfoData[docId];
+            if (!data) return;
+
+            document.getElementById('moreInfoViewerTitle').innerText = data.title;
+            document.getElementById('moreInfoViewerBody').innerHTML = data.content;
+            document.getElementById('moreInfoSelection').classList.add('hidden');
+            document.getElementById('moreInfoViewer').classList.add('visible');
+        }
+
+        function showMoreInfoSelection() {
+            document.getElementById('moreInfoSelection').classList.remove('hidden');
+            document.getElementById('moreInfoViewer').classList.remove('visible');
         }
 
         // --- SHIFT CALENDAR LOGIC ---
@@ -1618,6 +1807,7 @@
             if (hash === '#lengthcheck') modalToShow = 'lengthCheckModal';
             else if (hash === '#converter') modalToShow = 'converterModal';
             else if (hash === '#config-docs') modalToShow = 'configDocsModal';
+            else if (hash === '#more-info') modalToShow = 'moreInfoModal';
             else if (hash === '#shiftcalendar') modalToShow = 'shiftcalendarModal';
             else if (hash === '#ocp-count') modalToShow = 'ocpCountModal';
             else if (hash === '#lap-history') modalToShow = 'lapHistoryModal';
@@ -1632,6 +1822,8 @@
                 }
                 if (modalToShow === 'lapHistoryModal') renderLaps();
                 if (modalToShow === 'configDocsModal') showConfigSelection();
+                if (modalToShow === 'moreInfoModal') showMoreInfoSelection();
+                
                 document.getElementById(modalToShow).classList.add('active');
                 updateUI();
                 closeMobileMenu();
@@ -1717,9 +1909,8 @@
         }, 1000);
 
         window.addEventListener('load', () => {
-            // Hide Ad based on URL param
-            const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.get('ad') === 'no' || urlParams.get('ad') === 'hide' || urlParams.get('hide_ad') === 'yes') {
+            // Hide Ad based on JS constant parameter
+            if (!SHOW_PROMO_AD) {
                 const promos = document.querySelectorAll('.promo-card');
                 promos.forEach(p => p.style.display = 'none');
             }
