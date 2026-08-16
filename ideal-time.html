@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ideal Time Calculator</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #005ac1;
+            --primary-container: #d8e2ff;
+            --on-primary-container: #001a41;
+            --bg-color: #f3f6fc;
+            --surface: #ffffff;
+            --surface-variant: #e1e2ec;
+            --on-surface: #1a1b1e;
+            --text-secondary: #565f71;
+            --success: #146c2e;
+            --success-bg: #e8f5e9;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Google Sans', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--on-surface);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: var(--surface);
+            max-width: 500px;
+            width: 100%;
+            border-radius: 24px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+            padding: 32px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .header h1 {
+            color: var(--primary);
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .header p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-top: 4px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+            color: var(--on-surface);
+        }
+
+        /* Time inputs row */
+        .time-inputs {
+            display: flex;
+            gap: 12px;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 14px 16px;
+            border-radius: 12px;
+            border: 2px solid var(--surface-variant);
+            background-color: var(--surface);
+            font-size: 1.1rem;
+            font-weight: 500;
+            outline: none;
+            transition: border-color 0.3s;
+            color: var(--on-surface);
+        }
+
+        .input-field:focus {
+            border-color: var(--primary);
+        }
+
+        /* Result Section */
+        .result-box {
+            background-color: var(--primary-container);
+            color: var(--on-primary-container);
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+            margin-top: 24px;
+            display: none; /* Hidden until calculation happens */
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .result-box h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            opacity: 0.9;
+        }
+
+        .main-result {
+            font-size: 3rem;
+            font-weight: 700;
+            line-height: 1.1;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .sub-result {
+            font-size: 1.2rem;
+            font-weight: 600;
+            opacity: 0.85;
+        }
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 20px;
+            border-top: 2px solid rgba(0, 0, 0, 0.05);
+            padding-top: 20px;
+        }
+
+        .detail-item {
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .detail-label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            opacity: 0.7;
+        }
+
+        .detail-value {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-top: 4px;
+        }
+
+        .target-reached {
+            background-color: var(--success-bg);
+            color: var(--success);
+            padding: 16px;
+            border-radius: 12px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-top: 24px;
+            display: none;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <h1>Ideal Time Calculator</h1>
+            <p>Formula: Time / Target × (Target - Achieved)</p>
+        </div>
+
+        <!-- Total Available Time -->
+        <div class="input-group">
+            <label>Total Available Time</label>
+            <div class="time-inputs">
+                <input type="number" id="timeHours" class="input-field" placeholder="Hours" min="0" oninput="calculate()">
+                <input type="number" id="timeMins" class="input-field" placeholder="Minutes" min="0" oninput="calculate()">
+            </div>
+        </div>
+
+        <!-- Total Target -->
+        <div class="input-group">
+            <label>Total Target</label>
+            <input type="number" id="target" class="input-field" placeholder="e.g. 1000" min="1" oninput="calculate()">
+        </div>
+
+        <!-- Achieved Target -->
+        <div class="input-group">
+            <label>Achieved Target</label>
+            <input type="number" id="achieved" class="input-field" placeholder="e.g. 450" min="0" oninput="calculate()">
+        </div>
+
+        <!-- Success Message (if target is complete) -->
+        <div id="target-reached" class="target-reached">
+            🎉 Target Completely Achieved!
+        </div>
+
+        <!-- Result Display -->
+        <div id="result-box" class="result-box">
+            <h3>Ideal Time Remaining</h3>
+            <div class="main-result" id="display-hours-mins">0h 0m</div>
+            <div class="sub-result" id="display-total-mins">(0 minutes)</div>
+
+            <div class="details-grid">
+                <div class="detail-item">
+                    <span class="detail-label">Remaining Target</span>
+                    <span class="detail-value" id="detail-remaining">0</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Time Per Unit</span>
+                    <span class="detail-value" id="detail-takt">0 min</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function calculate() {
+            // Get values from inputs
+            let hours = parseFloat(document.getElementById('timeHours').value) || 0;
+            let mins = parseFloat(document.getElementById('timeMins').value) || 0;
+            let target = parseFloat(document.getElementById('target').value) || 0;
+            let achieved = parseFloat(document.getElementById('achieved').value) || 0;
+
+            let resultBox = document.getElementById('result-box');
+            let successBox = document.getElementById('target-reached');
+
+            // Calculate total time in minutes
+            let totalTimeMinutes = (hours * 60) + mins;
+
+            // Validation: Hide results if time is 0 or target is invalid
+            if (totalTimeMinutes <= 0 || target <= 0) {
+                resultBox.style.display = 'none';
+                successBox.style.display = 'none';
+                return;
+            }
+
+            // Check if completed
+            if (achieved >= target) {
+                resultBox.style.display = 'none';
+                successBox.style.display = 'block';
+                return;
+            } else {
+                successBox.style.display = 'none';
+            }
+
+            // --- THE CORE FORMULA ---
+            // Formula: Time / target * (target - achieved)
+            let remainingTarget = target - achieved;
+            let timePerUnit = totalTimeMinutes / target;
+            let idealTimeRemaining = timePerUnit * remainingTarget;
+
+            // Formatting Output
+            let displayIdealMins = idealTimeRemaining.toFixed(2);
+            
+            // Format into Hours and Minutes
+            let finalHours = Math.floor(idealTimeRemaining / 60);
+            let finalMins = Math.round(idealTimeRemaining % 60);
+            
+            let formattedTimeStr = "";
+            if (finalHours > 0) {
+                formattedTimeStr += finalHours + "h ";
+            }
+            formattedTimeStr += finalMins + "m";
+
+            // Inject into DOM
+            document.getElementById('display-hours-mins').innerText = formattedTimeStr;
+            document.getElementById('display-total-mins').innerText = `(${displayIdealMins} minutes)`;
+            
+            document.getElementById('detail-remaining').innerText = remainingTarget;
+            
+            // Format time per unit nicely
+            let formattedTimePerUnit;
+            if (timePerUnit < 1) {
+                formattedTimePerUnit = (timePerUnit * 60).toFixed(1) + " sec";
+            } else {
+                formattedTimePerUnit = timePerUnit.toFixed(2) + " min";
+            }
+            document.getElementById('detail-takt').innerText = formattedTimePerUnit;
+
+            // Show result
+            resultBox.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
